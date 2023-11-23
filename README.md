@@ -1,46 +1,28 @@
-# Metronic 7 + Laravel 7
+**Installation:**
 
-### Introduction
+1. Clone the repository:
 
-...
+```
+git clone https://github.com/Shimofu16/ESMS.git
+```
 
-### Installation
+2. Install the project dependencies:
 
-Laravel has a set of requirements in order to ron smoothly in specific environment. Please see [requirements](https://laravel.com/docs/7.x#server-requirements) section in Laravel documentation.
-
-Metronic similarly uses additional plugins and frameworks, so ensure You have [Composer](https://getcomposer.org/) and [Node](https://nodejs.org/) installed on Your machine.
-
-Assuming your machine meets all requirements - let's process to installation of Metronic Laravel integration (skeleton).
-
-1. Open in cmd or terminal app and navigate to this folder
-2. Run following commands
-
-```bash
+```
+cd ESMS
 composer install
 ```
 
-```bash
+3. Configure the database:
+
+```
 cp .env.example .env
-```
-
-```bash
 php artisan key:generate
+php artisan migrate
 ```
 
-```bash
-npm install
-```
+4. Start the development server:
 
-```bash
-npm run dev
 ```
-
-```bash
 php artisan serve
 ```
-
-And navigate to generated server link (http://127.0.0.1:8000)
-
-### Copyright
-
-...
