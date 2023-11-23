@@ -9,40 +9,56 @@ use App\Models\GradeLevel;
 use App\Models\Section;
 use App\Models\Active_SchoolYearAndSem;
 use App\Models\Student_Specialization_GradeLevel_SchoolYear;
+use Illuminate\Database\Eloquent\Builder;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-
-
-        $enrolled_students_cnt = Student::where('status', 1)->count();
-        $graduate_students_count =  $students = Student::with('enrollment.student')->whereHas('enrollment', function ($query) {
-            return $query->where('gradelevel_id', 2)->where('sem_id', 2);
-        })->count();
         $active_school_year = Active_SchoolYearAndSem::with('schoolyear', 'sem')->first();
-
-        
-
         $active = Active_SchoolYearAndSem::first();
+        $enrolled_students_cnt = Student::with('enrollment')
+            ->select('status')
+            ->whereHas('enrollment', function (Builder $query) use ($active) {
+                $query->where('school_year_id', $active->active_SY_id);
+            })
+            ->where('status', 1)
+            ->count();
+        $graduate_students_count =  $students = Student::select('status')->where('status', 3)->count();
 
-        // $enrolled_students = Student_Specialization_GradeLevel_SchoolYear::with('student')->where('school_year_id', '=', $active->active_SY_id)->where('sem_id','=', $active->active_sem_id)->get();
+        $gradeLevels = [1, 2];
+        $studentsCountPerSpecializationForGrades = [];
 
-        $enrolled_students_g11 = Student_Specialization_GradeLevel_SchoolYear::with('student')->whereHas('student', function ($q) {
-            return $q->where('status', 1);
-        })->where('school_year_id', '=', $active->active_SY_id)->where('sem_id', '=', $active->active_sem_id)->where('gradelevel_id', 1)->get();
-        $enrolled_students_g12 = Student_Specialization_GradeLevel_SchoolYear::with('student')->whereHas('student', function ($q) {
-            return $q->where('status', 1);
-        })->where('school_year_id', '=', $active->active_SY_id)->where('sem_id', '=', $active->active_sem_id)->where('gradelevel_id', 2)->get();
-        $spcs = Specialization::with('enrollment')->get();
-        $grds = GradeLevel::all();
-
-        $sections = Section::with('specialization.enrollment')->get();
-        $students = Student::with('enrollment')->get();
-
-
-
-        return view('pages.dashboard', compact('enrolled_students_cnt', 'active_school_year', 'enrolled_students_g11', 'enrolled_students_g12', 'spcs', 'grds', 'students', 'sections','graduate_students_count'));
+        foreach ($gradeLevels as $gradeLevel) {
+            $studentsCountPerSpecializationForGrades["grade1{$gradeLevel}"] =
+                Specialization::withCount(['enrollment as total_students_count' => function (Builder $query) use ($active, $gradeLevel) {
+                    $query->where('school_year_id',  $active->active_SY_id)
+                        ->where('gradelevel_id', $gradeLevel)
+                        ->whereHas('student', function (Builder $q) {
+                            $q->where('status', 1);
+                        });
+                }, 'enrollment as male_students_count' => function (Builder $query) use ($active, $gradeLevel) {
+                    $query->where('school_year_id',  $active->active_SY_id)
+                        ->where('gradelevel_id', $gradeLevel)
+                        ->whereHas('student', function (Builder $q) {
+                            $q->where('status', 1)
+                                ->where('sex', 'Male');
+                        });
+                }, 'enrollment as female_students_count' => function (Builder $query) use ($active, $gradeLevel) {
+                    $query->where('school_year_id',  $active->active_SY_id)
+                        ->where('gradelevel_id', $gradeLevel)
+                        ->whereHas('student', function (Builder $q) {
+                            $q->where('status', 1)
+                                ->where('sex', 'Female');
+                        });
+                }])
+                ->get();
+        }
+        
+        return view(
+            'pages.dashboard',
+            compact('enrolled_students_cnt', 'studentsCountPerSpecializationForGrades',  'graduate_students_count')
+        );
     }
 }

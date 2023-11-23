@@ -100,7 +100,7 @@ class EnrollNewStudentController extends Controller
         $name = $request->first_name . ' ' . $request->middle_name . ' ' . $request->last_name;
 
         Activity::log(auth()->user()->id, 'Student Management', 'Enrolled a new student named ' . $name . ' with LRN ' . $request->lrn . ' and Student Number ' . $request->std_num . '');
-        return redirect()->route('enroll_new_student.create')->with('success', 'Student Enrolled Successfully!');
+        return redirect()->route('enroll_new_student.create')->with('success_toast', 'Student Enrolled Successfully!');
     }
 
     //enrollment form create

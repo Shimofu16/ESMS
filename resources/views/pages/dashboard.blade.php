@@ -20,17 +20,17 @@
 @endsection
 
 @section('info')
- <!--begin::Info-->
- <div class="d-flex align-items-center flex-wrap mr-2">
+    <!--begin::Info-->
+    <div class="d-flex align-items-center flex-wrap mr-2">
 
-    <!--begin::Page Title-->
-    <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-       Dashboard
-    </h5>
-    <!--end::Page Title-->
+        <!--begin::Page Title-->
+        <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+            Dashboard
+        </h5>
+        <!--end::Page Title-->
 
-</div>
-<!--end::Info-->
+    </div>
+    <!--end::Info-->
 @endsection
 
 @section('content')
@@ -99,7 +99,10 @@
 
         <div class="row p-3">
 
-
+            @php
+                $totalStudentCountPerSpecializationGrade11 = 0;
+                $totalStudentCountPerSpecializationGrade12 = 0;
+            @endphp
             <div class="col-6">
                 <table class="table table-active rounded table-bordered  mt-5"
                     style="outline-style: solid; outline-width:2px;">
@@ -117,45 +120,33 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($spcs as $spc)
+                        @foreach ($studentsCountPerSpecializationForGrades['grade11'] as $specializationGrade11)
+                            @php
+                                $totalStudentCountPerSpecializationGrade11 += $specializationGrade11->total_students_count;
+                            @endphp
                             <tr>
-                                <td>{{ $spc->specialization }}</td>
-                                @php
-                                    $male_cnt = 0;
-                                    $female_cnt = 0;
-                                    $total_cnt = 0;
-                                @endphp
-                                @foreach ($enrolled_students_g11->where('specialization_id', $spc->id) as $enrolled_student)
-                                    @if ($enrolled_student->student->sex == 'Male')
-                                        @php
-                                            $male_cnt = $male_cnt + 1;
-                                        @endphp
-                                    @endif
-
-                                    @if ($enrolled_student->student->sex == 'Female')
-                                        @php
-                                            $female_cnt = $female_cnt + 1;
-
-                                        @endphp
-                                    @endif
-                                    @php
-                                        $total_cnt = $female_cnt + $male_cnt;
-                                    @endphp
-                                @endforeach
+                                <td>{{ $specializationGrade11->specialization }}</td>
 
                                 <td>
-                                    {{ $male_cnt }}
+                                    {{ $specializationGrade11->male_students_count }}
                                 </td>
                                 <td>
-                                    {{ $female_cnt }}
+                                    {{ $specializationGrade11->female_students_count }}
                                 </td>
                                 <td>
-                                    {{ $total_cnt }}
-
+                                    {{ $specializationGrade11->total_students_count}}
                                 </td>
                             </tr>
                         @endforeach
-
+                        <tr>
+                            <td colspan="2"></td>
+                            <td>
+                                {{ __('Total:') }}
+                            </td>
+                            <td>
+                                {{ $totalStudentCountPerSpecializationGrade11 }}
+                            </td>
+                        </tr>
                     </tbody>
 
                 </table>
@@ -168,7 +159,6 @@
                             <th colspan="4">Grade 12</th>
                         </tr>
                         <tr>
-
                             <th>Strand/Specilization</th>
                             <th>Male</th>
                             <th>Female</th>
@@ -177,104 +167,47 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($spcs as $spc)
+                        @foreach ($studentsCountPerSpecializationForGrades['grade12'] as $specializationGrade12)
+                            @php
+                                $totalStudentCountPerSpecializationGrade12 += $specializationGrade12->total_students_count;
+                            @endphp
                             <tr>
-                                <td>{{ $spc->specialization }}</td>
-                                @php
-                                    $male_cnt = 0;
-                                    $female_cnt = 0;
-                                    $total_cnt = 0;
-                                @endphp
-
-                                @foreach ($enrolled_students_g12->where('specialization_id', $spc->id) as $enrolled_student)
-                                    @if ($enrolled_student->student->sex == 'Male' && $enrolled_student->student->status == 1)
-                                        @php
-                                            $male_cnt = $male_cnt + 1;
-                                        @endphp
-                                    @endif
-
-                                    @if ($enrolled_student->student->sex == 'Female' && $enrolled_student->student->status == 1)
-                                        @php
-                                            $female_cnt = $female_cnt + 1;
-
-                                        @endphp
-                                    @endif
-                                    @php
-                                        $total_cnt = $female_cnt + $male_cnt;
-                                    @endphp
-                                @endforeach
+                                <td>{{ $specializationGrade12->specialization }}</td>
 
                                 <td>
-                                    {{ $male_cnt }}
+                                    {{ $specializationGrade12->male_students_count }}
                                 </td>
                                 <td>
-                                    {{ $female_cnt }}
+                                    {{ $specializationGrade12->female_students_count }}
                                 </td>
                                 <td>
-                                    {{ $total_cnt }}
-
+                                    {{ $specializationGrade12->total_students_count }}
                                 </td>
                             </tr>
                         @endforeach
-
+                        <tr>
+                            <td colspan="2"></td>
+                            <td>
+                                {{ __('Total:') }}
+                            </td>
+                            <td>
+                                {{ $totalStudentCountPerSpecializationGrade12 }}
+                            </td>
+                        </tr>
                     </tbody>
 
                 </table>
             </div>
 
-            {{-- <div class="col-6">
 
 
-                @foreach ($sections as $section)
-                <p>
-                    {{ $section->specialization->specialization }}/ {{ $section->section }}
-                </p>
-
-                    @foreach ($section->specialization->enrollment->where('section_id',$section->id) as $enrollment)
-
-                    <p>{{ $enrollment->student->last_name}}</p>
-
-                    @endforeach
-
-
-                 @endforeach
-
-            </div> --}}
-
-
-
-            {{-- <div class="col-6">
-                <h3>Grade 11</h3>
-                @foreach ($spcs as $spc)
-                        <h5>{{ $spc->strand->strand }}/{{ $spc->specialization }}
-                        </h5>
-                        @foreach ($spc->enrollment->where('gradelevel_id', 1) as $enrollment)
-                            <ul>
-                                <li>{{ $enrollment->student->last_name }}</li>
-                            </ul>
-                        @endforeach
-
-                @endforeach
-            </div> --}}
-
-            {{-- <div class="col-6">
-                <h3>Grade 12</h3>
-                @foreach ($spcs as $spc)
-                    <h5>{{ $spc->strand->strand }}/{{ $spc->specialization }}</h5>
-                    @foreach ($spc->enrollment->where('gradelevel_id', 2) as $enrollment)
-                        <ul>
-                            <li>{{ $enrollment->student->last_name }}</li>
-                        </ul>
-                    @endforeach
-                @endforeach
-            </div> --}}
         </div>
     </div>
-    @endsection
+@endsection
 
 
-    {{-- Scripts Section --}}
-    @section('scripts')
+{{-- Scripts Section --}}
+{{-- @section('scripts')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"
             integrity="sha512-sW/w8s4RWTdFFSduOTGtk4isV1+190E/GghVffMA9XczdJ2MDzSzLEubKAs5h0wzgSJOQTRYyaz73L3d6RtJSg=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -318,4 +251,4 @@
                 }
             });
         </script>
-    @endsection
+    @endsection --}}
