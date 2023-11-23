@@ -13,32 +13,36 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class DashboardController extends Controller
 {
-    public function index(){
+    public function index()
+    {
+
+
+        $enrolled_students_cnt = Student::where('status', 1)->count();
+        $graduate_students_count =  $students = Student::with('enrollment.student')->whereHas('enrollment', function ($query) {
+            return $query->where('gradelevel_id', 2)->where('sem_id', 2);
+        })->count();
+        $active_school_year = Active_SchoolYearAndSem::with('schoolyear', 'sem')->first();
 
         
-        $enrolled_students_cnt = Student::where('status', 1)->count();
-        $active_school_year = Active_SchoolYearAndSem::with('schoolyear','sem')->first();
 
-
-       
         $active = Active_SchoolYearAndSem::first();
 
         // $enrolled_students = Student_Specialization_GradeLevel_SchoolYear::with('student')->where('school_year_id', '=', $active->active_SY_id)->where('sem_id','=', $active->active_sem_id)->get();
-        
-        $enrolled_students_g11 = Student_Specialization_GradeLevel_SchoolYear::with('student')->whereHas('student', function($q){
-            return $q->where('status',1);
-        })->where('school_year_id', '=', $active->active_SY_id)->where('sem_id','=', $active->active_sem_id)->where('gradelevel_id',1)->get();
-        $enrolled_students_g12 = Student_Specialization_GradeLevel_SchoolYear::with('student')->whereHas('student', function($q){
-            return $q->where('status',1);
-        })->where('school_year_id', '=', $active->active_SY_id)->where('sem_id','=', $active->active_sem_id)->where('gradelevel_id',2)->get();
+
+        $enrolled_students_g11 = Student_Specialization_GradeLevel_SchoolYear::with('student')->whereHas('student', function ($q) {
+            return $q->where('status', 1);
+        })->where('school_year_id', '=', $active->active_SY_id)->where('sem_id', '=', $active->active_sem_id)->where('gradelevel_id', 1)->get();
+        $enrolled_students_g12 = Student_Specialization_GradeLevel_SchoolYear::with('student')->whereHas('student', function ($q) {
+            return $q->where('status', 1);
+        })->where('school_year_id', '=', $active->active_SY_id)->where('sem_id', '=', $active->active_sem_id)->where('gradelevel_id', 2)->get();
         $spcs = Specialization::with('enrollment')->get();
         $grds = GradeLevel::all();
 
         $sections = Section::with('specialization.enrollment')->get();
-       $students = Student::with('enrollment')->get();
-    
-        
+        $students = Student::with('enrollment')->get();
 
-        return view('pages.dashboard',compact('enrolled_students_cnt', 'active_school_year', 'enrolled_students_g11', 'enrolled_students_g12','spcs','grds','students','sections'));
+
+
+        return view('pages.dashboard', compact('enrolled_students_cnt', 'active_school_year', 'enrolled_students_g11', 'enrolled_students_g12', 'spcs', 'grds', 'students', 'sections','graduate_students_count'));
     }
 }
