@@ -17,3 +17,9 @@ if (!function_exists('slug')) {
         return Str::upper(Str::slug($firstLetters));
     }
 }
+
+if (! function_exists('toLetter')) {
+    function toLetter($word){
+        return Str::substr($word, 0);
+    }
+}

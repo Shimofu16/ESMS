@@ -72,7 +72,7 @@
                     </li>
                 @endcan
 
-                @can('Enrollment Permission')
+                {{-- @can('Enrollment Permission')
                     <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                         <a href="javascript:;" class="menu-link menu-toggle">
                             <span class="menu-icon fas fa-users">
@@ -92,13 +92,13 @@
                                         </i>
                                         <span class="menu-text">New Students</span>
                                         <span class="menu-label">
-                                            {{-- <span class="label label-rounded label-primary"><?= $count_user ?></span> --}}
+                                            <span class="label label-rounded label-primary"><?= $count_user ?></span>
                                         </span>
 
                                     </a>
 
                                 </li>
-                                {{-- <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                     <a href="{{ route('enroll_existing_student.create') }}" class="menu-link menu-toggle">
                                         <i class="menu-bullet menu-bullet-line">
                                             <span></span>
@@ -107,7 +107,7 @@
 
                                     </a>
 
-                                </li> --}}
+                                </li>
                                 <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                     <a href="{{ route('import_student.create') }}" class="menu-link menu-toggle">
                                         <i class="menu-bullet menu-bullet-line">
@@ -123,7 +123,7 @@
                             </ul>
                         </div>
                     </li>
-                @endcan
+                @endcan --}}
 
                 @can('Student Records Permission')
                     <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">

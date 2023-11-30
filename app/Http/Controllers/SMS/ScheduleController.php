@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Models\Specialization;
 use App\Http\Controllers\Controller;
 use App\Models\Active_SchoolYearAndSem;
+use Illuminate\Database\Eloquent\Collection;
 
 class ScheduleController extends Controller
 {
@@ -28,10 +29,11 @@ class ScheduleController extends Controller
     public function index()
     {
         $schedules = Schedule::all();
-        $teachers = Teacher::all();
-        $sections = Section::all();
-        $subjects = Subject::all();
-        $semesters = Sem::all();
+        $teachers = Teacher::select('id', 'name')->get();
+        $sections = Section::select('id', 'section')->get();
+        $subjects = Subject::select('id', 'name')->get();
+        $semesters = Sem::select('id', 'sem')->get();
+
 
         $specializations = Specialization::all();
         return view(
@@ -67,9 +69,11 @@ class ScheduleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        $schedules = Schedule::orderBy('start_time','ASC')->get();
+
+        return view('pages.SMS.Schedules.show', compact('schedules'));
     }
 
     /**

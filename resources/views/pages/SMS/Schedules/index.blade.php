@@ -43,23 +43,15 @@
                             Add Schedule
                         </button>
                         @include('pages.SMS.Schedules.modal._add')
-                        {{-- <div class="dropdown">
-                            <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button"
-                                id="dropdownMenuButton1" data-toggle="dropdown" aria-expanded="false">
-                                Specializations
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                @foreach ($specializations as $specialization)
-                                    <li><a class="dropdown-item"
-                                            href="{{ route('subject.index',['grade_level_id' => $grade_level_id, 'specialization_id' => $specialization->id] ) }}">{{ $specialization->specialization }}</a>
-                                    </li>
-                                @endforeach
-                            </ul>
-
-                        </div> --}}
+                        <a class="btn btn-secondary font-weight-bold btn-sm" href="{{ route('schedule.show') }}">
+                            {{-- calendar --}}
+                            <i class="flaticon2-calendar"></i>
+                            View in Calendar
+                        </a>
                     </div>
                 </div>
                 <div class="card-body">
+                    <div id='calendar'></div>
                     <table class="table dataTable">
                         <thead>
                             <tr>
@@ -122,9 +114,6 @@
                 "ordering": false,
                 "info": false,
                 "searching": true,
-                // "scrollY": "300px",
-                // "scrollCollapse": true,
-                // "paging": false,
             });
         });
     </script>
