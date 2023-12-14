@@ -112,7 +112,7 @@
 
                         <div class="col-md-6">
                             <div id="results">
-                                
+
                             </div>
                         </div>
                     </div>

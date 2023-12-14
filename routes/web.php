@@ -26,7 +26,7 @@ Auth::routes();
 //Dashboard
 
 //  Route::get('/',[App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard.index')->middleware(['auth','permission:Dashboard Permission']);
-Route::get('/', [App\Http\Controllers\EnrollNewStudentController::class, 'enrollmentForm'])->name('enrollmentForm.create');
+Route::get('/', [App\Http\Controllers\EnrollNewStudentController::class, 'index'])->name('enrollment.form.index');
 
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::get('/', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard.index');

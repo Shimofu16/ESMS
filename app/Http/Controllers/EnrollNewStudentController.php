@@ -15,6 +15,10 @@ use RealRashid\SweetAlert\Facades\Alert;
 class EnrollNewStudentController extends Controller
 {
 
+    public function index(){
+        return view('pages.SMS.EnrollmentForm.index');
+    }
+
     function create()
     {
         $tracks = DB::table('tracks')->get();
