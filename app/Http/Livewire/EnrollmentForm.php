@@ -47,6 +47,7 @@ class EnrollmentForm extends Component
     public $track_id;
     public $strand_id;
     public $specialization_id;
+    public $student_type;
 
     // address
     public $house_no;
@@ -131,6 +132,7 @@ class EnrollmentForm extends Component
                     'strand_id' => 'required',
                     'specialization_id' => 'required',
                     'student_photo' => 'required',
+                    'student_type' => 'required',
                 ]);
                 break;
             case 2:

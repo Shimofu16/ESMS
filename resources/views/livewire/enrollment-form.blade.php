@@ -285,6 +285,25 @@
                                 </small>
                             @enderror
                         </div>
+                        <div class="col-span-2 lg:col-span-3 ">
+                            <label for="student_type" class="block text-sm font-medium leading-6 text-gray-900">Type</label>
+                            <div class="mt-2">
+                                <select id="student_type" wire:model="student_type"
+                                    class="block w-full @error('student_type')
+                        border-red-500
+                        @enderror px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                    <option selected value="">Choose type</option>
+                                    <option value="Regular">Regular</option>
+                                    <option value="Iregular">Iregular</option>
+
+                                </select>
+                            </div>
+                            @error('student_type')
+                                <small class="text-[#DC3545]" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </small>
+                            @enderror
+                        </div>
                     @break
 
                     @case(2)
@@ -648,18 +667,21 @@
                 <div></div>
             @endif
             @if ($current_step != 1)
-                <button type="button" wire:click="decreaseStep()" class="font-semibold py-2 px-4 rounded" wire:loading.class="disabled">
+                <button type="button" wire:click="decreaseStep()" class="font-semibold py-2 px-4 rounded"
+                    wire:loading.class="disabled">
                     Back
                 </button>
             @endif
             @if ($current_step != 5)
                 <button type="button" wire:click="increaseStep()"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" wire:loading.class="disabled">
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
+                    wire:loading.class="disabled">
                     Next
                 </button>
             @else
                 <button type="submit"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" wire:loading.class="disabled">
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
+                    wire:loading.class="disabled">
                     Submit
                 </button>
             @endif
