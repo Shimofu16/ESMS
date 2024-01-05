@@ -99,7 +99,7 @@ class EnrollStudentSubjectController extends Controller
                         'sy_id' => $active->active_SY_id
                     ]);
                     if ($subject['status'] == 'To Enroll') {
-                        $subjectIds[] = $subject['subject_id']; 
+                        $subjectIds[] = $subject['subject_id'];
                     }
             }
 

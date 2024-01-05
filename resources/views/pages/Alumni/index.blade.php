@@ -18,7 +18,7 @@
 
     <!--begin::Page Title-->
     <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-      Student Records 
+      Student Records
 
       <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Navigation/Angle-right.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -48,7 +48,7 @@
                     Alumni
                 </h3>
             </div>
-           
+
         </div>
         <div class="card-body">
             <!--begin: Datatable-->
@@ -66,19 +66,19 @@
 
                 <tbody>
                      @foreach ($students as $student)
-                        
+
                         <tr>
                             <td>
-                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalLong">
+                                <a href="{{ route('enrolled_student.show') }}" class="btn btn-primary btn-sm">
                                     View
-                                  </button>
+                                </a>
                             </td>
                             <td>{{ $student->enrollment->student->last_name }}, {{ $student->enrollment->student->first_name }} {{ $student->enrollment->student->middle_name }} {{ $student->enrollment->student->extension }}</td>
                             <td>{{ $student->enrollment->student->sex }}</td>
                             <td>{{ $student->enrollment->specialization->strand->strand }} - {{ $student->enrollment->specialization->specialization }}</td>
                             <td>{{ $student->enrollment->student->shs_yr_graduated }}</td>
                         </tr>
-                    @endforeach 
+                    @endforeach
                 </tbody>
 
             </table>
@@ -89,100 +89,7 @@
 
 
     <!-- View Modal-->
-   
-<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Student Basic Information</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
 
-            <div class="row mb-5">
-                <div class="col-8">
-                    <div class="form-group">
-                        <label> Student Name</label>
-                        {{-- <p class="form-control form-control-sm form-control-solid" type="text" value="{{ $student->enrollment->student->last_name }}, {{ $student->enrollment->student->first_name }} {{ $student->enrollment->student->middle_name }} {{ $student->enrollment->student->extension }}" disabled> --}}
-                            <p class="bg-secondary p-2">{{ $student->enrollment->student->last_name }}, {{ $student->enrollment->student->first_name }} {{ $student->enrollment->student->middle_name }} {{ $student->enrollment->student->extension }}</p>
-                        </div>
-                </div>
-                <div class="col-4">
-                    <div class="form-group">
-                        <label>LRN </label>
-                        {{-- <input class="form-control form-control-sm form-control-solid" type="text" value="{{ $student->enrollment->student->lrn }}" disabled> --}}
-                        <p class="bg-secondary p-2">{{ $student->enrollment->student->lrn }}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row mb-5">
-                <div class="col-8">
-                    <div class="form-group">
-                        <label> Sex</label>
-                        <p class="bg-secondary p-2">{{ $student->enrollment->student->sex }}</p>
-                        {{-- <input class="form-control form-control-sm form-control-solid" type="text" value="{{ $student->enrollment->student->sex }}" disabled> --}}
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="form-group">
-                        <label>Nationality </label>
-                        <p class="bg-secondary p-2">{{ $student->enrollment->student->nationality }}</p>
-                        {{-- <input class="form-control form-control-sm form-control-solid" type="text" value="{{ $student->enrollment->student->nationality }}" disabled> --}}
-                    </div>
-                </div>
-            </div>
-            <div class="row mb-5">
-                <div class="col-8">
-                    <div class="form-group">
-                        <label> Birthdate</label>
-                        <p class="bg-secondary p-2">{{ $student->enrollment->student->b_date }}</p>
-                        {{-- <input class="form-control form-control-sm form-control-solid" type="text" value="{{ $student->enrollment->student->b_date }}" disabled> --}}
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="form-group">
-                        <label>Contact Number </label>
-                        <p class="bg-secondary p-2">{{ $student->enrollment->student->contact_num }}</p>
-                        {{-- <input class="form-control form-control-sm form-control-solid" type="text" value="{{ $student->enrollment->student->contact_num }}" disabled> --}}
-                    </div>
-                </div>
-            </div>
-            <div class="row mb-5">
-                <div class="col-12">
-                    <div class="form-group">
-                        <label> Address</label>
-                        <p class="bg-secondary p-2">{{ $student->enrollment->student->house_num }} {{ $student->enrollment->student->purok }} {{ $student->enrollment->student->brgy }} {{ $student->enrollment->student->municipality }} {{ $student->enrollment->student->province }}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row mb-5">
-                <div class="col-8">
-                    <div class="form-group">
-                        <label> Father's Name</label>
-                        <p class="bg-secondary p-2">{{ $student->enrollment->student->f_name }}</p>
-                        {{-- <input class="form-control form-control-sm form-control-solid" type="text" value="{{ $student->enrollment->student->f_name }}" disabled> --}}
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="form-group">
-                        <label>Mother's Name</label>
-                        <p class="bg-secondary p-2">{{ $student->enrollment->student->m_name }}</p>
-                        {{-- <input class="form-control form-control-sm form-control-solid" type="text" value="{{ $student->enrollment->student->m_name }}" disabled> --}}
-                    </div>
-                </div>
-            </div>
-
-
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
 @endsection
 
 {{-- Scripts Section --}}

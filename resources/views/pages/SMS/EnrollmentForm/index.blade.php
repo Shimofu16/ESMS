@@ -21,8 +21,8 @@
             <div class="flex flex-wrap -mx-4 justify-center">
                 {{-- center this --}}
                 <div class="w-full md:w-1/2 px-4 mb-12 md:mb-0">
-                    <div class="bg-white shadow-md rounded p-6 mb-4 flex flex-col my-2 mx-2 bg-[#1B3CF6]"
-                        style="background-color: #1B3CF6;">
+                    <div class="shadow-md rounded p-6 mb-4 flex flex-col my-2 mx-2 bg-[#3699FF] flex flex-col sm:flex-row items-center justify-center">
+                        <img src="{{ asset('media/logos/capellan_logo.png') }}" alt="CITSPC-LOGO" class="h-[70px] w-[70px] me-3">
                         <h1 class="text-2xl text-center text-gray-100 font-bold ">CIT San Pablo Registration Form</h1>
                     </div>
 
