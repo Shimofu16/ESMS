@@ -191,7 +191,7 @@
                     <table class="table">
                         <thead>
                             <tr>
-      
+
                                 <th scope="col">Section</th>
                                 <th scope="col">Specialization Name</th>
                                 <th scope="col">Grade</th>
@@ -200,11 +200,15 @@
                         <tbody>
                             @foreach ($sections as $section)
                                 <tr>
-                                    <td>{{ $section->section }}</td>
-                                    <td> 
+                                    <td>
+                                        <a href="{{ route('schedule.show', ['section_id' => $section->id]) }}">
+                                            {{ $section->section }}
+                                        </a>
+                                    </td>
+                                    <td>
                                         {{ $section->specialization->specialization }}
                                     </td>
-                                    <td> 
+                                    <td>
                                         {{ $section->gradelevel->grade_level }}
                                     </td>
                                 </tr>
@@ -287,7 +291,7 @@
                             </button> --}}
                         @else
                             <button type="button" class="btn btn-primary font-weight-bold btn-sm act_sy_sem-edit"
-                                data-toggle="modal" 
+                                data-toggle="modal"
                                 data-target="#change_school_year"
                                 data-uid="{{ $active_schoolYear_sems->id }}"
                                 data-sy="{{  $active_schoolYear_sems->schoolyear->id }}"
@@ -453,8 +457,8 @@
                                 <select class="form-control" id="specialization" name="specialization">
 
                                     @foreach ($specializations as $specialization)
-                                        <option value={{ $specialization->id }}> 
-                                            {{ $specialization->specialization }} 
+                                        <option value={{ $specialization->id }}>
+                                            {{ $specialization->specialization }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -466,8 +470,8 @@
                                 <select class="form-control" id="gradelevel" name="gradelevel">
 
                                     @foreach ($gradelevels as $gradelevel)
-                                        <option value={{ $gradelevel->id }}> 
-                                            {{ $gradelevel->grade_level }} 
+                                        <option value={{ $gradelevel->id }}>
+                                            {{ $gradelevel->grade_level }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -478,7 +482,7 @@
                             <input type="text" class="form-control" placeholder="Enter section"
                                 name="section" />
                         </div>
-                       
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light-primary font-weight-bold"
@@ -568,7 +572,7 @@
 {{-- Scripts Section --}}
 @section('scripts')
     {{-- <script src="{{ asset('js/pages/widgets.js') }}" type="text/javascript"></script> --}}
-    
+
     <script>
         $(document).ready(function() {
 

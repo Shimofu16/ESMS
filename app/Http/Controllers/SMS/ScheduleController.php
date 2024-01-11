@@ -69,11 +69,14 @@ class ScheduleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($section_id)
     {
-        $schedules = Schedule::orderBy('start_time','ASC')->get();
+        $section = Section::find($section_id);
+        $schedules = Schedule::where('section_id', $section_id)
+            ->orderBy('start_time', 'ASC')
+            ->get();
 
-        return view('pages.SMS.Schedules.show', compact('schedules'));
+        return view('pages.SMS.Schedules.show', compact('schedules','section'));
     }
 
     /**

@@ -43,11 +43,6 @@
                             Add Schedule
                         </button>
                         @include('pages.SMS.Schedules.modal._add')
-                        <a class="btn btn-secondary font-weight-bold btn-sm" href="{{ route('schedule.show') }}">
-                            {{-- calendar --}}
-                            <i class="flaticon2-calendar"></i>
-                            View in Calendar
-                        </a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -71,15 +66,22 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $schedule->subject->name }}</td>
                                     <td>{{ $schedule->teacher->name }}</td>
-                                    <td>{{ $schedule->section->section }}</td>
+                                    <td>
+                                        <a href="{{ route('schedule.show', ['section_id' => $schedule->section_id]) }}">
+                                            {{ $schedule->section->section }}
+                                        </a>
+
+                                    </td>
                                     <td>{{ $schedule->subject->specialization->specialization }}</td>
                                     <td>
-                                        <span>@foreach ($schedule->days as $day)
-                                            {{ $day }},
-                                            @if ($loop->last)
-                                                {{ $day }}
-                                            @endif
-                                        @endforeach</span><br>
+                                        <span>
+                                            @foreach ($schedule->days as $day)
+                                                {{ $day }},
+                                                @if ($loop->last)
+                                                    {{ $day }}
+                                                @endif
+                                            @endforeach
+                                        </span><br>
                                         <span>At {{ date('h:i A', strtotime($schedule->start_time)) }} -
                                             {{ date('h:i A', strtotime($schedule->end_time)) }}</span>
                                     </td>

@@ -219,7 +219,7 @@ Route::prefix('schedule')
     ->middleware(['auth', 'permission:Schedule Management Permission'])
     ->group(function () {
         Route::get('/', [App\Http\Controllers\SMS\ScheduleController::class, 'index'])->name('index');
-        Route::get('/calendar', [App\Http\Controllers\SMS\ScheduleController::class, 'show'])->name('show');
+        Route::get('/{section_id}', [App\Http\Controllers\SMS\ScheduleController::class, 'show'])->name('show');
         Route::post('/store', [App\Http\Controllers\SMS\ScheduleController::class, 'store'])->name('store');
         Route::put('/update/{id}', [App\Http\Controllers\SMS\ScheduleController::class, 'update'])->name('update');
         Route::delete('/destroy/{id}', [App\Http\Controllers\SMS\ScheduleController::class, 'destroy'])->name('destroy');

@@ -46,7 +46,7 @@
                             <i class="flaticon2-chat-1 text-primary"></i>
                         </span>
                         <h3 class="card-label">
-                            Schedule
+                            Schedule - {{ $section->section }}
                         </h3>
                         <small>Below are the schedule</small>
                     </div>
@@ -63,7 +63,7 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">Subject & Section</th>
+                                <th scope="col">Subject</th>
                                 <th scope="col">Monday</th>
                                 <th scope="col">Tuesday</th>
                                 <th scope="col">Wednesday</th>
@@ -80,7 +80,6 @@
                                 <tr>
                                     <td>
                                         <h6>{{ $schedule->subject->name }}</h6>
-                                        <h6>{{ $schedule->section->section }}</h6>
                                     </td>
                                     @if ($days->contains('Monday'))
                                         <td class="px-1">
