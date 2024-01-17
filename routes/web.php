@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SMS\BackUpController;
 use App\Http\Controllers\SMS\SubjectController;
 use Illuminate\Support\Facades\Route;
 
@@ -209,6 +210,7 @@ Route::prefix('teacher')
     ->middleware(['auth', 'permission:Teacher Management Permission'])
     ->group(function () {
         Route::get('/', [App\Http\Controllers\SMS\TeacherController::class, 'index'])->name('index');
+        Route::get('/{id}', [App\Http\Controllers\SMS\TeacherController::class, 'show'])->name('show');
         Route::post('/store', [App\Http\Controllers\SMS\TeacherController::class, 'store'])->name('store');
         Route::put('/update/{id}', [App\Http\Controllers\SMS\TeacherController::class, 'update'])->name('update');
         Route::delete('/destroy/{id}', [App\Http\Controllers\SMS\TeacherController::class, 'destroy'])->name('destroy');
@@ -236,7 +238,15 @@ Route::prefix('user')
         Route::delete('/destroy/{id}', [App\Http\Controllers\SMS\UserController::class, 'destroy'])->name('destroy');
     });
 
-
+//Graduates
+Route::prefix('backups')
+    ->name('backups.')
+    ->middleware(['auth', 'permission:User Management Permission'])
+    ->group(function () {
+        Route::get('/create', [BackUpController::class,'create'])->name('create');
+        Route::get('/download/{file_name}', [BackUpController::class,'download'])->name('download');
+        Route::delete('/delete/{file_name}', [BackUpController::class,'delete'])->name('delete');
+    });
 // //Enrollment
 //  Route::get('/enrollment', function () {
 //      return view('pages.Enrollment.index');

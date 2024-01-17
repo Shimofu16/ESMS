@@ -946,28 +946,50 @@
                                                     <legend>REQUIREMENTS:</legend>
 
                                                     <div>
-                                                        <input type="checkbox" id="form137" name="scales">
+                                                        
+                                                        <input type="checkbox" id="form137" name="scales" 
+                                                        @if ($student->document->Form137_Document != null)
+                                                        checked disabled
+                                                    @endif
+                                                        >
                                                         <label for="scales">Form 137</label>
                                                     </div>
                                                     <div>
-                                                        <input type="checkbox" id="psa" name="horns">
-                                                        <label for="horns">NSO/PSA</label>
+                                                        <input type="checkbox" id="psa" name="psa"
+                                                        @if ($student->document->JHS_cert_Document != null)
+                                                        checked disabled
+                                                    @endif
+                                                        >
+                                                        <label for="psa">NSO/PSA</label>
                                                     </div>
                                                     <div>
-                                                        <input type="checkbox" id="card" name="horns">
-                                                        <label for="horns">JHS Certification</label>
+                                                        <input type="checkbox" id="card" name="card"
+                                                        @if ($student->document->PSA_Document != null)
+                                                        checked disabled
+                                                    @endif
+                                                        >
+                                                        <label for="card">JHS Certification</label>
                                                     </div>
                                                     <div>
-                                                        <input type="checkbox" id="goodmoral" name="horns">
-                                                        <label for="horns">Cerificate of Good Moral</label>
+                                                        <input type="checkbox" id="goodmoral" name="goodmoral"
+                                                        @if ($student->document->GoodMoral_Document != null)
+                                                        checked disabled
+                                                    @endif
+                                                        >
+                                                        <label for="goodmoral">Cerificate of Good Moral</label>
                                                     </div>
                                                     <div>
-                                                        <input type="checkbox" id="card" name="horns">
+                                                        <input type="checkbox" id="card" name="horns"
+                                                        @if ($student->document->Card_Document != null)
+                                                        checked disabled
+                                                    @endif
+                                                        >
                                                         <label for="horns">CARD</label>
                                                     </div>
                                                     <div>
-                                                        <input type="checkbox" id="vaxxcard" name="horns">
-                                                        <label for="horns">Vaccination Card</label>
+                                                        <input type="checkbox" id="vaxxcard" name="vaxxcard"
+                                                        >
+                                                        <label for="vaxxcard">Vaccination Card</label>
                                                     </div>
                                                 </fieldset>
 

@@ -907,106 +907,108 @@
 
                             <form action="{{ route('document.store', $student->enrollment->student->id) }}"
                                 method="post" enctype="multipart/form-data">
-                                @csrf
-                                @method('POST')
-                                <div class="row mb-5">
-                                    <div class="col-12 p-2 pl-4">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="form-check mt-2">
-                                                    <input class="form-check-input" type="checkbox" value="Submitted"
-                                                        id="flexCheckDefault" name="form137">
-                                                    <label class="form-check-label" for="flexCheckDefault">
-                                                        Form 137
-                                                    </label>
+                                <div class="modal-body">
+                                    @csrf
+                                    @method('POST')
+                                    <div class="row mb-5">
+                                        <div class="col-12 p-2 pl-4">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-check mt-2">
+                                                        <input class="form-check-input" type="checkbox" value="Submitted"
+                                                            id="form137" name="form137">
+                                                        <label class="form-check-label" for="form137">
+                                                            Form 137
+                                                        </label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="file" name="form137file">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 p-2 pl-4">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="form-check mt-2">
-                                                    <input class="form-check-input" type="checkbox" value="Submitted"
-                                                        id="flexCheckChecked" name="JHS_cert">
-                                                    <label class="form-check-label" for="flexCheckChecked">
-                                                        JHS Certification
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="file" name="JHS_certfile">
+                                                <div class="col-6">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="file" name="form137file">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div class="col-12 p-2 pl-4">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="form-check mt-2">
-                                                    <input class="form-check-input" type="checkbox" value="Submitted"
-                                                        id="flexCheckChecked" name="PSA">
-                                                    <label class="form-check-label" for="flexCheckChecked">
-                                                        PSA (Xerox Copy)
-                                                    </label>
+    
+                                        <div class="col-12 p-2 pl-4">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-check mt-2">
+                                                        <input class="form-check-input" type="checkbox" value="Submitted"
+                                                            id="JHS_cert" name="JHS_cert">
+                                                        <label class="form-check-label" for="JHS_cert">
+                                                            JHS Certification
+                                                        </label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="file" name="PSAfile">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 p-2 pl-4">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="form-check mt-2">
-                                                    <input class="form-check-input" type="checkbox" value="Submitted"
-                                                        id="flexCheckChecked" name="goodmoral">
-                                                    <label class="form-check-label" for="flexCheckChecked">
-                                                        Good Moral (Original Copy)
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="file" name="goodmoralfile">
+                                                <div class="col-6">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="file" name="JHS_certfile">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div class="col-12 p-2 pl-4">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="form-check mt-2">
-                                                    <input class="form-check-input" type="checkbox" value="Submitted"
-                                                        id="flexCheckChecked" name="Card">
-                                                    <label class="form-check-label" for="flexCheckChecked">
-                                                        Card
-                                                    </label>
+    
+                                        <div class="col-12 p-2 pl-4">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-check mt-2">
+                                                        <input class="form-check-input" type="checkbox" value="Submitted"
+                                                            id="PSA" name="PSA">
+                                                        <label class="form-check-label" for="PSA">
+                                                            PSA (Xerox Copy)
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="file" name="PSAfile">
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-6">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="file" name="Cardfile">
+                                        </div>
+    
+                                        <div class="col-12 p-2 pl-4">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-check mt-2">
+                                                        <input class="form-check-input" type="checkbox" value="Submitted"
+                                                            id="goodmoral" name="goodmoral">
+                                                        <label class="form-check-label" for="goodmoral">
+                                                            Good Moral (Original Copy)
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="file" name="goodmoralfile">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+    
+                                        <div class="col-12 p-2 pl-4">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-check mt-2">
+                                                        <input class="form-check-input" type="checkbox" value="Submitted"
+                                                            id="Card" name="Card">
+                                                        <label class="form-check-label" for="Card">
+                                                            Card
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="file" name="Cardfile">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="col text-center pt-5">
+                                <div class="modal-footer">
                                     <button type="button" class="btn btn-danger mt-4" data-dismiss="modal">
                                         Cancel</button>
                                     <button type="submit" class="btn btn-primary mt-4 mr-2">Submit</button>
@@ -1032,124 +1034,127 @@
 
                             <form action="{{ route('document.update', $student->id) }}" method="post"
                                 enctype="multipart/form-data">
-                                @csrf
-                                @method('POST')
-                                <div class="row mb-5">
-                                    @if (!empty($student->document->Form137))
-                                    @else
-                                        <div class="col-12 p-2 pl-4">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="form-check mt-2">
-                                                        <input class="form-check-input" type="checkbox" value="Submitted"
-                                                            id="flexCheckDefault" name="form137">
-                                                        <label class="form-check-label" for="flexCheckDefault">
-                                                            Form 137
-                                                        </label>
+                                <div class="modal-body">
+                                    @csrf
+                                    @method('POST')
+                                    <div class="row mb-5">
+                                        @if (!empty($student->document->Form137))
+                                        @else
+                                            <div class="col-12 p-2 pl-4">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="form-check mt-2">
+                                                            <input class="form-check-input" type="checkbox" value="Submitted"
+                                                                id="form137" name="form137">
+                                                            <label class="form-check-label" for="form137">
+                                                                Form 137
+                                                            </label>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="file"
-                                                            name="form137file">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endif
-
-                                    @if (!empty($student->document->JHS_cert))
-                                    @else
-                                        <div class="col-12 p-2 pl-4">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="form-check mt-2">
-                                                        <input class="form-check-input" type="checkbox" value="Submitted"
-                                                            id="flexCheckChecked" name="JHS_cert">
-                                                        <label class="form-check-label" for="flexCheckChecked">
-                                                            JHS Certification
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="file"
-                                                            name="JHS_certfile">
+                                                    <div class="col-6">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="file"
+                                                                name="form137file">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    @endif
-
-                                    @if (!empty($student->document->PSA))
-                                    @else
-                                        <div class="col-12 p-2 pl-4">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="form-check mt-2">
-                                                        <input class="form-check-input" type="checkbox" value="Submitted"
-                                                            id="flexCheckChecked" name="PSA">
-                                                        <label class="form-check-label" for="flexCheckChecked">
-                                                            PSA (Xerox Copy)
-                                                        </label>
+                                        @endif
+    
+                                        @if (!empty($student->document->JHS_cert))
+                                        @else
+                                            <div class="col-12 p-2 pl-4">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="form-check mt-2">
+                                                            <input class="form-check-input" type="checkbox" value="Submitted"
+                                                                id="JHS_cert" name="JHS_cert">
+                                                            <label class="form-check-label" for="JHS_cert">
+                                                                JHS Certification
+                                                            </label>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="file" name="PSAfile">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endif
-
-                                    @if (!empty($student->document->GoodMoral))
-                                    @else
-                                        <div class="col-12 p-2 pl-4">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="form-check mt-2">
-                                                        <input class="form-check-input" type="checkbox" value="Submitted"
-                                                            id="flexCheckChecked" name="goodmoral">
-                                                        <label class="form-check-label" for="flexCheckChecked">
-                                                            Good Moral (Original Copy)
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="file"
-                                                            name="goodmoralfile">
+                                                    <div class="col-6">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="file"
+                                                                name="JHS_certfile">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    @endif
-
-                                    @if (!empty($student->document->Card))
-                                    @else
-                                        <div class="col-12 p-2 pl-4">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="form-check mt-2">
-                                                        <input class="form-check-input" type="checkbox" value="Submitted"
-                                                            id="flexCheckChecked" name="Card">
-                                                        <label class="form-check-label" for="flexCheckChecked">
-                                                            Card
-                                                        </label>
+                                        @endif
+    
+                                        @if (!empty($student->document->PSA))
+                                        @else
+                                            <div class="col-12 p-2 pl-4">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="form-check mt-2">
+                                                            <input class="form-check-input" type="checkbox" value="Submitted"
+                                                                id="PSA" name="PSA">
+                                                            <label class="form-check-label" for="PSA">
+                                                                PSA (Xerox Copy)
+                                                            </label>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="file" name="Cardfile">
+                                                    <div class="col-6">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="file" name="PSAfile">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    @endif
+                                        @endif
+    
+                                        @if (!empty($student->document->GoodMoral))
+                                        @else
+                                            <div class="col-12 p-2 pl-4">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="form-check mt-2">
+                                                            <input class="form-check-input" type="checkbox" value="Submitted"
+                                                                id="goodmoral" name="goodmoral">
+                                                            <label class="form-check-label" for="goodmoral">
+                                                                Good Moral (Original Copy)
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="file"
+                                                                name="goodmoralfile">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+    
+                                        @if (!empty($student->document->Card))
+                                        @else
+                                            <div class="col-12 p-2 pl-4">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="form-check mt-2">
+                                                            <input class="form-check-input" type="checkbox" value="Submitted"
+                                                                id="Card" name="Card">
+                                                            <label class="form-check-label" for="Card">
+                                                                Card
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="file" name="Cardfile">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+    
+                                    </div>
 
                                 </div>
-                                <div class="col text-center pt-5">
+                                <div class="modal-footer">
                                     <button type="button" class="btn btn-danger mt-4" data-dismiss="modal">
                                         Cancel</button>
                                     <button type="submit" class="btn btn-primary mt-4 mr-2">Submit</button>

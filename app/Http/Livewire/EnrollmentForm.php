@@ -121,7 +121,6 @@ class EnrollmentForm extends Component
                     'first_name' => 'required',
                     'middle_name' => 'required',
                     'last_name' => 'required',
-                    'extension_name' => 'required',
                     'civil_status' => 'required',
                     'gender' => 'required',
                     'birth_date' => 'required',

@@ -71,12 +71,17 @@
                                     <td class="text-center">
                                         <button class="btn btn-sm btn-outline-primary" data-toggle="modal"
                                             data-target="#edit{{ $teacher->id }}">
-                                            <i class="fas fa-edit text-primary"></i>
+                                            <i class="fas fa-edit"></i>
                                         </button>
                                         <button class="btn btn-sm btn-outline-danger" data-toggle="modal"
                                             data-target="#delete{{ $teacher->id }}">
-                                            <i class="fas fa-trash text-danger"></i>
+                                            <i class="fas fa-trash"></i>
                                         </button>
+                                        <a class="btn btn-sm btn-outline-info"
+                                            href="{{ route('teacher.show', ['id' => $teacher->id]) }}">
+                                            <i class="fas fa-eye"></i>
+
+                                        </a>
                                     </td>
                                 </tr>
                                 @include('pages.SMS.Teachers.modal._edit')

@@ -62,7 +62,9 @@ class TeacherController extends Controller
      */
     public function show($id)
     {
-        //
+        $teacher = Teacher::find($id);
+        $schedules = $teacher->schedules;
+        return view('pages.SMS.Teachers.show', compact('teacher', 'schedules'));
     }
 
     /**

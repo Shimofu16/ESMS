@@ -1,22 +1,80 @@
 @extends('layout.default')
 
 @section('info')
- <!--begin::Info-->
- <div class="d-flex align-items-center flex-wrap mr-2">
+    <!--begin::Info-->
+    <div class="d-flex align-items-center flex-wrap mr-2">
 
-    <!--begin::Page Title-->
-    <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-      System Maintenance
-    </h5>
-    <!--end::Page Title-->
+        <!--begin::Page Title-->
+        <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+            System Maintenance
+        </h5>
+        <!--end::Page Title-->
 
-</div>
-<!--end::Info-->
+    </div>
+    <!--end::Info-->
 @endsection
 
 {{-- Content --}}
 @section('content')
     <div class="row">
+        
+    </div>
+    <div class="row">
+
+        {{-- Bgein backups Table --}}
+        <div class="col-md-6">
+            <div class="card card-custom">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-icon">
+                            <i class="flaticon2-chat-1 text-primary"></i>
+                        </span>
+                        <h3 class="card-label">
+                            Backups
+                            {{-- <small>sub title</small> --}}
+                        </h3>
+                    </div>
+                    <div class="card-toolbar">
+                        <!-- Button trigger modal-->
+                        <a href="{{ route('backups.create') }}" class="btn btn-primary font-weight-bold btn-sm">
+                            <i class="flaticon2-cube"></i>
+                            Add Backup
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>name</th>
+                                <th>Size</th>
+                                <th>Date Created</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($backups as $backup)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $backup['name'] }}</td>
+                                    <td>{{ $backup['size'] }}</td>
+                                    <td>
+                                        {{ \Carbon\Carbon::parse($backup['created_at'])->format('F d, Y') }}
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('backups.download', $backup['name']) }}">Download</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {{-- End backups Table --}}
+
         {{-- Bgein Tracks Table --}}
         <div class="col-md-6">
             <div class="card card-custom">
@@ -291,10 +349,9 @@
                             </button> --}}
                         @else
                             <button type="button" class="btn btn-primary font-weight-bold btn-sm act_sy_sem-edit"
-                                data-toggle="modal"
-                                data-target="#change_school_year"
+                                data-toggle="modal" data-target="#change_school_year"
                                 data-uid="{{ $active_schoolYear_sems->id }}"
-                                data-sy="{{  $active_schoolYear_sems->schoolyear->id }}"
+                                data-sy="{{ $active_schoolYear_sems->schoolyear->id }}"
                                 data-sem="{{ $active_schoolYear_sems->sem->id }}">
                                 </i>
                                 Update
@@ -479,8 +536,7 @@
                         </div>
                         <div class="form-group">
                             <label>Section Name <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" placeholder="Enter section"
-                                name="section" />
+                            <input type="text" class="form-control" placeholder="Enter section" name="section" />
                         </div>
 
                     </div>
@@ -555,7 +611,8 @@
                         @csrf
                         <div class="form-group">
                             <label>School Year (e.g. 2000-2001) <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" placeholder="Enter School Year" name="school_year" />
+                            <input type="text" class="form-control" placeholder="Enter School Year"
+                                name="school_year" />
                         </div>
                     </div>
                     <div class="modal-footer">

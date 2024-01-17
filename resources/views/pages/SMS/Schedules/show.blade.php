@@ -80,6 +80,7 @@
                                 <tr>
                                     <td>
                                         <h6>{{ $schedule->subject->name }}</h6>
+                                        <span>{{ $schedule->teacher->name }}</span>
                                     </td>
                                     @if ($days->contains('Monday'))
                                         <td class="px-1">
@@ -93,7 +94,13 @@
                                             </div>
                                         </td>
                                     @else
-                                        <td></td>
+                                        <td class="px-1">
+                                            <div class="card border-0">
+                                                <div class="card-body px-1 text-center">
+                                                    &nbsp;
+                                                </div>
+                                            </div>
+                                        </td>
                                     @endif
                                     @if ($days->contains('Tuesday'))
                                         <td class="px-1">
@@ -106,7 +113,13 @@
                                             </div>
                                         </td>
                                     @else
-                                        <td></td>
+                                        <td class="px-1">
+                                            <div class="card border-0">
+                                                <div class="card-body px-1 text-center">
+                                                    &nbsp;
+                                                </div>
+                                            </div>
+                                        </td>
                                     @endif
                                     @if ($days->contains('Wednesday'))
                                         <td class="px-1">
@@ -119,7 +132,13 @@
                                             </div>
                                         </td>
                                     @else
-                                        <td></td>
+                                        <td class="px-1">
+                                            <div class="card border-0">
+                                                <div class="card-body px-1 text-center">
+                                                    &nbsp;
+                                                </div>
+                                            </div>
+                                        </td>
                                     @endif
                                     @if ($days->contains('Thursday'))
                                         <td class="px-1">
@@ -132,7 +151,13 @@
                                             </div>
                                         </td>
                                     @else
-                                        <td></td>
+                                        <td class="px-1">
+                                            <div class="card border-0">
+                                                <div class="card-body px-1 text-center">
+                                                    &nbsp;
+                                                </div>
+                                            </div>
+                                        </td>
                                     @endif
                                     @if ($days->contains('Friday'))
                                         <td class="px-1">
@@ -145,7 +170,13 @@
                                             </div>
                                         </td>
                                     @else
-                                        <td></td>
+                                        <td class="px-1">
+                                            <div class="card border-0">
+                                                <div class="card-body px-1 text-center">
+                                                    &nbsp;
+                                                </div>
+                                            </div>
+                                        </td>
                                     @endif
                                 </tr>
                             @empty
