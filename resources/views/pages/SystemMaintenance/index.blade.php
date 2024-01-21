@@ -17,7 +17,7 @@
 {{-- Content --}}
 @section('content')
     <div class="row">
-        
+
     </div>
     <div class="row">
 
@@ -561,16 +561,18 @@
                         <i aria-hidden="true" class="ki ki-close"></i>
                     </button>
                 </div>
-                <form id="update" method="POST">
+                <form action="{{ route('act_sy_sem.update', $active_schoolYear_sems->id) }}" method="POST">
                     <div class="modal-body">
                         @csrf
                         @method('PUT')
                         <div class="form-group">
                             <label>School Year (e.g. 2000-2001) <span class="text-danger">*</span></label>
-                            <select class="custom-select custom-select-sm" name="schhol_year">
+                            <select class="custom-select custom-select-sm" name="school_year">
                                 <option selected disabled>Choose School Year</option>
                                 @foreach ($schoolYears as $schoolyear)
-                                    <option value="{{ $schoolyear->id }}">{{ $schoolyear->school_year }}
+                                    <option value="{{ $schoolyear->id }}"
+                                        {{ $active_schoolYear_sems->schoolyear->id == $schoolyear->id ? 'selected' : '' }}>
+                                        {{ $schoolyear->school_year }}
                                     </option>
                                 @endforeach
                             </select>
@@ -580,10 +582,15 @@
                             <select class="custom-select custom-select-sm" name="sem">
                                 <option selected disabled>Choose Sem</option>
                                 @foreach ($sems as $sem)
-                                    <option value="{{ $sem->id }}">Semester {{ $sem->sem }}
+                                    <option value="{{ $sem  ->id }}"
+                                        {{ $active_schoolYear_sems->sem->id == $sem->id ? 'selected' : '' }}>
+                                        Semester {{ $sem->sem }}
                                     </option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="alert alert-warning" role="alert">
+                            <strong>IMPORTANT:</strong> Please note that once this action is performed, it <strong>cannot be undone</strong>. Proceed with caution.
                         </div>
                     </div>
                     <div class="modal-footer">

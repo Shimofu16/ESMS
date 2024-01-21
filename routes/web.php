@@ -199,6 +199,7 @@ Route::prefix('subject')
     ->name('subject.')
     ->middleware(['auth', 'permission:Subject Management Permission'])
     ->group(function () {
+        Route::get('/create', [App\Http\Controllers\SMS\SubjectController::class, 'create'])->name('create');
         Route::get('/{grade_level_id}/{specialization_id?}', [App\Http\Controllers\SMS\SubjectController::class, 'index'])->name('index');
         Route::post('/store', [App\Http\Controllers\SMS\SubjectController::class, 'store'])->name('store');
         Route::put('/update/{id}', [App\Http\Controllers\SMS\SubjectController::class, 'update'])->name('update');

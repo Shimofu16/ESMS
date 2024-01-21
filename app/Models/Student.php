@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\SMS\StudentSubject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,9 +24,9 @@ class Student extends Model
         return $this->hasOne(Document::class);
     }
 
-    public function enrollment(){
-        return $this->belongsTo(Student_Specialization_GradeLevel_SchoolYear::class,'enrollment_id','id');
-
+    public function enrollment()
+    {
+        return $this->belongsTo(Student_Specialization_GradeLevel_SchoolYear::class, 'enrollment_id', 'id');
     }
 
     public function billings()
@@ -36,6 +37,10 @@ class Student extends Model
     public function payments()
     {
         return $this->hasMany(Payment::class, 'std_id', 'id');
+    }
+    public function subjects()
+    {
+        return $this->hasMany(StudentSubject::class);
     }
 
     // get full name of student

@@ -724,7 +724,7 @@
             font-weight: 700;
             margin: 30px 400px 0 400px;
             padding: 10px;
-           
+
             background-color: aliceblue;
 
         }
@@ -805,7 +805,8 @@
                                                     fill="#000000" fill-rule="nonzero" opacity="0.3" />
                                                 <rect fill="#000000" opacity="0.3"
                                                     transform="translate(12.000000, 8.000000) rotate(-180.000000) translate(-12.000000, -8.000000) "
-                                                    x="11" y="1" width="2" height="14" rx="1" />
+                                                    x="11" y="1" width="2" height="14"
+                                                    rx="1" />
                                                 <path
                                                     d="M7.70710678,15.7071068 C7.31658249,16.0976311 6.68341751,16.0976311 6.29289322,15.7071068 C5.90236893,15.3165825 5.90236893,14.6834175 6.29289322,14.2928932 L11.2928932,9.29289322 C11.6689749,8.91681153 12.2736364,8.90091039 12.6689647,9.25670585 L17.6689647,13.7567059 C18.0794748,14.1261649 18.1127532,14.7584547 17.7432941,15.1689647 C17.3738351,15.5794748 16.7415453,15.6127532 16.3310353,15.2432941 L12.0362375,11.3779761 L7.70710678,15.7071068 Z"
                                                     fill="#000000" fill-rule="nonzero"
@@ -822,8 +823,8 @@
                                         <div class="header">
                                             <div class="deped-logo-wrapper">
                                                 <div class="deped-logo">
-                                                    <img src="{{ asset('media/capellan/deped.png') }}"
-                                                        alt="deped-logo" style = "width:110px;"  >
+                                                    <img src="{{ asset('media/capellan/deped.png') }}" alt="deped-logo"
+                                                        style="width:110px;">
                                                 </div>
                                             </div>
                                             <div class="header-title">
@@ -837,23 +838,36 @@
                                             <div class="capellan-logo-wrapper">
                                                 <div class="capellan-logo">
                                                     <img src="{{ asset('media/capellan/capellan-logo-ver2.png') }}"
-                                                        alt="capellan-logo"  style = "width:110px;">
+                                                        alt="capellan-logo" style="width:110px;">
                                                 </div>
                                             </div>
                                         </div>
-                                        
-                                        <hr style="margin-top: 70px; margin-bottom:0px;" >
+
+                                        <hr style="margin-top: 70px; margin-bottom:0px;">
                                         <div class="content">
                                             <div class="grade-content">
                                                 <div class="grade-content-left">
-                                                    <p>Grade: <span>{{ $student->enrollment->grade_level->grade_level }} - {{ $student->enrollment->specialization->strand->strand }} ({{ $student->enrollment->specialization->specialization }})</span> </p>
-                                                    <p>Name: <span>{{ $student->enrollment->student->last_name }}, {{ $student->enrollment->student->first_name }} {{ $student->enrollment->student->middle_name }} {{ $student->enrollment->student->extension }}</span></p>
-                                                    <p>Contact Number: <span>{{ $student->enrollment->student->contact_num }}</span></p>
+                                                    <p>Grade:
+                                                        <span>{{ $student->enrollment->grade_level->grade_level }} -
+                                                            {{ $student->enrollment->specialization->strand->strand }}
+                                                            ({{ $student->enrollment->specialization->specialization }})</span>
+                                                    </p>
+                                                    <p>Name: <span>{{ $student->enrollment->student->last_name }},
+                                                            {{ $student->enrollment->student->first_name }}
+                                                            {{ $student->enrollment->student->middle_name }}
+                                                            {{ $student->enrollment->student->extension }}</span></p>
+                                                    <p>Contact Number:
+                                                        <span>{{ $student->enrollment->student->contact_num }}</span>
+                                                    </p>
                                                 </div>
                                                 <div class="grade-content-right">
                                                     <p>LRN: <span>{{ $student->enrollment->student->lrn }}</span></p>
-                                                    <p>Birthdate: <span>{{\Carbon\Carbon::parse($student->enrollment->student->b_date )->format('F d, Y')}}</span></p>
-                                                    <p>Civil Status: <span>{{ $student->enrollment->student->civil_status }}</span></p>
+                                                    <p>Birthdate:
+                                                        <span>{{ \Carbon\Carbon::parse($student->enrollment->student->b_date)->format('F d, Y') }}</span>
+                                                    </p>
+                                                    <p>Civil Status:
+                                                        <span>{{ $student->enrollment->student->civil_status }}</span>
+                                                    </p>
                                                 </div>
                                             </div>
 
@@ -865,43 +879,73 @@
                                                     <p>Sex: <span>{{ $student->enrollment->student->sex }}</span> </p>
                                                 </div>
                                                 <div class="nationality">
-                                                    <p>Nationality: <span>{{ $student->enrollment->student->nationality }}</span></p>
+                                                    <p>Nationality:
+                                                        <span>{{ $student->enrollment->student->nationality }}</span>
+                                                    </p>
                                                 </div>
                                             </div>
 
                                             <div class="address-content">
-                                                <p>Address: <span>{{ $student->enrollment->student->house_num }} {{ $student->enrollment->student->purok }} {{ $student->enrollment->student->brgy }} {{ $student->enrollment->student->municipality }}, {{ $student->enrollment->student->province }}</span></p>
+                                                <p>Address: <span>{{ $student->enrollment->student->house_num }}
+                                                        {{ $student->enrollment->student->purok }}
+                                                        {{ $student->enrollment->student->brgy }}
+                                                        {{ $student->enrollment->student->municipality }},
+                                                        {{ $student->enrollment->student->province }}</span></p>
                                             </div>
 
                                             <div class="parents-info-content">
                                                 <div class="parents-info-content-left">
-                                                    <p>Father's Name: <span>{{ $student->enrollment->student->f_name }}</span></p>
-                                                    <p>Mother's Name: <span>{{ $student->enrollment->student->m_name }}</span></p>
-                                                    <p>Guardian's Name: <span>{{ $student->enrollment->student->g_name }}</span></p>
+                                                    <p>Father's Name:
+                                                        <span>{{ $student->enrollment->student->f_name }}</span>
+                                                    </p>
+                                                    <p>Mother's Name:
+                                                        <span>{{ $student->enrollment->student->m_name }}</span>
+                                                    </p>
+                                                    <p>Guardian's Name:
+                                                        <span>{{ $student->enrollment->student->g_name }}</span>
+                                                    </p>
                                                 </div>
                                                 <div class="parents-info-content-right">
-                                                    <p>Occupation: <span>{{ $student->enrollment->student->f_occu }}</span></p>
-                                                    <p>Occupation: <span>{{ $student->enrollment->student->m_occu }}</span></p>
-                                                    <p>Relationship: <span>{{ $student->enrollment->student->relationship }}</span></p>
+                                                    <p>Occupation:
+                                                        <span>{{ $student->enrollment->student->f_occu }}</span>
+                                                    </p>
+                                                    <p>Occupation:
+                                                        <span>{{ $student->enrollment->student->m_occu }}</span>
+                                                    </p>
+                                                    <p>Relationship:
+                                                        <span>{{ $student->enrollment->student->relationship }}</span>
+                                                    </p>
                                                 </div>
                                             </div>
 
                                             <div class="guardian-address-content">
-                                                <p>Address of Guardian: <span>{{ $student->enrollment->student->g_add }}
-                                                    </span></p>
-                                                <p>Contact Number of Guardian: <span>{{ $student->enrollment->student->g_contact_num }}</span></p>
-                                                <p>School Last Attended: <span>{{ $student->enrollment->student->prev_school }}</span></p>
+                                                <p>Address of Guardian:
+                                                    <span>{{ $student->enrollment->student->g_add }}
+                                                    </span>
+                                                </p>
+                                                <p>Contact Number of Guardian:
+                                                    <span>{{ $student->enrollment->student->g_contact_num }}</span>
+                                                </p>
+                                                <p>School Last Attended:
+                                                    <span>{{ $student->enrollment->student->prev_school }}</span>
+                                                </p>
                                             </div>
 
                                             <div class="yrs-jhs-content">
                                                 <div class="yrs-jhs">
-                                                    <p>No. of Years in JHS: <span>{{ $student->enrollment->student->jhs_yrs }}</span></p>
+                                                    <p>No. of Years in JHS:
+                                                        <span>{{ $student->enrollment->student->jhs_yrs }}</span>
+                                                    </p>
                                                 </div>
                                                 <div class="yr-graduated">
-                                                    <p>Year Graduated: <span>{{ $student->enrollment->student->year_grad }}</span></p>
+                                                    <p>Year Graduated:
+                                                        <span>{{ $student->enrollment->student->year_grad }}</span>
+                                                    </p>
                                                 </div>
                                                 <div class="gen-ave">
-                                                    <p>General Average: <span>{{ $student->enrollment->student->gen_ave }}</span></p>
+                                                    <p>General Average:
+                                                        <span>{{ $student->enrollment->student->gen_ave }}</span>
+                                                    </p>
                                                 </div>
                                             </div>
 
@@ -927,7 +971,8 @@
                                                             <td><span>Intermediate</span></td>
                                                             <td>{{ $student->enrollment->student->intermediate }}
                                                             </td>
-                                                            <td>{{ $student->enrollment->student->intermediate_yr }}</td>
+                                                            <td>{{ $student->enrollment->student->intermediate_yr }}
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td><span>Junior High School</span></td>
@@ -946,49 +991,33 @@
                                                     <legend>REQUIREMENTS:</legend>
 
                                                     <div>
-                                                        
-                                                        <input type="checkbox" id="form137" name="scales" 
-                                                        @if ($student->document->Form137_Document != null)
-                                                        checked disabled
-                                                    @endif
-                                                        >
+
+                                                        <input type="checkbox" id="form137" name="scales"
+                                                            @if (!empty($student->document->Form137_Document)) checked disabled @endif>
                                                         <label for="scales">Form 137</label>
                                                     </div>
                                                     <div>
                                                         <input type="checkbox" id="psa" name="psa"
-                                                        @if ($student->document->JHS_cert_Document != null)
-                                                        checked disabled
-                                                    @endif
-                                                        >
+                                                            @if (!empty($student->document->JHS_cert_Document)) checked disabled @endif>
                                                         <label for="psa">NSO/PSA</label>
                                                     </div>
                                                     <div>
                                                         <input type="checkbox" id="card" name="card"
-                                                        @if ($student->document->PSA_Document != null)
-                                                        checked disabled
-                                                    @endif
-                                                        >
+                                                            @if (!empty($student->document->PSA_Document)) checked disabled @endif>
                                                         <label for="card">JHS Certification</label>
                                                     </div>
                                                     <div>
                                                         <input type="checkbox" id="goodmoral" name="goodmoral"
-                                                        @if ($student->document->GoodMoral_Document != null)
-                                                        checked disabled
-                                                    @endif
-                                                        >
+                                                            @if (!empty($student->document->GoodMoral_Document)) checked disabled @endif>
                                                         <label for="goodmoral">Cerificate of Good Moral</label>
                                                     </div>
                                                     <div>
                                                         <input type="checkbox" id="card" name="horns"
-                                                        @if ($student->document->Card_Document != null)
-                                                        checked disabled
-                                                    @endif
-                                                        >
+                                                            @if (!empty($student->document->Card_Document)) checked disabled @endif>
                                                         <label for="horns">CARD</label>
                                                     </div>
                                                     <div>
-                                                        <input type="checkbox" id="vaxxcard" name="vaxxcard"
-                                                        >
+                                                        <input type="checkbox" id="vaxxcard" name="vaxxcard">
                                                         <label for="vaxxcard">Vaccination Card</label>
                                                     </div>
                                                 </fieldset>

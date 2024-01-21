@@ -54,7 +54,7 @@ class SubjectController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.SMS.Subjects.show');
     }
 
     /**

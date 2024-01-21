@@ -16,7 +16,7 @@ class DropoutController extends Controller
 
         $active = Active_SchoolYearAndSem::first();
         $students = Student::with('enrollment.student')->whereHas('enrollment', function ($query) use($active) {
-            return $query->where('school_year_id', '=', $active->active_SY_id)->where('sem_id','=', $active->active_sem_id);
+            return $query->where('school_year_id', '=', $active->active_SY_id);
         })->where('status', 2)->get();
         
         

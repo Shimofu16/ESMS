@@ -276,7 +276,7 @@ class EnrollmentForm extends Component
                 'specialization_id' => $this->specialization_id,
                 'gradelevel_id' => $this->grade_level_id,
                 'school_year_id' => $school_year->active_SY_id,
-                'sem_id' => $school_year->active_sem_id,
+                'sem_id' => 1,
             ]);
 
             Student::where('id', $student->id)->update([
