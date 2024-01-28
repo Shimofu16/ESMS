@@ -16,9 +16,9 @@ class AlumniController extends Controller
 
         $active = Active_SchoolYearAndSem::first();
         $students = Student::with('enrollment.student')->whereHas('enrollment', function ($query) use($active) {
-            return $query->where('school_year_id', '=', 1)->where('gradelevel_id','=', '2')->where('sem_id','=', '2');
+            return $query->where('school_year_id', '=', $active->active_SY_id )->where('gradelevel_id','=', '2')->where('sem_id','=', '2');
         })->where('status', 3)->get();
-        
+
         return view('pages.Alumni.index',compact('students'));
 
     }

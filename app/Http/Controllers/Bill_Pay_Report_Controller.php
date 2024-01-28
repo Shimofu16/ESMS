@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Activity;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\Billing;
@@ -14,7 +15,7 @@ class Bill_Pay_Report_Controller extends Controller
     public function index(){
 
          $students = Student::with('payments','enrollment')->where('status',1)->get();
-        
+
          return view('pages.Accounting.Report.index' ,compact('students') );
 
     }
@@ -22,7 +23,7 @@ class Bill_Pay_Report_Controller extends Controller
     public function show($id){
 
         $students = Student::findOrFail($id);
-        
+
         $billings = collect(Billing::where('std_id',$id)->get());
         $payments = collect(Payment::where('std_id',$id)->get());
         $memos = collect(Memo::where('student_id',$id)->get());
@@ -48,8 +49,6 @@ class Bill_Pay_Report_Controller extends Controller
 
 
         $balance = $billings_sum - $payments_sum + $memo_credit_sum - $memo_debit_sum;
-
-
 
         return view('pages.Accounting.Report.show' ,compact('students','bills_pays','balance') );
 

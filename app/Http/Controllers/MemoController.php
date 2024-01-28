@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Activity;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\Memo;
@@ -23,7 +24,7 @@ class MemoController extends Controller
     }
 
     public function store(Request $request){
-       
+
         Memo::create([
             'student_id' => $request->std_id,
             'memo_particulars' => $request->memo_particulars . ' (memo)',
@@ -31,7 +32,7 @@ class MemoController extends Controller
             'memo_date' => $request->memo_date,
             'memo_type' => $request->memo_type,
         ]);
-
+        Activity::log(auth()->user()->id, 'Memo Management', 'Added Memo '. $request->memo_particulars);
        return redirect()->route('memo.show', $request->std_id);
     }
 }

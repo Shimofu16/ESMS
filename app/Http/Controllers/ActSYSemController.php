@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Activity;
 use Illuminate\Http\Request;
 use App\Models\Active_SchoolYearAndSem;
 use App\Models\Student;
@@ -22,13 +23,14 @@ class ActSYSemController extends Controller
                         })
                         ->get();
                     if ($students) {
-    
+
                         foreach ($students as $key => $student) {
                             $student->enrollment->update([
                                 'sem_id' => 2,
                             ]);
                         }
                     }
+                    Activity::log(auth()->user()->id, 'Active School Year Management', 'Update Semester to 2nd sem');
                 }
             }else if ($request->school_year > $active->active_SY_id) {
                 $students = Student::with('enrollment')
@@ -49,6 +51,7 @@ class ActSYSemController extends Controller
             $sem_id = $request->sem;
             if ($request->school_year > $active->active_SY_id) {
                 $sem_id = 1;
+                Activity::log(auth()->user()->id, 'Active School Year Management', 'Update SY to '. $request->$request->school_year. ' and Semester to 1st sem');
             }
 
             $active->active_SY_id = $request->school_year;

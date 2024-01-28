@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Activity;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use Carbon\Carbon;
@@ -19,18 +20,18 @@ class GraduateController extends Controller
 
     public function store(Request $request){
         $std_id = $request->student_id;
-
+$count =count($request->student_id);
         for($i = 0; $i<count($std_id); $i++)
         {
              Student::findorfail($std_id[$i])->update([
                 'status' => 3,
                 'shs_yr_graduated' =>  $date = Carbon::now()->format('Y'),
 
-               
-             ]);
-             
-        }
 
+             ]);
+
+        }
+        Activity::log(auth()->user()->id, 'Graduate Management', 'Added '. $count. ' Graduates');
         return redirect()->route('graduate.create')->with('success', 'Successfull!');
     }
 }

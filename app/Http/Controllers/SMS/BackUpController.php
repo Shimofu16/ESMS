@@ -27,18 +27,19 @@ class BackUpController extends Controller
      */
     public function create()
     {
-        $file_name = 'ESMS-CIT-DB-BACKUP-' . Carbon::now()->format('Y-m-d') . '.zip';
-        $command = 'backup:run';
-        $arguments = ['--only-db' => true, '--filename' => $file_name];
-
-        //check if there is a backup already created
-        if (Storage::disk('public')->exists('CIT/' . $file_name)) {
-            return redirect()->back()->with('error', 'Backup already created');
+        try {
+            $file_name = 'ESMS-CIT-BACKUP-' . Carbon::now()->format('Y-m-d') . '.zip';
+            $command = 'backup:run';
+            $arguments = ['--filename' => $file_name];
+            //check if there is a backup already created
+            if (Storage::disk('backup')->exists('CIT/' . $file_name)) {
+                return redirect()->back()->with('error', 'Backup already created');
+            }
+            Artisan::call($command, $arguments);
+            return redirect()->back()->with('success', 'Backup created successfully');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', $th->getMessage());
         }
-
-        Artisan::call($command, $arguments);
-
-        return redirect()->back()->with('success', 'Backup created successfully');
     }
 
     /**

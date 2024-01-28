@@ -33,11 +33,6 @@ class SystemMaintenanceController extends Controller
     private function getBackups(){
         $path = 'CIT';
         $files = collect(Storage::disk('backup')->allFiles($path));
-
-        //check if there is a backup already created
-        if (Storage::disk('backup')->exists('')) {
-            return redirect()->back()->with('error', 'Backup already created');
-        }
         $backups = $files->map(function ($file) use ($path) {
             return [
                 'name' => basename($file),

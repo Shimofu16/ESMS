@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Activity;
 use Illuminate\Http\Request;
 use App\Models\Section;
 use App\Models\Student;
@@ -34,7 +35,7 @@ class SectionController extends Controller
             'gradelevel_id' => $request->gradelevel,
             'specialization_id' => $request->specialization,
         ]);
-
+        Activity::log(auth()->user()->id, 'Section Management', 'Added section ' . $request->section . ' to Grade Level 1' . $request->gradelevel);
         return redirect()->route('sys_main.index');
     }
 
