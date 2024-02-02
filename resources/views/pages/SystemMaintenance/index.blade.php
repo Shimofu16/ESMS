@@ -18,9 +18,6 @@
 @section('content')
     <div class="row">
 
-    </div>
-    <div class="row">
-
         {{-- Bgein backups Table --}}
         <div class="col-md-6">
             <div class="card card-custom">
@@ -36,10 +33,10 @@
                     </div>
                     <div class="card-toolbar">
                         <!-- Button trigger modal-->
-                        <a href="{{ route('backups.create') }}" class="btn btn-primary font-weight-bold btn-sm">
+                        {{-- <a href="{{ route('backups.create') }}" class="btn btn-primary font-weight-bold btn-sm">
                             <i class="flaticon2-cube"></i>
                             Add Backup
-                        </a>
+                        </a> --}}
                     </div>
                 </div>
                 <div class="card-body">
@@ -73,56 +70,8 @@
                 </div>
             </div>
         </div>
+
         {{-- End backups Table --}}
-
-        {{-- Bgein Tracks Table --}}
-        <div class="col-md-6">
-            <div class="card card-custom">
-                <div class="card-header">
-                    <div class="card-title">
-                        <span class="card-icon">
-                            <i class="flaticon2-chat-1 text-primary"></i>
-                        </span>
-                        <h3 class="card-label">
-                            Tracks
-                            {{-- <small>sub title</small> --}}
-                        </h3>
-                    </div>
-                    <div class="card-toolbar">
-                        <!-- Button trigger modal-->
-                        <button type="button" class="btn btn-primary font-weight-bold btn-sm" data-toggle="modal"
-                            data-target="#track"><i class="flaticon2-cube"></i>
-                            Add Track
-                        </button>
-                    </div>
-                </div>
-                <div class="card-body">
-
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Track Name</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($tracks as $track)
-                                <tr>
-                                    <td>{{ $track->id }}</td>
-                                    <td>{{ $track->track }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-                <div class="card-footer d-flex justify-content-between">
-                    {{-- <a href="#" class="btn btn-light-primary font-weight-bold">Manage</a>
-                            <a href="#" class="btn btn-outline-secondary font-weight-bold">Learn more</a> --}}
-                </div>
-            </div>
-        </div>
-        {{-- End Tracks Table --}}
-
 
         {{-- Bgein Strand Table --}}
         <div class="col-md-6">
@@ -173,7 +122,8 @@
         </div>
         {{-- End Strand Table --}}
 
-
+    </div>
+    <div class="row">
         {{-- Bgein Specialization Table --}}
         <div class="col-md-6">
             <div class="card card-custom mt-7">
@@ -218,7 +168,7 @@
                 </div>
                 <div class="card-footer d-flex justify-content-between">
                     {{-- <a href="#" class="btn btn-light-primary font-weight-bold">Manage</a>
-                            <a href="#" class="btn btn-outline-secondary font-weight-bold">Learn more</a> --}}
+                        <a href="#" class="btn btn-outline-secondary font-weight-bold">Learn more</a> --}}
                 </div>
             </div>
         </div>
@@ -276,12 +226,14 @@
                 </div>
                 <div class="card-footer d-flex justify-content-between">
                     {{-- <a href="#" class="btn btn-light-primary font-weight-bold">Manage</a>
-                            <a href="#" class="btn btn-outline-secondary font-weight-bold">Learn more</a> --}}
+                        <a href="#" class="btn btn-outline-secondary font-weight-bold">Learn more</a> --}}
                 </div>
             </div>
         </div>
         {{-- End Specialization Table --}}
 
+    </div>
+    <div class="row">
         {{-- Bgein SchoolYear Table --}}
         <div class="col-md-6">
             <div class="card card-custom mt-7">
@@ -344,9 +296,9 @@
                         <!-- Button trigger modal-->
                         @if ($active_schoolYear_sems == null)
                             {{-- <button type="button" class="btn btn-primary font-weight-bold btn-sm" data-toggle="modal"
-                                data-target="#school_year"><i class="flaticon2-cube"></i>
-                                Add School Year
-                            </button> --}}
+                            data-target="#school_year"><i class="flaticon2-cube"></i>
+                            Add School Year
+                        </button> --}}
                         @else
                             <button type="button" class="btn btn-primary font-weight-bold btn-sm act_sy_sem-edit"
                                 data-toggle="modal" data-target="#change_school_year"
@@ -380,8 +332,9 @@
 
             </div>
         </div>
-        {{-- End SchoolYearTable --}}
+
     </div>
+    {{-- End SchoolYearTable --}}
 
     <!-- Track Modal-->
     <div class="modal fade" id="track" data-backdrop="static" tabindex="-1" role="dialog"
@@ -582,7 +535,7 @@
                             <select class="custom-select custom-select-sm" name="sem">
                                 <option selected disabled>Choose Sem</option>
                                 @foreach ($sems as $sem)
-                                    <option value="{{ $sem  ->id }}"
+                                    <option value="{{ $sem->id }}"
                                         {{ $active_schoolYear_sems->sem->id == $sem->id ? 'selected' : '' }}>
                                         Semester {{ $sem->sem }}
                                     </option>
@@ -590,7 +543,8 @@
                             </select>
                         </div>
                         <div class="alert alert-warning" role="alert">
-                            <strong>IMPORTANT:</strong> Please note that once this action is performed, it <strong>cannot be undone</strong>. Proceed with caution.
+                            <strong>IMPORTANT:</strong> Please note that once this action is performed, it <strong>cannot be
+                                undone</strong>. Proceed with caution.
                         </div>
                     </div>
                     <div class="modal-footer">
