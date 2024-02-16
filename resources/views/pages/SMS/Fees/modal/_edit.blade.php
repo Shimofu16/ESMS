@@ -34,6 +34,9 @@
                             <label for="type" class="form-label fw-bold text-black">Type</label>
                             <select name="type" id="type" class="form-control">
                                 <option value="">Select type</option>
+                                <option value="">Select type</option>
+<option value="tuition" @if ($fee->type == 'tuition') selected @endif>
+                                    Tuition</option>
                                 <option value="registration" @if ($fee->type == 'registration') selected @endif>
                                     Registration</option>
                                 <option value="miscellaneous" @if ($fee->type == 'miscellaneous') selected @endif>
