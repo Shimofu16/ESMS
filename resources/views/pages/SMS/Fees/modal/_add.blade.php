@@ -33,13 +33,15 @@
                             <label for="type" class="form-label fw-bold text-black">Type</label>
                             <select name="type" id="type" class="form-control">
                                 <option value="">Select type</option>
+<option value="tuition" @if (old('type') == 'tuition') selected @endif>
+                                    Tuition</option>
                                 <option value="registration" @if (old('type') == 'registration') selected @endif>
                                     Registration</option>
                                 <option value="miscellaneous" @if (old('type') == 'miscellaneous') selected @endif>
                                     Miscellaneous</option>
                                 <option value="activity" @if (old('type') == 'activity') selected @endif>Activity
                                 </option>
-                                <option value="other" @if (old('type') == 'other') selected @endif>Activity
+                                <option value="other" @if (old('type') == 'other') selected @endif>Other
                                 </option>
                             </select>
                             @error('type')
