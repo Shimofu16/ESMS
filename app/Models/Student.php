@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\SMS\PaymentTransaction;
 use App\Models\SMS\StudentSubject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -41,6 +42,10 @@ class Student extends Model
     public function subjects()
     {
         return $this->hasMany(StudentSubject::class);
+    }
+    public function transactions()
+    {
+        return $this->hasMany(PaymentTransaction::class);
     }
 
     // get full name of student

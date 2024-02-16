@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBillingsTable extends Migration
+class CreateFeesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateBillingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('billings', function (Blueprint $table) {
+        Schema::create('fees', function (Blueprint $table) {
             $table->id();
-            $table->string('std_id');
-            $table->string('billing_particulars');
-            $table->string('billing_amt');
-            $table->string('billing_date');
+            $table->text('name');
+            $table->text('description');
+            $table->enum('type', ['registration', 'miscellaneous', 'activity', 'other']);
+            $table->double('amount');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateBillingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('billings');
+        Schema::dropIfExists('fees');
     }
 }

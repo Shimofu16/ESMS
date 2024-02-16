@@ -20,6 +20,7 @@ class CreateStudentSubjectsTable extends Migration
             $table->unsignedBigInteger('semester_id');
             $table->unsignedBigInteger('sy_id');
             $table->string('status')->nullable();
+            $table->string('grade')->nullable();
 
             // Define foreign key constraints
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');

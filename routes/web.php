@@ -194,6 +194,24 @@ Route::group(['prefix' => 'change-pass', 'middleware' => 'auth'], function () {
     Route::post('/update', [App\Http\Controllers\ChangePassController::class, 'update'])->name('changePass.update');
 });
 
+// Fees
+Route::prefix('fee')
+    ->name('fee.')
+    ->middleware(['auth', 'permission:Accounting Permission'])
+    ->group(function () {
+        Route::get('/', [App\Http\Controllers\SMS\FeeController::class, 'index'])->name('index');
+        Route::post('/store', [App\Http\Controllers\SMS\FeeController::class, 'store'])->name('store');
+        Route::put('/update/{id}', [App\Http\Controllers\SMS\FeeController::class, 'update'])->name('update');
+        Route::delete('/destroy/{id}', [App\Http\Controllers\SMS\FeeController::class, 'destroy'])->name('destroy');
+    });
+// Fees
+Route::prefix('transaction')
+    ->name('transaction.')
+    ->middleware(['auth', 'permission:Accounting Permission'])
+    ->group(function () {
+        Route::get('/', [App\Http\Controllers\SMS\PaymentTransaction::class, 'index'])->name('index');
+        Route::post('/store', [App\Http\Controllers\SMS\PaymentTransaction::class, 'store'])->name('store');
+    });
 // Subjects
 Route::prefix('subject')
     ->name('subject.')

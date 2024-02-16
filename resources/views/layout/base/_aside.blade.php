@@ -201,26 +201,26 @@
                             <ul class="menu-subnav">
 
                                 <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                    <a href="{{ route('billing.index') }}" class="menu-link menu-toggle">
+                                    <a href="{{ route('fee.index') }}" class="menu-link menu-toggle">
                                         <i class="menu-bullet menu-bullet-line">
                                             <span></span>
                                         </i>
-                                        <span class="menu-text">Billing</span>
+                                        <span class="menu-text">Fees</span>
                                     </a>
 
                                 </li>
                                 <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                    <a href="{{ route('payment.index') }}" class="menu-link menu-toggle">
+                                    <a href="{{ route('transaction.index') }}" class="menu-link menu-toggle">
                                         <i class="menu-bullet menu-bullet-line">
                                             <span></span>
                                         </i>
-                                        <span class="menu-text">Payment</span>
+                                        <span class="menu-text">Payment Transactions</span>
 
                                     </a>
 
                                 </li>
 
-                                <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                {{-- <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                     <a href="{{ route('acc_report.index') }}" class="menu-link menu-toggle">
                                         <i class="menu-bullet menu-bullet-line">
                                             <span></span>
@@ -239,7 +239,7 @@
 
                                     </a>
 
-                                </li>
+                                </li> --}}
 
 
 
