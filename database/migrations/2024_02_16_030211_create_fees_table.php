@@ -17,7 +17,7 @@ class CreateFeesTable extends Migration
             $table->id();
             $table->text('name');
             $table->text('description');
-            $table->enum('type', ['registration', 'miscellaneous', 'activity', 'other']);
+            $table->enum('type', ['tuition', 'registration', 'miscellaneous', 'activity', 'other']);
             $table->double('amount');
             $table->timestamps();
         });
