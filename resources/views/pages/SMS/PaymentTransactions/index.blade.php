@@ -30,19 +30,16 @@
                             <i class="flaticon2-chat-1 text-primary"></i>
                         </span>
                         <h3 class="card-label">
-                            Payment Transactions - SY:
+                            Payment Transactions - SY: {{ $active_school_year }}
                         </h3>
-                        <small>Below are the Payment Transactions for SY: </small>
+                        <small>Below are the Payment Transactions for SY: {{ $active_school_year }} </small>
                     </div>
                     <div class="card-toolbar">
                         <!-- Button trigger modal-->
-                        <button type="button" class="btn btn-primary font-weight-bold btn-sm mr-1" data-toggle="modal"
-                            data-target="#add">
+                        <a href="{{ route('transaction.create') }}" class="btn btn-primary font-weight-bold btn-sm mr-1">
                             <i class="flaticon2-cube"></i>
                             Add transaction
-                        </button>
-                        @include('pages.SMS.PaymentTransactions.modal._add')
-
+                        </a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -50,22 +47,37 @@
                         <thead>
                             <tr>
                                 <th scope="col">Student</th>
-                                <th scope="col">Mode of payment</th>
+                                {{-- <th scope="col">Mode of payment</th> --}}
                                 <th scope="col">Total Amount</th>
                                 <th scope="col">Payment</th>
-                                <th scope="col" class="text-center">Action</th>
+                                <th scope="col">Change</th>
+                                <th scope="col">Fees</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($transactions as $transaction)
                                 <tr>
                                     <td>{{ $transaction->student->full_name }}</td>
-                                    <td>{{ $transaction->mode_of_payment }}</td>
+                                    {{-- <td>{{ $transaction->mode_of_payment }}</td> --}}
                                     <td>PHP {{ number_format($transaction->total_amount, 2) }}</td>
                                     <td>PHP {{ number_format($transaction->amount, 2) }}</td>
+                                    <td>
+                                        @if ($transaction->amount > $transaction->total_amount)
+                                            {{ number_format($transaction->amount - $transaction->total_amount, 2) }}
+                                        @else
+                                            {{ 0 }}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-outline-info btn-sm" data-toggle="modal"
+                                        data-target="#fees{{ $transaction->id }}">
+                                        <i class="fas fa-eye text-info"></i>
+                                    </button>
+                                    @include('pages.SMS.PaymentTransactions.modal._fees')
+                                    </td>
                             @endforeach
                         </tbody>
-                      
+
 
 
                     </table>

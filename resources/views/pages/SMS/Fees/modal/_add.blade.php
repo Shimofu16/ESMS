@@ -12,7 +12,7 @@
                         <div class="col-12">
                             <label for="name" class="form-label fw-bold text-black">Name</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                value="{{ old('name') }}">
+                                value="{{ old('name') }}" required>
                             @error('name')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -21,7 +21,7 @@
                     <div class="row mb-3">
                         <div class="col-12">
                             <label for="description" class="form-label fw-bold text-black">Description</label>
-                            <textarea class="form-control" id="description" name="description" cols="30" rows="10"></textarea>
+                            <textarea class="form-control" id="description" name="description" cols="30" rows="10" required></textarea>
                             @error('description')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -31,9 +31,9 @@
                     <div class="row mb-3">
                         <div class="col-12">
                             <label for="type" class="form-label fw-bold text-black">Type</label>
-                            <select name="type" id="type" class="form-control">
+                            <select name="type" id="type" class="form-control" required>
                                 <option value="">Select type</option>
-<option value="tuition" @if (old('type') == 'tuition') selected @endif>
+                                <option value="tuition" @if (old('type') == 'tuition') selected @endif>
                                     Tuition</option>
                                 <option value="registration" @if (old('type') == 'registration') selected @endif>
                                     Registration</option>
@@ -54,7 +54,7 @@
                         <div class="col-12">
                             <label for="amount" class="form-label fw-bold text-black">Amount</label>
                             <input type="number" class="form-control" id="amount" name="amount"
-                                value="{{ old('amount') }}">
+                                value="{{ old('amount') }}" required>
                             @error('amount')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror

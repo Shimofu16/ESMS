@@ -209,7 +209,8 @@ Route::prefix('transaction')
     ->name('transaction.')
     ->middleware(['auth', 'permission:Accounting Permission'])
     ->group(function () {
-        Route::get('/', [App\Http\Controllers\SMS\PaymentTransaction::class, 'index'])->name('index');
+        Route::get('/create', [App\Http\Controllers\SMS\PaymentTransaction::class, 'create'])->name('create');
+        Route::get('/{id?}', [App\Http\Controllers\SMS\PaymentTransaction::class, 'index'])->name('index');
         Route::post('/store', [App\Http\Controllers\SMS\PaymentTransaction::class, 'store'])->name('store');
     });
 // Subjects

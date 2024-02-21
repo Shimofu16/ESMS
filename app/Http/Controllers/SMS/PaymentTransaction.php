@@ -16,15 +16,15 @@ class PaymentTransaction extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($school_year = null)
     {
-        $active = Active_SchoolYearAndSem::find(1);
+        $active_school_year = Active_SchoolYearAndSem::find(1)->schoolYear->school_year;
         $transactions = SMSPaymentTransaction::all();
 
         $students = Student::all();
         $fees = Fee::all();
 
-        return view('pages.SMS.PaymentTransactions.index', compact('transactions', 'students', 'fees'));
+        return view('pages.SMS.PaymentTransactions.index', compact('transactions', 'students', 'fees', 'active_school_year'));
     }
 
     /**
@@ -34,7 +34,8 @@ class PaymentTransaction extends Controller
      */
     public function create()
     {
-        //
+        $students = Student::all();
+        return view('pages.SMS.PaymentTransactions.create', compact('students'));
     }
 
     /**

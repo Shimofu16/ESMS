@@ -23,4 +23,8 @@ class PaymentTransaction extends Model
     {
         return $this->belongsTo(Student::class);
     }
+    public function fees()
+    {
+        return $this->hasMany(TransactionFee::class, 'transaction_id');
+    }
 }

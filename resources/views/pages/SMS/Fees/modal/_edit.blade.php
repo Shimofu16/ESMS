@@ -13,16 +13,16 @@
                         <div class="col-12">
                             <label for="name" class="form-label fw-bold text-black">Name</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                value="{{ $fee->name }}">
+                                value="{{ $fee->name }}" required>
                             @error('name')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
-                    <div class="row mb-3">
+                    <div class="row mb-3" >
                         <div class="col-12">
                             <label for="description" class="form-label fw-bold text-black">Description</label>
-                            <textarea class="form-control" id="description" name="description" cols="30" rows="10">{{ $fee->description }}</textarea>
+                            <textarea class="form-control" id="description" name="description" cols="30" rows="10" required>{{ $fee->description }}</textarea>
                             @error('description')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -32,10 +32,9 @@
                     <div class="row mb-3">
                         <div class="col-12">
                             <label for="type" class="form-label fw-bold text-black">Type</label>
-                            <select name="type" id="type" class="form-control">
+                            <select name="type" id="type" class="form-control" required>
                                 <option value="">Select type</option>
-                                <option value="">Select type</option>
-<option value="tuition" @if ($fee->type == 'tuition') selected @endif>
+                                <option value="tuition" @if ($fee->type == 'tuition') selected @endif>
                                     Tuition</option>
                                 <option value="registration" @if ($fee->type == 'registration') selected @endif>
                                     Registration</option>
@@ -43,7 +42,7 @@
                                     Miscellaneous</option>
                                 <option value="activity" @if ($fee->type == 'activity') selected @endif>Activity
                                 </option>
-                                <option value="other" @if ($fee->type == 'other') selected @endif>Activity
+                                <option value="other" @if ($fee->type == 'other') selected @endif>Other
                                 </option>
                             </select>
                             @error('type')
@@ -56,7 +55,7 @@
                         <div class="col-12">
                             <label for="amount" class="form-label fw-bold text-black">Amount</label>
                             <input type="number" class="form-control" id="amount" name="amount"
-                                value="{{ $fee->amount }}">
+                                value="{{ $fee->amount }}" required>
                             @error('amount')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
