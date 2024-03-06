@@ -69,13 +69,11 @@ class Add extends Component
     private function checkIfHasSchedule(int $semesterId, int $sectionId, string $startTime, string $endTime, $days): bool
     {
         $schedule = Schedule::with('subject', 'teacher', 'section')
-            ->whereHas('subject', function ($query) use ($semesterId) {
-                $query->where('semester_id', $semesterId);
-            })
             ->where(function ($query) use ($startTime, $endTime) {
                 $query->where('start_time', '<', $endTime)
                     ->where('end_time', '>', $startTime);
             })
+            ->where('semester_id', $semesterId)
             ->where('section_id', $sectionId)
             ->first();
 
@@ -109,10 +107,13 @@ class Add extends Component
             if ($hasSchedule) {
                 return redirect(request()->header('Referer'))->with('toast_error', 'Schedule already exists.');
             }
+            $setting = getCurrentSettings();
             Schedule::create([
                 'teacher_id' => $this->teacher_id,
                 'subject_id' => $this->subject_id,
                 'section_id' => $this->section_id,
+                'school_year_id' => $setting->school_year_id,
+                'semester_id' => $this->semester_id,
                 'days' => $this->days,
                 'start_time' => $this->start_time,
                 'end_time' => $this->end_time,

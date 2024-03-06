@@ -18,8 +18,6 @@ class CreatePaymentTransactionsTable extends Migration
             $table->foreignId('student_id')->constrained('students', 'id');
             $table->foreignId('school_year_id')->constrained('school_years', 'id');
             $table->text('mode_of_payment');
-            $table->double('total_amount');
-            $table->double('amount');
             $table->enum('status',['pending', 'paid'])->default('pending');
             $table->timestamps();
         });

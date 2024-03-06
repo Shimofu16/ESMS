@@ -126,64 +126,218 @@ class DatabaseSeeder extends Seeder
         // Reset cached roles and permissions
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // create permissions
-        Permission::create(['name' => 'Dashboard Permission']);
-        Permission::create(['name' => 'Enrollment Permission']);
-        Permission::create(['name' => 'Student Records Permission']);
-        Permission::create(['name' => 'Accounting Permission']);
-        Permission::create(['name' => 'Reports Permission']);
-        Permission::create(['name' => 'Section Permission']);
-        Permission::create(['name' => 'Add Graduates Permission']);
-        Permission::create(['name' => 'System Maintenance Permission']);
-        Permission::create(['name' => 'Register User Permission']);
-        Permission::create(['name' => 'Subject Management Permission']);
-        Permission::create(['name' => 'Schedule Management Permission']);
-        Permission::create(['name' => 'View Teacher Schedule Permission']);
-        Permission::create(['name' => 'Teacher Management Permission']);
-        Permission::create(['name' => 'User Management Permission']);
+        $permissions = [
+            [
+                'name' => toSlug('View Dashboard'),
+            ],
+            [
+                'name' => toSlug('Manage Enrollments'),
+            ],
+            [
+                'name' => toSlug('Manage Students'),
+            ],
+            [
+                'name' => toSlug('Edit Student'),
+            ],
+            [
+                'name' => toSlug('Accept Student'),
+            ],
+            [
+                'name' => toSlug('Drop Student'),
+            ],
+            [
+                'name' => toSlug('Manage Alumni'),
+            ],
+            [
+                'name' => toSlug('Add Alumni'),
+            ],
+            [
+                'name' => toSlug('Manage Dropouts'),
+            ],
+            [
+                'name' => toSlug('Manage Accounting'),
+            ],
+            [
+                'name' => toSlug('Manage Fees'),
+            ],
+            [
+                'name' => toSlug('Add Fee'),
+            ],
+            [
+                'name' => toSlug('Edit Fee'),
+            ],
+            [
+                'name' => toSlug('Delete Fee'),
+            ],
+            [
+                'name' => toSlug('Manage Sections'),
+            ],
+            [
+                'name' => toSlug('Add Section'),
+            ],
+            [
+                'name' => toSlug('Edit Section'),
+            ],
+            [
+                'name' => toSlug('Delete Section'),
+            ],
+            [
+                'name' => toSlug('Manage Subjects'),
+            ],
+            [
+                'name' => toSlug('Add Subject'),
+            ],
+            [
+                'name' => toSlug('Edit Subject'),
+            ],
+            [
+                'name' => toSlug('Delete Subject'),
+            ],
+            [
+                'name' => toSlug('Manage Schedules'),
+            ],
+            [
+                'name' => toSlug('Add Schedule'),
+            ],
+            [
+                'name' => toSlug('Edit Schedule'),
+            ],
+            [
+                'name' => toSlug('Delete Schedule'),
+            ],
+            [
+                'name' => toSlug('Manage Teachers'),
+            ],
+            [
+                'name' => toSlug('Add Teacher'),
+            ],
+            [
+                'name' => toSlug('Edit Teacher'),
+            ],
+            [
+                'name' => toSlug('Delete Teacher'),
+            ],
+            [
+                'name' => toSlug('Manage Users'),
+            ],
+            [
+                'name' => toSlug('Add User'),
+            ],
+            [
+                'name' => toSlug('Edit User'),
+            ],
+            [
+                'name' => toSlug('Delete User'),
+            ],
+            [
+                'name' => toSlug('Manage Transactions'),
+            ],
+            [
+                'name' => toSlug('Add Transaction'),
+            ],
+            [
+                'name' => toSlug('Manage Reports'),
+            ],
+            [
+                'name' => toSlug('Manage Graduates'),
+            ],
+            [
+                'name' => toSlug('Manage System Maintenance'),
+            ],
+        ];
+
+
+        foreach ($permissions as $permission) {
+            Permission::create($permission);
+        }
+
+
 
 
         // create roles and assign existing permissions
         $roleRegistrar = Role::create(['name' => 'Registrar']);
-        $roleRegistrar->givePermissionTo('Dashboard Permission');
-        $roleRegistrar->givePermissionTo('Enrollment Permission');
-        $roleRegistrar->givePermissionTo('Student Records Permission');
-        $roleRegistrar->givePermissionTo('Section Permission');
-        $roleRegistrar->givePermissionTo('Add Graduates Permission');
-        $roleRegistrar->givePermissionTo('Reports Permission');
-        $roleRegistrar->givePermissionTo('System Maintenance Permission');
+        $roleRegistrar->givePermissionTo(toSlug('View Dashboard'));
+        $roleRegistrar->givePermissionTo(toSlug('Manage Enrollments'));
+        $roleRegistrar->givePermissionTo(toSlug('Manage Alumni'));
+        $roleRegistrar->givePermissionTo(toSlug('Add Alumni'));
+        $roleRegistrar->givePermissionTo(toSlug('Manage dropouts'));
+        $roleRegistrar->givePermissionTo(toSlug('Manage Students'));
+        $roleRegistrar->givePermissionTo(toSlug('Edit Student'));
+        $roleRegistrar->givePermissionTo(toSlug('Accept Student'));
+        $roleRegistrar->givePermissionTo(toSlug('Drop Student'));
+        $roleRegistrar->givePermissionTo(toSlug('Manage Sections'));
+        $roleRegistrar->givePermissionTo(toSlug('Add Section'));
+        $roleRegistrar->givePermissionTo(toSlug('Edit Section'));
+        $roleRegistrar->givePermissionTo(toSlug('Delete Section'));
+        $roleRegistrar->givePermissionTo(toSlug('Manage Subjects'));
+        $roleRegistrar->givePermissionTo(toSlug('Add Subject'));
+        $roleRegistrar->givePermissionTo(toSlug('Edit Subject'));
+        $roleRegistrar->givePermissionTo(toSlug('Delete Subject'));
+        $roleRegistrar->givePermissionTo(toSlug('Manage Schedules'));
+        $roleRegistrar->givePermissionTo(toSlug('Add Schedule'));
+        $roleRegistrar->givePermissionTo(toSlug('Edit Schedule'));
+        $roleRegistrar->givePermissionTo(toSlug('Delete Schedule'));
+        $roleRegistrar->givePermissionTo(toSlug('Manage Graduates'));
+        $roleRegistrar->givePermissionTo(toSlug('Manage Reports'));
+        $roleRegistrar->givePermissionTo(toSlug('Manage System Maintenance'));
 
-        $roleRegistrar->givePermissionTo('Subject Management Permission');
-        $roleRegistrar->givePermissionTo('Schedule Management Permission');
 
 
         $roleAccounting = Role::create(['name' => 'Accounting']);
-        $roleAccounting->givePermissionTo('Dashboard Permission');
-        $roleAccounting->givePermissionTo('Accounting Permission');
+        $roleAccounting->givePermissionTo(toSlug('View Dashboard'));
+        $roleAccounting->givePermissionTo(toSlug('Manage Accounting'));
+        $roleAccounting->givePermissionTo(toSlug('Manage Fees'));
+        $roleAccounting->givePermissionTo(toSlug('Manage Transactions'));
+        $roleAccounting->givePermissionTo(toSlug('Add Transaction'));
 
 
         $roleTeacher = Role::create(['name' => 'Teacher']);
-        $roleTeacher->givePermissionTo('Dashboard Permission');
-        $roleTeacher->givePermissionTo('Student Records Permission');
+        $roleTeacher->givePermissionTo(toSlug('View Dashboard'));
+        $roleTeacher->givePermissionTo(toSlug('Manage Students'));
+        $roleTeacher->givePermissionTo(toSlug('Manage Schedules'));
 
-        $roleTeacher->givePermissionTo('View Teacher Schedule Permission');
+
 
 
         $roleDirector = Role::create(['name' => 'Director']);
-        $roleDirector->givePermissionTo('Dashboard Permission');
-        $roleDirector->givePermissionTo('Enrollment Permission');
-        $roleDirector->givePermissionTo('Student Records Permission');
-        $roleDirector->givePermissionTo('Section Permission');
-        $roleDirector->givePermissionTo('Add Graduates Permission');
-        $roleDirector->givePermissionTo('Accounting Permission');
-        $roleDirector->givePermissionTo('Reports Permission');
-        $roleDirector->givePermissionTo('System Maintenance Permission');
-        $roleDirector->givePermissionTo('Register User Permission');
-
-        $roleDirector->givePermissionTo('Subject Management Permission');
-        $roleDirector->givePermissionTo('Schedule Management Permission');
-        $roleDirector->givePermissionTo('Teacher Management Permission');
-        $roleDirector->givePermissionTo('User Management Permission');
+        $roleDirector->givePermissionTo(toSlug('View Dashboard'));
+        $roleDirector->givePermissionTo(toSlug('Manage Enrollments'));
+        $roleDirector->givePermissionTo(toSlug('Manage Students'));
+        $roleDirector->givePermissionTo(toSlug('Manage Alumni'));
+        $roleDirector->givePermissionTo(toSlug('Add Alumni'));
+        $roleDirector->givePermissionTo(toSlug('Manage dropouts'));
+        $roleDirector->givePermissionTo(toSlug('Edit Student'));
+        $roleDirector->givePermissionTo(toSlug('Accept Student'));
+        $roleDirector->givePermissionTo(toSlug('Drop Student'));
+        $roleDirector->givePermissionTo(toSlug('Manage Sections'));
+        $roleDirector->givePermissionTo(toSlug('Add Section'));
+        $roleDirector->givePermissionTo(toSlug('Edit Section'));
+        $roleDirector->givePermissionTo(toSlug('Delete Section'));
+        $roleDirector->givePermissionTo(toSlug('Manage Accounting'));
+        $roleDirector->givePermissionTo(toSlug('Manage Transactions'));
+        $roleDirector->givePermissionTo(toSlug('Add Transaction'));
+        $roleDirector->givePermissionTo(toSlug('Manage Reports'));
+        $roleDirector->givePermissionTo(toSlug('Manage System Maintenance'));
+        $roleDirector->givePermissionTo(toSlug('Manage Subjects'));
+        $roleDirector->givePermissionTo(toSlug('Add Subject'));
+        $roleDirector->givePermissionTo(toSlug('Edit Subject'));
+        $roleDirector->givePermissionTo(toSlug('Delete Subject'));
+        $roleDirector->givePermissionTo(toSlug('Manage Fees'));
+        $roleDirector->givePermissionTo(toSlug('Add Fee'));
+        $roleDirector->givePermissionTo(toSlug('Edit Fee'));
+        $roleDirector->givePermissionTo(toSlug('Delete Fee'));
+        $roleDirector->givePermissionTo(toSlug('Manage Schedules'));
+        $roleDirector->givePermissionTo(toSlug('Add Schedule'));
+        $roleDirector->givePermissionTo(toSlug('Edit Schedule'));
+        $roleDirector->givePermissionTo(toSlug('Delete Schedule'));
+        $roleDirector->givePermissionTo(toSlug('Manage Teachers'));
+        $roleDirector->givePermissionTo(toSlug('Add Teacher'));
+        $roleDirector->givePermissionTo(toSlug('Edit Teacher'));
+        $roleDirector->givePermissionTo(toSlug('Delete Teacher'));
+        $roleDirector->givePermissionTo(toSlug('Manage Users'));
+        $roleDirector->givePermissionTo(toSlug('Add User'));
+        $roleDirector->givePermissionTo(toSlug('Edit User'));
+        $roleDirector->givePermissionTo(toSlug('Delete User'));
 
         Role::create(['name' => 'Super Admin']);
 

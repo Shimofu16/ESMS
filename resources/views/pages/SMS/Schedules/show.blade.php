@@ -1,24 +1,25 @@
 @extends('layout.default')
 
 @section('styles')
-    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css"> --}}
-    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.2.3/css/fixedHeader.dataTables.min.css"> --}}
-    {{-- <script src="{{ asset('fullcalendar-6.1.9/dist/index.global.min.js') }}"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-            var schedules = {!! $schedules !!}
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                events: [
-                    schedules.forEach(element => {
+<style>
+    tr.bg-orange th {
+        background-color: #f8cbad;
+    }
 
-                    });
-                ]
-            });
-            calendar.render();
-        });
-    </script> --}}
+    table.table-bordered {
+        border-collapse: collapse;
+        border: 1px solid black;
+        /* Adjust border width as needed */
+    }
+
+    table.table-bordered th,
+    table.table-bordered td {
+        border: 1px solid black;
+        /* Adjust border width as needed */
+        padding: 8px;
+        /* Add padding to cells for better spacing */
+    }
+</style>
 @endsection
 
 @section('info')
@@ -60,10 +61,11 @@
                     </div>
                 </div>
                 <div class="card-body container">
-                    <table class="table">
+                    <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th scope="col">Subject</th>
+                                <th scope="col">Section</th>
                                 <th scope="col">Monday</th>
                                 <th scope="col">Tuesday</th>
                                 <th scope="col">Wednesday</th>
@@ -79,12 +81,23 @@
                                 @endphp
                                 <tr>
                                     <td>
-                                        <h6>{{ $schedule->subject->name }}</h6>
-                                        <span>{{ $schedule->teacher->name }}</span>
+                                        <div class="card bg-transparent border-0">
+                                            <div class="card-body px-1 text-center">
+                                                    <h6>{{ $schedule->subject->name }}</h6>
+                                                    <span>{{ $schedule->teacher->name }}</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="card bg-transparent border-0">
+                                            <div class="card-body px-1 text-center">
+                                                <h6>{{ $schedule->section->section }}</h6>
+                                            </div>
+                                        </div>
                                     </td>
                                     @if ($days->contains('Monday'))
                                         <td class="px-1">
-                                            <div class="card">
+                                            <div class="card bg-transparent border-0">
                                                 <div class="card-body px-1 text-center">
                                                     {{-- section, specialization, and time --}}
 
@@ -104,7 +117,7 @@
                                     @endif
                                     @if ($days->contains('Tuesday'))
                                         <td class="px-1">
-                                            <div class="card">
+                                            <div class="card bg-transparent border-0">
                                                 <div class="card-body px-1 text-center">
                                                     {{-- section, specialization, and time --}}
                                                     <span>{{ date('h:i A', strtotime($schedule->start_time)) }} -
@@ -123,7 +136,7 @@
                                     @endif
                                     @if ($days->contains('Wednesday'))
                                         <td class="px-1">
-                                            <div class="card">
+                                            <div class="card bg-transparent border-0">
                                                 <div class="card-body px-1 text-center">
                                                     {{-- section, specialization, and time --}}
                                                     <span>{{ date('h:i A', strtotime($schedule->start_time)) }} -
@@ -142,7 +155,7 @@
                                     @endif
                                     @if ($days->contains('Thursday'))
                                         <td class="px-1">
-                                            <div class="card">
+                                            <div class="card bg-transparent border-0">
                                                 <div class="card-body px-1 text-center">
                                                     {{-- section, specialization, and time --}}
                                                     <span>{{ date('h:i A', strtotime($schedule->start_time)) }} -
@@ -161,7 +174,7 @@
                                     @endif
                                     @if ($days->contains('Friday'))
                                         <td class="px-1">
-                                            <div class="card">
+                                            <div class="card bg-transparent border-0">
                                                 <div class="card-body px-1 text-center">
                                                     {{-- section, specialization, and time --}}
                                                     <span>{{ date('h:i A', strtotime($schedule->start_time)) }} -

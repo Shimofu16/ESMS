@@ -17,9 +17,19 @@ if (!function_exists('slug')) {
         return Str::upper(Str::slug($firstLetters));
     }
 }
+if (!function_exists('toSlug')) {
+    function toSlug($string)
+    {
+        // $str = explode(' ', $string);
+        // return Str::lower($str[0]) . '-' .  Str::lower($str[1]);
 
-if (! function_exists('toLetter')) {
-    function toLetter($word){
+        return Str::replace(' ', '-', Str::lower($string));
+    }
+}
+
+if (!function_exists('toLetter')) {
+    function toLetter($word)
+    {
         return Str::substr($word, 0);
     }
 }

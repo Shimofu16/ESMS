@@ -48,7 +48,8 @@
         ],
         "files": [
             "app/Helpers/Activity.php",
-            "app/Helpers/StrHelper.php"
+            "app/Helpers/StrHelper.php",
+            "app/Helpers/Query.php"
         ]
     },
     "autoload-dev": {

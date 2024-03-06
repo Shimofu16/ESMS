@@ -263,7 +263,7 @@ class EnrollmentForm extends Component
             $student->junior_hs = $this->junior_highschool;
             $student->junior_hs_yr = $this->year_graduated_junior_highschool;
             $student->type = $this->student_type;
-            $student->status = '1';
+            $student->status = 0;
 
 
 

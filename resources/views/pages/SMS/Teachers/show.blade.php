@@ -71,13 +71,17 @@
                                     <img src="{{ asset('media/logos/capellan_logo.png') }}" alt="logo" class="img-fluid"
                                         style="width: 100px; height: 100px;">
                                 </div>
-                                <div class="ms-1 me-5 mt-5">
-                                    <h4 class="fw-bold">CAPELLAN INSTITUTE OF TECHNOLOGY</h4>
+                                <div class="ml-2 me-5 my-5">
+                                    <h4 class="fw-bold"><strong>CAPELLAN INSTITUTE OF TECHNOLOGY</strong></h4>
                                     <h6 class="mb-4 text-center">San Pablo City Branch</h6>
                                     <h4 class="fw-bold mb-3">Class Schedule</h4>
-                                    <h4 class="fw-bold">{{ $teacher->name }}</h4>
-                                    {{-- <h6 class="mb-4">Grade {{ $section->gradeLevel->grade_level }}</h6> --}}
+                                    <h4 class="fw-bold mb-3">SY: {{ $setting->school_year }}</h4>
+                                    <h4 class="fw-bold">{{ $setting->semester_id }}{{ ($setting->semester_id == 1? 'st' : 'nd') }} Semester</h4>
                                 </div>
+                            </div>
+                            <div class="px-3 mt-5 d-flex justify-content-between">
+                                <h4 class="fw-bold mt-5"><strong>Teacher:</strong> {{ $teacher->name }}</h4> 
+                                {{-- <h4 class="fw-bold mt-5">{{ ($setting->semester_id == 1? 'First' : 'Second') }} Semester</h4> --}}
                             </div>
                         </div>
                         <!-- Table with stripped rows -->
@@ -85,6 +89,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Subject</th>
+                                    <th scope="col">Section</th>
                                     <th scope="col">Monday</th>
                                     <th scope="col">Tuesday</th>
                                     <th scope="col">Wednesday</th>
@@ -98,16 +103,26 @@
                                     @php
                                         $days = collect($schedule->days);
                                     @endphp
-                                    <tr>
+                                     <tr>
                                         <td>
-                                            <h6>{{ $schedule->subject->name }}</h6>
+                                            <div class="card bg-transparent border-0">
+                                                <div class="card-body px-1 text-center">
+                                                        <h6>{{ $schedule->subject->name }}</h6>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="card bg-transparent border-0">
+                                                <div class="card-body px-1 text-center">
+                                                    <h6>{{ $schedule->section->section }}</h6>
+                                                </div>
+                                            </div>
                                         </td>
                                         @if ($days->contains('Monday'))
                                             <td class="px-1">
-                                                <div class="card">
+                                                <div class="card bg-transparent border-0">
                                                     <div class="card-body px-1 text-center">
                                                         {{-- section, specialization, and time --}}
-    
                                                         <span>{{ date('h:i A', strtotime($schedule->start_time)) }} -
                                                             {{ date('h:i A', strtotime($schedule->end_time)) }}</span>
                                                     </div>
@@ -124,7 +139,7 @@
                                         @endif
                                         @if ($days->contains('Tuesday'))
                                             <td class="px-1">
-                                                <div class="card">
+                                                <div class="card bg-transparent border-0">
                                                     <div class="card-body px-1 text-center">
                                                         {{-- section, specialization, and time --}}
                                                         <span>{{ date('h:i A', strtotime($schedule->start_time)) }} -
@@ -143,7 +158,7 @@
                                         @endif
                                         @if ($days->contains('Wednesday'))
                                             <td class="px-1">
-                                                <div class="card">
+                                                <div class="card bg-transparent border-0">
                                                     <div class="card-body px-1 text-center">
                                                         {{-- section, specialization, and time --}}
                                                         <span>{{ date('h:i A', strtotime($schedule->start_time)) }} -
@@ -162,7 +177,7 @@
                                         @endif
                                         @if ($days->contains('Thursday'))
                                             <td class="px-1">
-                                                <div class="card">
+                                                <div class="card bg-transparent border-0">
                                                     <div class="card-body px-1 text-center">
                                                         {{-- section, specialization, and time --}}
                                                         <span>{{ date('h:i A', strtotime($schedule->start_time)) }} -
@@ -181,7 +196,7 @@
                                         @endif
                                         @if ($days->contains('Friday'))
                                             <td class="px-1">
-                                                <div class="card">
+                                                <div class="card bg-transparent border-0">
                                                     <div class="card-body px-1 text-center">
                                                         {{-- section, specialization, and time --}}
                                                         <span>{{ date('h:i A', strtotime($schedule->start_time)) }} -

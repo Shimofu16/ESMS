@@ -48,7 +48,7 @@
             <ul class="menu-nav {{ Metronic::printClasses('aside_menu_nav', false) }}">
                 <!--begin::Menu Nav-->
 
-                @can('Dashboard Permission')
+                @can('view-dashboard')
                     <li class="menu-item" aria-haspopup="true">
                         <a href="{{ route('dashboard.index') }}" class="menu-link">
                             <span class="svg-icon menu-icon">
@@ -125,7 +125,7 @@
                     </li>
                 @endcan --}}
 
-                @can('Student Records Permission')
+                @can('manage-enrollments')
                     <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                         <a href="javascript:;" class="menu-link menu-toggle">
                             <span class="menu-icon fas fa-address-book">
@@ -137,46 +137,68 @@
                         <div class="menu-submenu">
 
                             <ul class="menu-subnav">
-
+                                @can('manage-students')
+                                    <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                        <a href="{{ route('enrolled_student.index') }}" class="menu-link menu-toggle">
+                                            <i class="menu-bullet menu-bullet-line">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Enrolled Students</span>
+                                            <span class="menu-label">
+                                                {{-- <span class="label label-rounded label-primary"><?= $count_user ?></span> --}}
+                                            </span>
+                                        </a>
+                                    </li>
+                                @endcan
+                                @can('manage-students')
+                                    <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                        <a href="{{ route('enrolled_student.index') }}" class="menu-link menu-toggle">
+                                            <i class="menu-bullet menu-bullet-line">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Pending Students</span>
+                                            <span class="menu-label">
+                                                {{-- <span class="label label-rounded label-primary"><?= $count_user ?></span> --}}
+                                            </span>
+                                        </a>
+                                    </li>
+                                @endcan
                                 <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                    <a href="{{ route('enrolled_student.index') }}" class="menu-link menu-toggle">
+                                    <a href="{{ route('subject.create') }}" class="menu-link menu-toggle">
                                         <i class="menu-bullet menu-bullet-line">
                                             <span></span>
                                         </i>
-                                        <span class="menu-text">Enrolled Students</span>
-                                        <span class="menu-label">
-                                            {{-- <span class="label label-rounded label-primary"><?= $count_user ?></span> --}}
-                                        </span>
+                                        <span class="menu-text">Enrollment</span>
 
                                     </a>
 
                                 </li>
-                                <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                    <a href="{{ route('alumni.index') }}" class="menu-link menu-toggle">
-                                        <i class="menu-bullet menu-bullet-line">
-                                            <span></span>
-                                        </i>
-                                        <span class="menu-text">Alumni</span>
-
-                                    </a>
-
-                                </li>
-                                <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                    <a href="{{ route('dropout.index') }}" class="menu-link menu-toggle">
-                                        <i class="menu-bullet menu-bullet-line">
-                                            <span></span>
-                                        </i>
-                                        <span class="menu-text">Dropouts</span>
-
-                                    </a>
-
-                                </li>
+                                @can('manage-alumni')
+                                    <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                        <a href="{{ route('alumni.index') }}" class="menu-link menu-toggle">
+                                            <i class="menu-bullet menu-bullet-line">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Alumni</span>
+                                        </a>
+                                    </li>
+                                @endcan
+                                @can('manage-dropouts')
+                                    <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                        <a href="{{ route('dropout.index') }}" class="menu-link menu-toggle">
+                                            <i class="menu-bullet menu-bullet-line">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Dropouts</span>
+                                        </a>
+                                    </li>
+                                @endcan
 
                             </ul>
                         </div>
                     </li>
                 @endcan
-                @can('Section Permission')
+                @can('manage-sections')
                     <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                         <a href="{{ route('section.index') }}" class="menu-link menu-toggle">
                             <span class="menu-icon fas fa-user-plus">
@@ -187,7 +209,7 @@
                     </li>
                 @endcan
 
-                @can('Accounting Permission')
+                @can('manage-accounting')
                     <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                         <a href="javascript:;" class="menu-link menu-toggle">
                             <span class="menu-icon fas fa-money-bill">
@@ -199,56 +221,32 @@
                         <div class="menu-submenu">
 
                             <ul class="menu-subnav">
-
-                                <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                    <a href="{{ route('fee.index') }}" class="menu-link menu-toggle">
-                                        <i class="menu-bullet menu-bullet-line">
-                                            <span></span>
-                                        </i>
-                                        <span class="menu-text">Fees</span>
-                                    </a>
-
-                                </li>
-                                <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                    <a href="{{ route('transaction.index') }}" class="menu-link menu-toggle">
-                                        <i class="menu-bullet menu-bullet-line">
-                                            <span></span>
-                                        </i>
-                                        <span class="menu-text">Payment Transactions</span>
-
-                                    </a>
-
-                                </li>
-
-                                {{-- <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                    <a href="{{ route('acc_report.index') }}" class="menu-link menu-toggle">
-                                        <i class="menu-bullet menu-bullet-line">
-                                            <span></span>
-                                        </i>
-                                        <span class="menu-text">Report</span>
-
-                                    </a>
-
-                                </li>
-                                <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                    <a href="{{ route('memo.index') }}" class="menu-link menu-toggle">
-                                        <i class="menu-bullet menu-bullet-line">
-                                            <span></span>
-                                        </i>
-                                        <span class="menu-text">Memo</span>
-
-                                    </a>
-
-                                </li> --}}
-
-
-
+                                @can('manage-fees')
+                                    <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                        <a href="{{ route('fee.index') }}" class="menu-link menu-toggle">
+                                            <i class="menu-bullet menu-bullet-line">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Fees</span>
+                                        </a>
+                                    </li>
+                                @endcan
+                                @can('manage-transactions')
+                                    <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                        <a href="{{ route('transaction.index') }}" class="menu-link menu-toggle">
+                                            <i class="menu-bullet menu-bullet-line">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Payment Transactions</span>
+                                        </a>
+                                    </li>
+                                @endcan
                             </ul>
                         </div>
                     </li>
                 @endcan
 
-                @can('Reports Permission')
+                @can('manage-reports')
                     <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                         <a href="javascript:;" class="menu-link menu-toggle">
                             <span class="menu-icon fas fa-print">
@@ -307,7 +305,7 @@
                         </div>
                     </li>
                 @endcan
-                @can('Add Graduates Permission')
+                @can('add-alumni')
                     <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                         <a href="{{ route('graduate.create') }}" class="menu-link menu-toggle">
                             <span class="menu-icon fas fa-graduation-cap">
@@ -318,7 +316,7 @@
                     </li>
                 @endcan
 
-                @can('System Maintenance Permission')
+                @can('manage-system-maintenance')
                     <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                         <a href="{{ route('sys_main.index') }}" class="menu-link menu-toggle">
                             <span class="menu-icon fas fa-cog">
@@ -340,7 +338,7 @@
                     </li>
                 @endcan --}}
 
-                @can('Subject Management Permission')
+                @can('manage-subjects')
                     <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                         <a href="javascript:;" class="menu-link menu-toggle">
                             <span class="menu-icon fas fa-solid fa-book-open"></span>
@@ -373,17 +371,7 @@
                                     </a>
 
                                 </li>
-                                <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                    <a href="{{ route('subject.create') }}"
-                                        class="menu-link menu-toggle">
-                                        <i class="menu-bullet menu-bullet-line">
-                                            <span></span>
-                                        </i>
-                                        <span class="menu-text">Enrollment</span>
-
-                                    </a>
-
-                                </li>
+                                
 
 
                             </ul>
@@ -391,7 +379,7 @@
                     </li>
                 @endcan
 
-                @can('Teacher Management Permission')
+                @can('manage-teachers')
                     <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                         <a href="{{ route('teacher.index') }}" class="menu-link menu-toggle">
                             <span class="menu-icon fas fa-chalkboard-teacher">
@@ -402,7 +390,7 @@
                     </li>
                 @endcan
 
-                @can('Schedule Management Permission')
+                @can('manage-schedules')
                     <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                         <a href="{{ route('schedule.index') }}" class="menu-link menu-toggle">
                             <span class="menu-icon fas fa-calendar-week">
@@ -412,7 +400,7 @@
                         </a>
                     </li>
                 @endcan
-                @can('User Management Permission')
+                @can('manage-users')
                     <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                         <a href="{{ route('user.index') }}" class="menu-link menu-toggle">
                             <span class="menu-icon fas fa-users-cog">

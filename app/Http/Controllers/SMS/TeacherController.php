@@ -4,6 +4,7 @@ namespace App\Http\Controllers\SMS;
 
 use App\Helpers\Activity;
 use App\Http\Controllers\Controller;
+use App\Models\Active_SchoolYearAndSem;
 use App\Models\SMS\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Action;
@@ -63,8 +64,13 @@ class TeacherController extends Controller
     public function show($id)
     {
         $teacher = Teacher::find($id);
-        $schedules = $teacher->schedules;
-        return view('pages.SMS.Teachers.show', compact('teacher', 'schedules'));
+        $setting = getCurrentSettings();
+
+        $schedules = $teacher->schedules()
+        ->where('school_year_id', $setting->school_year_id)
+        ->where('semester_id', $setting->semester_id)
+        ->get();
+        return view('pages.SMS.Teachers.show', compact('teacher', 'schedules', 'setting'));
     }
 
     /**

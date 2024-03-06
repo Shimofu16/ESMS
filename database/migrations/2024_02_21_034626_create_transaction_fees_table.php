@@ -17,11 +17,14 @@ class CreateTransactionFeesTable extends Migration
             $table->id();
             $table->foreignId('transaction_id')->constrained('payment_transactions', 'id');
             $table->foreignId('fee_id')->constrained('fees', 'id');
+            $table->double('amount');
+            $table->double('balance')->nullable()->default(0);
+            $table->enum('type', ['tuition', 'registration', 'miscellaneous', 'activity', 'other']);
             $table->timestamps();
         });
     }
 
-    /**
+    /**+
      * Reverse the migrations.
      *
      * @return void

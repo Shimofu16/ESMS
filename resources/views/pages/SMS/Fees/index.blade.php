@@ -36,12 +36,14 @@
                     </div>
                     <div class="card-toolbar">
                         <!-- Button trigger modal-->
-                        <button type="button" class="btn btn-primary font-weight-bold btn-sm mr-1" data-toggle="modal"
-                            data-target="#add">
-                            <i class="flaticon2-cube"></i>
-                            Add Fee
-                        </button>
-                        @include('pages.SMS.Fees.modal._add')
+                        @can('add-fee')
+                            <button type="button" class="btn btn-primary font-weight-bold btn-sm mr-1" data-toggle="modal"
+                                data-target="#add">
+                                <i class="flaticon2-cube"></i>
+                                Add Fee
+                            </button>
+                            @include('pages.SMS.Fees.modal._add')
+                        @endcan
 
                     </div>
                 </div>
@@ -65,24 +67,31 @@
                                         </div>
                                     </td>
                                     <td>{{ $fee->type }}</td>
-                                    <td>PHP {{ number_format($fee->amount,2) }}</td>
+                                    <td>PHP {{ number_format($fee->amount, 2) }}</td>
                                     <td class="text-center">
-                                        <button class="btn btn-sm btn-outline-primary" data-toggle="modal"
-                                            data-target="#edit{{ $fee->id }}">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-danger" data-toggle="modal"
-                                            data-target="#delete{{ $fee->id }}">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
+                                        @can('edit-fee')
+                                            <button class="btn btn-sm btn-outline-primary" data-toggle="modal"
+                                                data-target="#edit{{ $fee->id }}">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                        @endcan
+                                        @can('delete-fee')
+                                            <button class="btn btn-sm btn-outline-danger" data-toggle="modal"
+                                                data-target="#delete{{ $fee->id }}">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        @endcan
                                     </td>
                                 </tr>
-                                @include('pages.SMS.Fees.modal._edit')
-                                @include('pages.SMS.Fees.modal._delete')
+                                @can('edit-fee')
+                                    @include('pages.SMS.Fees.modal._edit')
+                                @endcan
+                                @can('delete-fee')
+                                    @include('pages.SMS.Fees.modal._delete')
+                                @endcan
                             @endforeach
 
                         </tbody>
-
 
                     </table>
                 </div>
