@@ -13,20 +13,24 @@
                                 <tr>
                                     <th scope="col">Fee</th>
                                     <th scope="col">Amount</th>
+                                    <th scope="col">Balance</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @php
-                                    $total = 0;
+                                    $totalAmount = 0;
+                                    $totalBalance = 0;
                                 @endphp
                                 @foreach ($transaction->fees as $transaction_fee)
                                     <tr>
                                         {{-- <th scope="row">1</th> --}}
                                         <td>{{ $transaction_fee->fee->name }}</td>
                                         <td>{{ $transaction_fee->fee->amount }}</td>
+                                        <td>{{ $transaction_fee->fee->balance }}</td>
                                     </tr>
                                     @php
-                                        $total = $total + $transaction_fee->fee->amount;
+                                        $totalAmount = $total + $transaction_fee->fee->amount;
+                                        $totalBalance = $total + $transaction_fee->fee->balance;
                                     @endphp
                                 @endforeach
                             </tbody>
@@ -34,7 +38,10 @@
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <strong>Total: PHP {{ number_format($total, 2) }} </strong>
+                                        <strong>Total amount: PHP {{ number_format($totalAmount, 2) }} </strong>
+                                    </td>
+                                    <td>
+                                        <strong>Total balance: PHP {{ number_format($totalBalance, 2) }} </strong>
                                     </td>
                                 </tr>
                             </tfoot>

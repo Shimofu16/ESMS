@@ -139,7 +139,7 @@
                             <ul class="menu-subnav">
                                 @can('manage-students')
                                     <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                        <a href="{{ route('enrolled_student.index') }}" class="menu-link menu-toggle">
+                                        <a href="{{ route('students.enrolled.index') }}" class="menu-link menu-toggle">
                                             <i class="menu-bullet menu-bullet-line">
                                                 <span></span>
                                             </i>
@@ -152,7 +152,7 @@
                                 @endcan
                                 @can('manage-students')
                                     <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                        <a href="{{ route('enrolled_student.index') }}" class="menu-link menu-toggle">
+                                        <a href="{{ route('students.enrollee.index') }}" class="menu-link menu-toggle">
                                             <i class="menu-bullet menu-bullet-line">
                                                 <span></span>
                                             </i>
@@ -371,7 +371,7 @@
                                     </a>
 
                                 </li>
-                                
+
 
 
                             </ul>

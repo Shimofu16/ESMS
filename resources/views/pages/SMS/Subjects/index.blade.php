@@ -36,7 +36,7 @@
                     </div>
                     <div class="card-toolbar">
                         <!-- Button trigger modal-->
-                        <button type="button" class="btn btn-primary font-weight-bold btn-sm mr-1" data-toggle="modal"
+                        <button type="button" class="btn btn-primary font-weight-bold btn-sm mr-3" data-toggle="modal"
                             data-target="#add">
                             <i class="flaticon2-cube"></i>
                             Add Subject

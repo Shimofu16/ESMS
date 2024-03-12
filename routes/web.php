@@ -100,13 +100,17 @@ Route::group(['prefix' => 'enroll_existing_student', 'middleware' => ['auth']], 
     Route::post('/store', [App\Http\Controllers\EnrollExistingStudentController::class, 'store'])->name('enroll_existing_student.store');
 });
 
-//Student Record - Enrolled student
-Route::group(['prefix' => 'student-records', 'middleware' => ['auth']], function () {
-    Route::get('/enrolled_student', [App\Http\Controllers\EnrolledStudentController::class, 'index'])->name('enrolled_student.index');
-    Route::get('/show/{student_id}', [App\Http\Controllers\EnrolledStudentController::class, 'show'])->name('enrolled_student.show');
-    Route::get('/edit/{student_id}', [App\Http\Controllers\EnrolledStudentController::class, 'edit'])->name('enrolled_student.edit');
-    Route::put('/update/{student_id}', [App\Http\Controllers\EnrolledStudentController::class, 'update'])->name('enrolled_student.update');
-    Route::put('/drop/{id}', [App\Http\Controllers\EnrolledStudentController::class, 'drop'])->name('enrolled_student.drop');
+//Student Records
+Route::prefix('students')->name('students.')->group(function () {
+    Route::prefix('enrolled')->name('enrolled.')->group(function () {
+        Route::get('/', [App\Http\Controllers\SMS\EnrolledStudentController::class, 'index'])->name('index');
+        Route::get('/show/{student_id}', [App\Http\Controllers\SMS\EnrolledStudentController::class, 'show'])->name('show');
+        Route::put('/drop/{student_id}', [App\Http\Controllers\SMS\EnrolledStudentController::class, 'drop'])->name('drop');
+    });
+    Route::prefix('enrollee')->name('enrollee.')->group(function () {
+        Route::get('/', [App\Http\Controllers\SMS\EnrolleeStudentController::class, 'index'])->name('index');
+        Route::post('/payment/{student_id}', [App\Http\Controllers\SMS\EnrolleeStudentController::class, 'store'])->name('store');
+    });
 });
 
 //Enroll Student Subject
@@ -154,7 +158,7 @@ Route::group(['prefix' => 'billing', 'middleware' => ['auth']], function () {
 
 //Accounting - Payment
 Route::group(['prefix' => 'payment', 'middleware' => ['auth']], function () {
-    Route::get('/index', [App\Http\Controllers\PaymentController::class, 'index'])->name('payment.index');
+    Route::get('/index/{fee_type?}', [App\Http\Controllers\PaymentController::class, 'index'])->name('payment.index');
     Route::get('/show/{id}', [App\Http\Controllers\PaymentController::class, 'show'])->name('payment.show');
     Route::post('/store', [App\Http\Controllers\PaymentController::class, 'store'])->name('payment.store');
 });
@@ -209,7 +213,7 @@ Route::prefix('transaction')
     ->name('transaction.')
     ->middleware(['auth'])
     ->group(function () {
-        Route::get('/create', [App\Http\Controllers\SMS\PaymentTransaction::class, 'create'])->name('create');
+        Route::get('/create{student_id?}', [App\Http\Controllers\SMS\PaymentTransaction::class, 'create'])->name('create');
         Route::get('/{id?}', [App\Http\Controllers\SMS\PaymentTransaction::class, 'index'])->name('index');
         Route::post('/store', [App\Http\Controllers\SMS\PaymentTransaction::class, 'store'])->name('store');
     });

@@ -14,45 +14,39 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class EnrolledStudentController extends Controller
 {
-    public function index(){
+    public function index()
+    {
 
-        $active = Active_SchoolYearAndSem::first();
-        $students = Student::with('enrollment.student')->whereHas('enrollment', function ($query) use($active) {
-            return $query->where('school_year_id', '=', $active->active_SY_id)->where('sem_id','=', $active->active_sem_id);
-        })->where('status', 1)->get();
-        
-        
-        
-        return view('pages.StudentRecord.EnrolledStudents.index',compact('students'));
-
+        return view('pages.StudentRecord.EnrolledStudents.index', compact('students'));
     }
 
-    public function show($id){
+    public function show($id)
+    {
 
-        $student = Student::with('enrollment.student' , 'document')->where('id',$id)->first();
-        return view('pages.StudentRecord.EnrolledStudents.show',compact('student'));
-
+        $student = Student::with('enrollment.student', 'document')->where('id', $id)->first();
+        return view('pages.StudentRecord.EnrolledStudents.show', compact('student'));
     }
-    
-    public function edit($id){
-        
+
+    public function edit($id)
+    {
+
         $schoolyears = SchoolYear::all();
-        $students = Student::with('enrollment.student')->where('id',$id)->first();
+        $students = Student::with('enrollment.student')->where('id', $id)->first();
         $sems = Sem::all();
         $gradelevels = GradeLevel::all();
-        return view('pages.StudentRecord.EnrolledStudents.edit',compact('students','schoolyears','sems','gradelevels'));
-        
+        return view('pages.StudentRecord.EnrolledStudents.edit', compact('students', 'schoolyears', 'sems', 'gradelevels'));
     }
 
-    public function update(Request $request, $id){
-        
-        if($request->hasFile('image')){
+    public function update(Request $request, $id)
+    {
+
+        if ($request->hasFile('image')) {
             $image = $request->file('image')->getClientOriginalName();
-            $path = $request->file('image')->storeAs('student',  $image, 'public');     
+            $path = $request->file('image')->storeAs('student',  $image, 'public');
         }
         $student = Student::findOrfail($id);
-        
-        $student->image= $image;
+
+        $student->image = $image;
         $student->lrn = $request->lrn;
         $student->std_num = $request->std_num;
         $student->last_name = $request->last_name;
@@ -90,36 +84,35 @@ class EnrolledStudentController extends Controller
         $student->junior_hs = $request->junior_hs;
         $student->junior_hs_yr = $request->junior_hs_yr;
 
-   
-       $student->save();
+
+        $student->save();
 
         return redirect()->route('enrolled_student.show', $id);
-
-
     }
-    
-    public function drop($id, Request $request){
+
+    public function drop($id, Request $request)
+    {
 
         Student::findorfail($id)->update([
-            
-            'status' => 2, 
-            'reason_for_dropout' => $request->reason_for_dropout, 
-            'dropout_date' =>  $todayDate = Carbon::now()->format('Y-m-d'), 
-         //   dd($todayDate),
+
+            'status' => 2,
+            'reason_for_dropout' => $request->reason_for_dropout,
+            'dropout_date' =>  $todayDate = Carbon::now()->format('Y-m-d'),
+            //   dd($todayDate),
 
         ]);
 
-        return redirect()->route('enrolled_student.index')->with('warning', 'Student Dropped');
-
+        return redirect()->route('students.enrolled.index')->with('warning', 'Student Dropped');
     }
 
-    public function select(){
+    public function select()
+    {
         $sems = Sem::all();
         $tracks = DB::table('tracks')->get();
         $schoolyears = SchoolYear::all();
         $gradelevels = GradeLevel::all();
-        
+
         $students = Student::with('enrollment.student')->orderBy('status', 'ASC')->where('status', '!==', 3)->get();
-        return view('pages.Enrollment.EnrollExistingStudent.index',compact('students','tracks','schoolyears','gradelevels','sems'));
+        return view('pages.Enrollment.EnrollExistingStudent.index', compact('students', 'tracks', 'schoolyears', 'gradelevels', 'sems'));
     }
 }

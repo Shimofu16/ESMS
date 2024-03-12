@@ -15,18 +15,6 @@
                 </select>
             </div>
             <div class="col-6">
-                <label for="amount" class="form-label fw-bold text-black">Amount</label>
-                <input type="number" class="form-control" id="amount" name="amount" wire:model='amount'
-                    value="{{ old('amount') }}">
-                <small id="emailHelp" class="form-text text-muted">Enter amount after selecting fees.</small>
-                @error('amount')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-
-        </div>
-        <div class="row mb-3">
-            <div class="col-6">
                 <label for="fee_id" class="form-label fw-bold text-black">Fees</label>
                 <select name="fee_id" id="fee_id" wire:model='fee_id' class="form-control" required>
                     <option value="">Select fee</option>
@@ -37,6 +25,7 @@
                     @endforeach
                 </select>
             </div>
+
         </div>
         <div class="row mb-3">
             <div class="col-12">
@@ -45,6 +34,7 @@
                         <tr>
                             <th scope="col">Name</th>
                             <th scope="col">Amount</th>
+                            <th scope="col">Payment</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -55,25 +45,22 @@
                                     {{ $selected_fee->name }}
                                 </td>
                                 <td>PHP {{ number_format($selected_fee->amount, 2) }}</td>
+                                <td>
+                                    <label for="amount" class="form-label fw-bold text-black">Amount</label>
+                                    <input type="number" class="form-control" id="amount" name="amount[]"
+                                        wire:model='amount.{{ $selected_fee->id }}' value="{{ old('amount') }}">
+                                </td>
                                 @php
                                     $total = $total + $selected_fee->amount;
                                 @endphp
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="2" class="text-center">
+                                <td colspan="3" class="text-center">
                                     <strong>No fee selected. Please select fee first</strong>
                                 </td>
                             </tr>
                         @endforelse
-                        @if ($total > 0)
-                            <tr>
-                                <td></td>
-                                <td>
-                                    <strong>Total: {{ number_format($total, 2) }}</strong>
-                                </td>
-                            </tr>
-                        @endif
 
                     </tbody>
                 </table>

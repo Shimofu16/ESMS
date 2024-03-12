@@ -42,7 +42,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    @livewire('payment-transaction.create', ['students' => $students])
+                    @livewire('payment-transaction.create', ['students' => $students, 'student_id' => $student_id])
                 </div>
             </div>
         </div>
@@ -51,7 +51,5 @@
 @endsection
 
 @section('scripts')
-
     @livewireScripts
-
 @endsection

@@ -4,10 +4,10 @@ namespace App\Http\Controllers\SMS;
 
 use App\Helpers\Activity;
 use App\Http\Controllers\Controller;
-use App\Models\SMS\Fee;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
-class FeeController extends Controller
+class EnrolleeStudentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,9 @@ class FeeController extends Controller
      */
     public function index()
     {
-        $fees = Fee::all();
-        return view('pages.SMS.Fees.index', compact('fees'));
+        return view('pages.SMS.students.enrollees.index',[
+            'students' => getStudentsByStatus(0)
+        ]);
     }
 
     /**
@@ -36,15 +37,9 @@ class FeeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $student_id)
     {
-        try {
-            Fee::create($request->all());
-            Activity::log(auth()->user()->id, 'Fee Management', 'Added Fee ' . $request->name);
-            return back()->with('toast_success', 'Added Successfully');
-        } catch (\Throwable $th) {
-            return back()->with('toast_error', $th->getMessage());
-        }
+       
     }
 
     /**
@@ -66,6 +61,7 @@ class FeeController extends Controller
      */
     public function edit($id)
     {
+        //
     }
 
     /**
@@ -77,11 +73,7 @@ class FeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $fee = Fee::find($id);
-        $fee->update($request->all());
-
-        Activity::log(auth()->user()->id, 'Fee Management', 'Update Fee ' . $fee->name);
-        return back()->with('toast_success', ' Updated Successfully');
+        //
     }
 
     /**
@@ -92,10 +84,6 @@ class FeeController extends Controller
      */
     public function destroy($id)
     {
-        $fee = Fee::find($id);
-
-        Activity::log(auth()->user()->id, 'Fee Management', 'Update Fee ' . $fee->name);
-        $fee->delete();
-        return back()->with('toast_success', 'Deleted Successfully');
+        //
     }
 }

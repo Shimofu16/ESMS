@@ -52,7 +52,7 @@
                         <small>Below are the subjects you can enroll for student {{ $student->full_name }}</small>
                     </div>
                     <div class="card-toolbar">
-                        <a class="btn btn-secondary font-weight-bold btn-sm mr-1" href="{{ route('enrolled_student.index') }}">
+                        <a class="btn btn-secondary font-weight-bold btn-sm mr-1" href="{{ route('students.enrolled.index') }}">
                             {{-- return --}}
                             <i class="flaticon2-back"></i>
                             back

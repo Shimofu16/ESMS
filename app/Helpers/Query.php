@@ -4,6 +4,8 @@
 <?php
 
 use App\Models\Active_SchoolYearAndSem;
+use App\Models\SMS\Fee;
+use App\Models\Student;
 
 if (!function_exists('getCurrentSettings')) {
     function getCurrentSettings()
@@ -23,6 +25,30 @@ if (!function_exists('getCurrentSettings')) {
         })->collapse()->all();
         $setting->school_year = $active->schoolyear->school_year;
 
-    return $setting;
+        return $setting;
+    }
+}
+if (!function_exists('getStudentsByStatus')) {
+    function getStudentsByStatus(int $status)
+    {
+        $active = Active_SchoolYearAndSem::first();
+        return Student::with('enrollment.student')
+            ->whereHas('enrollment', function ($query) use ($active) {
+                return $query->where('school_year_id', '=', $active->active_SY_id)->where('sem_id', '=', $active->active_sem_id);
+            })
+            ->where('status', $status)
+            ->get();
+    }
+}
+if (!function_exists('getFeeByType')) {
+    function getFeeByType(string $type)
+    {
+        return Fee::where('type', $type)->first();
+    }
+}
+if (!function_exists('getFeeTypes')) {
+    function getFeeTypes()
+    {
+        return ['tuition', 'registration', 'miscellaneous', 'activity', 'other'];
     }
 }

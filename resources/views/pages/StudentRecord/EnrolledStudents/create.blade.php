@@ -37,7 +37,7 @@
                     </div>
                     <div class="card-toolbar">
                         <!-- Button trigger modal-->
-                        <a class="btn btn-secondary font-weight-bold btn-sm mr-1" href="{{ route('enrolled_student.index') }}">
+                        <a class="btn btn-secondary font-weight-bold btn-sm mr-1" href="{{ route('students.enrolled.index') }}">
                             {{-- return --}}
                             <i class="flaticon2-back"></i>
                             back
