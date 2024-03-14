@@ -10,10 +10,7 @@ class TransactionFee extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'transaction_id',
-        'fee_id'
-    ];
+    protected $guarded = [];
 
     public function transaction()
     {
@@ -22,5 +19,9 @@ class TransactionFee extends Model
     public function fee()
     {
         return $this->belongsTo(Fee::class, 'fee_id');
+    }
+    public function balances()
+    {
+        return $this->hasMany(TransactionFeeBalance::class, 'transaction_fee_id');
     }
 }

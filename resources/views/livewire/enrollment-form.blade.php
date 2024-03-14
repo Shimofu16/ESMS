@@ -631,7 +631,7 @@
                         </div>
                         <div class="col-span-2 lg:col-span-3">
                             <label for="junior_highschool"
-                                class="block text-sm font-medium leading-6 text-gray-900">junior_highschool</label>
+                                class="block text-sm font-medium leading-6 text-gray-900">Junior Highschool</label>
                             <div class="mt-2">
                                 <input type="text" name="junior_highschool" id="junior_highschool"
                                     wire:model='junior_highschool'

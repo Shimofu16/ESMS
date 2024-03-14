@@ -1,7 +1,15 @@
 <div class="container">
     <form wire:submit.prevent="save">
         @csrf
-
+        <div class="row mb-3">
+            @if (session()->has('error'))
+                <div class="col-12">
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                </div>
+            @endif
+        </div>
         <div class="row mb-3">
             <div class="col-6">
                 <label for="student_id" class="form-label fw-bold text-black">Student</label>
@@ -17,7 +25,7 @@
             <div class="col-6">
                 <label for="fee_id" class="form-label fw-bold text-black">Fees</label>
                 <select name="fee_id" id="fee_id" wire:model='fee_id' class="form-control" required>
-                    <option value="">Select fee</option>
+                    <option value="">Select student first before selecting fees</option>
                     @foreach ($fees as $fee)
                         <option value="{{ $fee->id }}" @if (old('fee_id') == $fee->id) selected @endif>
                             {{ $fee->name }} - {{ $fee->amount }}
@@ -25,7 +33,6 @@
                     @endforeach
                 </select>
             </div>
-
         </div>
         <div class="row mb-3">
             <div class="col-12">
@@ -33,25 +40,29 @@
                     <thead>
                         <tr>
                             <th scope="col">Name</th>
-                            <th scope="col">Amount</th>
+                            <th scope="col">Amount/Balance</th>
                             <th scope="col">Payment</th>
                         </tr>
                     </thead>
                     <tbody>
-
                         @forelse ($selected_fees as $selected_fee)
                             <tr>
                                 <td>
-                                    {{ $selected_fee->name }}
+                                    {{ $selected_fee['name'] }}
                                 </td>
-                                <td>PHP {{ number_format($selected_fee->amount, 2) }}</td>
+                                <td>PHP {{ number_format($selected_fee['amount'], 2) }}
+                                    @if ($selected_fee['balance'] > 0)
+                                        / {{ number_format($selected_fee['balance'], 2) }}
+                                    @endif
+                                </td>
                                 <td>
-                                    <label for="amount" class="form-label fw-bold text-black">Amount</label>
-                                    <input type="number" class="form-control" id="amount" name="amount[]"
-                                        wire:model='amount.{{ $selected_fee->id }}' value="{{ old('amount') }}">
+                                    <input type="number" class="form-control" id="amount.{{ $selected_fee['id'] }}"
+                                        name="amount.{{ $selected_fee['id'] }}"
+                                        wire:model.prevent='amount.{{ $selected_fee['id'] }}'
+                                        value="{{ old('amount') }}" placeholder="Amount">
                                 </td>
                                 @php
-                                    $total = $total + $selected_fee->amount;
+                                    $total = $total + $selected_fee['amount'];
                                 @endphp
                             </tr>
                         @empty

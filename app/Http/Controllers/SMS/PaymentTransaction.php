@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Active_SchoolYearAndSem;
 use App\Models\SMS\Fee;
 use App\Models\SMS\PaymentTransaction as SMSPaymentTransaction;
+use App\Models\SMS\TransactionFee;
 use App\Models\Student;
 use Illuminate\Http\Request;
 
@@ -16,22 +17,18 @@ class PaymentTransaction extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($fee_type = null)
+    public function index()
     {
-        $active_school_year = Active_SchoolYearAndSem::find(1)->schoolYear->school_year;
-        $transactions = SMSPaymentTransaction::all();
-        if ($fee_type) {
-            $transactions = SMSPaymentTransaction::with('transactions')
-                ->whereHas('transactions', function ($query) use ($fee_type) {
-                    $query->where('type', $fee_type);
-                })
-                ->get();
-        }
-
-        $students = Student::all();
-        $fees = Fee::all();
-
-        return view('pages.SMS.PaymentTransactions.index', compact('transactions', 'students', 'fees', 'active_school_year'));
+        return view(
+            'pages.SMS.PaymentTransactions.index',
+            [
+                'active_school_year' => Active_SchoolYearAndSem::find(1)->schoolYear->school_year,
+                'transactions' =>  SMSPaymentTransaction::all(),
+                'students' => Student::all(),
+                'fees' => Fee::all(),
+                'fees',
+            ]
+        );
     }
 
     /**
@@ -39,10 +36,12 @@ class PaymentTransaction extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($student_id)
+    public function create(?int $student_id = null)
     {
-        $students = Student::all();
-        return view('pages.SMS.PaymentTransactions.create', compact('students','student_id'));
+        return view('pages.SMS.PaymentTransactions.create', [
+            'students' =>  Student::all(),
+            'student_id' =>  $student_id
+        ]);
     }
 
     /**
@@ -53,29 +52,6 @@ class PaymentTransaction extends Controller
      */
     public function store(Request $request)
     {
-        $fees = Fee::all();
-        $total = 0;
-        foreach ($fees as $key => $fee) {
-            $total = $total + $fee->amount;
-        }
-        $active = Active_SchoolYearAndSem::find(1);
-        $student = Student::with('transactions')
-            ->whereHas('transactions', function ($query) use ($active) {
-                $query->where('school_year_id', $active->active_SY_id);
-            })
-            ->where('student_id', $request->student_id)
-            ->first();
-        // if ($student) {
-        //     return back()->with('toast_error', "Student $student->full_name already has transaction for SY: $active->schoolyear->school_year ");
-        // }
-        SMSPaymentTransaction::create([
-            'student_id' => $request->student_id,
-            'school_year_id' => $active->active_SY_id,
-            'mode_of_payment' => 'Cash',
-            'total_amount' => $total,
-            'amount' =>  $request->amount,
-        ]);
-        return back()->with('toast_success', 'Added Successfully');
     }
 
     /**
@@ -84,9 +60,18 @@ class PaymentTransaction extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($transaction_id, ?string $fee_type = null)
     {
-        //
+        $transactions = TransactionFee::query()
+            ->where('transaction_id', $transaction_id);
+        if ($fee_type) {
+            $transactions->where('type', $fee_type);
+        }
+        return view('pages.SMS.PaymentTransactions.show', [
+            'transaction_id' => $transaction_id,
+            'transactions' => $transactions->get(),
+            'active_school_year' =>  Active_SchoolYearAndSem::find(1)->schoolYear->school_year
+        ]);
     }
 
     /**

@@ -282,7 +282,7 @@ class EnrollmentForm extends Component
             Student::where('id', $student->id)->update([
                 'enrollment_id' => $enrollment_id->id,
             ]);
-            return redirect()->to('/')->with('success', 'Student Successfully Enrolled!');
+            return redirect()->to('/')->with('success', 'Student Successfully Registered!');
             $this->resetExcept(['current_step', 'total_step', 'titles']);
         } catch (\Throwable $th) {
             dd($th);

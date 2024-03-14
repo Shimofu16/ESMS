@@ -36,28 +36,10 @@
                     </div>
                     <div class="card-toolbar">
                         <!-- Button trigger modal-->
-                        <a href="{{ route('transaction.create') }}" class="btn btn-primary font-weight-bold btn-sm mr-3">
+                        <a href="{{ route('transaction.create') }}" class="btn btn-primary font-weight-bold btn-sm">
                             <i class="flaticon2-cube"></i>
                             Add transaction
                         </a>
-                        <div class="dropdown">
-                            <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button"
-                                id="dropdownMenuButton1" data-toggle="dropdown" aria-expanded="false">
-                                Fee Types
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                @foreach (getFeeTypes() as $fee)
-                                    <li>
-                                        <a class="dropdown-item"
-                                            href="{{ route('transaction.index', ['fee_type' => $fee]) }}">{{ Str::ucfirst($fee) }}</a>
-                                    </li>
-                                @endforeach
-                                <li>
-                                    <a href="{{ route('transaction.index') }}"
-                                        class="dropdown-item">Reset</a></li>
-                            </ul>
-
-                        </div>
                     </div>
                 </div>
                 <div class="card-body">
@@ -76,14 +58,13 @@
                                 <tr>
                                     <td>{{ $transaction->student->full_name }}</td>
                                     {{-- <td>{{ $transaction->mode_of_payment }}</td> --}}
-                                    <td>PHP {{ number_format($transaction->total_amount, 2) }}</td>
-                                    <td>PHP {{ number_format($transaction->amount, 2) }}</td>
+                                    <td>PHP {{ number_format(getTotalFeeAmount($transaction->transactions), 2) }}</td>
+                                    <td>PHP {{ number_format(getTotalBalance($transaction->transactions), 2) }}</td>
                                     <td>
-                                        <button class="btn btn-outline-info btn-sm" data-toggle="modal"
-                                            data-target="#fees{{ $transaction->id }}">
+                                        <a class="btn btn-outline-info btn-sm" href="{{ route('transaction.show', ['transaction_id' => $transaction->id]) }}">
                                             <i class="fas fa-eye text-info"></i>
-                                        </button>
-                                        @include('pages.SMS.PaymentTransactions.modal._fees')
+                                            View
+                                        </a>
                                     </td>
                             @endforeach
                         </tbody>

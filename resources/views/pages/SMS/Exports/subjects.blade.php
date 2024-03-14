@@ -17,7 +17,7 @@
         table.table-bordered td {
             border: 1px solid black;
             /* Adjust border width as needed */
-            padding: 8px;
+            padding: 2px !important;
             /* Add padding to cells for better spacing */
         }
     </style>

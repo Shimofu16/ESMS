@@ -213,9 +213,9 @@ Route::prefix('transaction')
     ->name('transaction.')
     ->middleware(['auth'])
     ->group(function () {
-        Route::get('/create{student_id?}', [App\Http\Controllers\SMS\PaymentTransaction::class, 'create'])->name('create');
-        Route::get('/{id?}', [App\Http\Controllers\SMS\PaymentTransaction::class, 'index'])->name('index');
-        Route::post('/store', [App\Http\Controllers\SMS\PaymentTransaction::class, 'store'])->name('store');
+        Route::get('/', [App\Http\Controllers\SMS\PaymentTransaction::class, 'index'])->name('index');
+        Route::get('/create/{student_id?}', [App\Http\Controllers\SMS\PaymentTransaction::class, 'create'])->name('create');
+        Route::get('/{transaction_id}/{fee_type?}', [App\Http\Controllers\SMS\PaymentTransaction::class, 'show'])->name('show');
     });
 // Subjects
 Route::prefix('subject')
