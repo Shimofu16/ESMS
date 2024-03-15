@@ -48,7 +48,7 @@ class Create extends Component
             // Find the payment transaction for the selected student in the active school year
             $transaction = PaymentTransaction::with('student', 'transactions')
                 ->where('student_id', $value)
-                ->where('school_year_id', $this->school_year->school_year_id)
+                ->where('school_year_id', $this->school_year['school_year_id'])
                 ->first();
 
             if ($transaction) {
@@ -85,7 +85,7 @@ class Create extends Component
             $this->array_selected_fees[] = $value;
             $transaction = PaymentTransaction::with('student', 'transactions')
                 ->where('student_id', $this->student_id)
-                ->where('school_year_id', $this->school_year->school_year_id)
+                ->where('school_year_id', $this->school_year['school_year_id'])
                 ->first();
 
             $this->selected_fees = collect(Fee::find($this->array_selected_fees))->map(function ($fee) use ($transaction) {
@@ -129,7 +129,7 @@ class Create extends Component
             $student = Student::find($this->student_id);
             $transaction = PaymentTransaction::with('student', 'transactions')
                 ->where('student_id', $student->id)
-                ->where('school_year_id', $this->school_year->school_year_id)
+                ->where('school_year_id', $this->school_year['school_year_id'])
                 ->first();
             if ($transaction) {
                 foreach ($this->selected_fees as $key => $fee) {
@@ -164,7 +164,7 @@ class Create extends Component
             } else {
                 $transaction =  PaymentTransaction::create([
                     'student_id' => $student->id,
-                    'school_year_id' => $this->school_year->school_year_id,
+                    'school_year_id' => $this->school_year['school_year_id'],
                     'mode_of_payment' => 'Cash',
                 ]);
                 foreach ($this->selected_fees as $key => $fee) {

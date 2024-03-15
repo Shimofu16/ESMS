@@ -20,7 +20,7 @@ class Enrollment extends Component
     {
         $this->schedules = collect();
         // dd(getCurrentSettings());
-        $this->school_year = $settings = getCurrentSettings();
+        $this->school_year =  getCurrentSettings();
         $this->students = getStudentsByStatus(0);
     }
 

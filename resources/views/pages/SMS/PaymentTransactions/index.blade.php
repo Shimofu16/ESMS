@@ -48,8 +48,8 @@
                             <tr>
                                 <th scope="col">Student</th>
                                 {{-- <th scope="col">Mode of payment</th> --}}
-                                <th scope="col">Total Amount</th>
-                                <th scope="col">Payment</th>
+                                <th scope="col">Total Fee Amount</th>
+                                <th scope="col">Balance</th>
                                 <th scope="col">Fees</th>
                             </tr>
                         </thead>

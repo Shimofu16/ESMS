@@ -57,9 +57,8 @@
             <table class="table table-separate table-head-custom table-checkable" id="example">
                 <thead>
                     <tr>
-                        <th></th>
                         <th>Full Name</th>
-                        <th>Grade</th>
+                        <th>Grade Level</th>
                         <th>Track</th>
                         <th>Strand</th>
                         <th>Specialization</th>
