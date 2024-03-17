@@ -23,52 +23,363 @@
                         <option value="{{ $student->id }}">{{ $student->full_name }}</option>
                     @endforeach
                 </select>
-                @error('student_id')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-                @error('section')
-                    <div class="text-info">{{ $message }}</div>
-                @enderror
-                @error('schedule')
-                    <div class="text-info">{{ $message }}</div>
-                @enderror
-                @error('subject')
-                    <div class="text-info">{{ $message }}</div>
-                @enderror
             </div>
             <div class="row justify-content-center my-3">
-                <button class="btn btn-primary {{ session()->has('error') ? 'pe-none' : '' }}" onclick="generatePDF()"
-                    wire:click='save' {{ session()->has('error') ? 'disabled' : '' }}>
+                <button class="btn btn-primary {{ session()->has('error') ? 'pe-none' : '' }}" wire:click="generatePDF"
+                    {{ session()->has('error') ? 'disabled' : '' }}>
                     <i class="fa-solid fa-file-arrow-down"></i>
                     Download PDF
                 </button>
             </div>
             <div class="border p-3">
                 <div id="wrapper">
-                    <div class="row flex-column text-center mb-5">
-                        <div class="d-flex justify-content-center  align-items-center ">
-                            <div class="mb-auto mt-3 mr-2">
-                                <img src="{{ asset('media/logos/capellan_logo.png') }}" alt="logo" class="img-fluid"
-                                    loading="lazy" style="width: 100px; height: 100px;">
+                    <div class="row flex-column text-center mb-3">
+                        <div class="d-flex justify-content-between mb-3 px-4">
+                            <div class="d-flex">
+                                <h1 class="label-title bold mt-3">
+                                    Student Number: &nbsp;
+                                </h1>
+                                <h1 class="label-title  mt-3 bb-1">
+                                    {{ $student_number }}
+                                </h1>
+
                             </div>
-    
+                            <div class="d-flex">
+                                <h1 class="label-title bold mt-3">
+                                    LRN.: &nbsp;
+                                </h1>
+                                <h1 class="label-title  mt-3 bb-1">
+                                    {{ $student_lrn }}
+                                </h1>
+
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center  align-items-center ">
+                            <div class="mb-auto mr-2">
+                                <img src="{{ asset('media/logos/capellan_logo.png') }}" alt="logo" class="img-fluid"
+                                    loading="lazy" style="width: 75px; height: 75px;">
+                            </div>
+                            <div>
+                                <h1 class="title bold mt-3">
+                                    CAPELLAN INTITUTE OF TECHNOTOLY
+                                </h1>
+                                <h1 class="sub-title mt-2">
+                                    Pasig City / San Pablo City
+                                </h1>
+                                <h1 class="sub-title mt-2">
+                                    Tel. (02) 8641-5648 / (049) 501-1468
+                                </h1>
+                                <h1 class="sub-title mt-2 bold">
+                                    (CERTIFICATE OF MATRICULATION)
+                                </h1>
+                            </div>
+
+                        </div>
+                        <div class="d-flex justify-content-between mb-3 px-4">
+                            <div class="d-flex">
+                                <h1 class="label-title bold mt-3">
+                                    Name: &nbsp;
+                                </h1>
+                                <h1 class="label-title  mt-3 bb-1">
+                                    {{ $name }}
+                                </h1>
+
+                            </div>
+                            <div class="d-flex">
+                                <h1 class="label-title bold mt-3">
+                                    Strand: &nbsp;
+                                </h1>
+                                <h1 class="label-title  mt-3 bb-1">
+                                    {{ $strand }}
+                                </h1>
+
+                            </div>
+                            <div class="d-flex">
+                                <h1 class="label-title bold mt-3">
+                                    Program: &nbsp;
+                                </h1>
+                                <h1 class="label-title  mt-3 bb-1">
+                                    {{ $program }}
+                                </h1>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3 px-4">
+                            <div class="d-flex">
+                                <h1 class="label-title bold mt-3">
+                                    School Year: &nbsp;
+                                </h1>
+                                <h1 class="label-title  mt-3 bb-1">
+                                    {{ $school_year['school_year'] }}
+                                </h1>
+
+                            </div>
+                            <div class="d-flex">
+                                <h1 class="label-title bold mt-3">
+                                    Grade Level: &nbsp;
+                                </h1>
+                                <h1 class="label-title  mt-3 bb-1">
+                                    {{ $grade_level }}
+                                </h1>
+
+                            </div>
+                            <div class="d-flex">
+                                <h1 class="label-title bold mt-3">
+                                    Semester: &nbsp;
+                                </h1>
+                                <h1 class="label-title  mt-3 bb-1">
+                                    @if ($semester)
+                                        {{ $semester }}{{ $semester == 1 ? 'st' : 'nd' }}
+                                    @endif
+                                </h1>
+
+                            </div>
+                            <div class="d-flex">
+                                <h1 class="label-title bold mt-3">
+                                    Date Enrolled: &nbsp;
+                                </h1>
+                                <h1 class="label-title  mt-3 bb-1">
+                                    @if ($date_enrolled)
+                                        {{ date('M d, Y', strtotime($date_enrolled)) }}
+                                    @endif
+                                </h1>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3 px-4">
+                            <div class="d-flex">
+                                <h1 class="label-title bold mt-3">
+                                    Total Amount of Tuition Fee: &nbsp;
+                                </h1>
+                                <h1 class="label-title  mt-3 bb-1">
+                                    {{ number_format($total_tuition_fee, 2) }}
+                                </h1>
+
+                            </div>
+                            <div class="d-flex">
+                                <h1 class="label-title bold mt-3">
+                                    Others: &nbsp;
+                                </h1>
+                                <h1 class="label-title  mt-3 bb-1">
+                                    {{ number_format($total_other_fees, 2) }}
+                                </h1>
+
+                            </div>
+                            <div class="d-flex">
+                                <h1 class="label-title bold mt-3">
+                                    Total: &nbsp;
+                                </h1>
+                                <h1 class="label-title  mt-3 bb-1">
+                                    {{ number_format($total, 2) }}
+                                </h1>
+                            </div>
                         </div>
                     </div>
                     <!-- Table with stripped rows -->
-                    <table class="table table-bordered mb-3">
+                    <table class="table table-bordered mb-1">
                         <thead>
-                            <tr class="bg-orange">
-                                <th scope="col" class="text-center">Core Subjects</th>
-                                <th scope="col" class="text-center">Grade</th>
-                                <th scope="col" class="text-center">To be Taken</th>
+                            <tr>
+                                <th scope="col" class="text-center">O.R NO.</th>
+                                <th scope="col" class="text-center">PARTICULARS</th>
+                                <th scope="col" class="text-center">AMOUNT</th>
+                                <th scope="col" class="text-center">BALANCE</th>
+                                <th scope="col" class="text-center">DATE</th>
                             </tr>
                         </thead>
                         <tbody>
-    
+                            @forelse ($transactions as $transaction)
+                                <tr>
+                                    <td> &nbsp;</td>
+                                    <td>{{ $transaction->fee->name }}</td>
+                                    <td>{{ number_format($transaction->amount, 2) }}</td>
+                                    <td>
+                                        @if ($transaction->fee_amount > $transaction->amount)
+                                            {{ number_format($transaction->fee_amount - $transaction->amount, 2) }}
+                                        @endif
+                                    </td>
+                                    <td>{{ date('M d, Y', strtotime($transaction->created_at)) }}</td>
+                                </tr>
+
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="text-center"> Select student to view transactions</td>
+                                </tr>
+                            @endforelse
+
                         </tbody>
-    
+
                     </table>
-    
+                    <div class="row flex-column text-center">
+                        <div class="d-flex justify-content-between px-4">
+                            <div class="d-flex">
+                                <h1 class="label-title bold my-3">
+                                    Cashier's Copy
+                                </h1>
+                            </div>
+                            <div class="d-flex">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bb-dashed mb-5">
+                    </div>
+                    <div class="row flex-column text-center mb-3">
+                        <div class="d-flex justify-content-between mb-3 px-4">
+                            <div class="d-flex">
+                                <h1 class="label-title bold mt-3">
+                                    Student Number: &nbsp;
+                                </h1>
+                                <h1 class="label-title  mt-3 bb-1">
+                                    {{ $student_number }}
+                                </h1>
+
+                            </div>
+                            <div class="d-flex">
+                                <h1 class="label-title bold mt-3">
+                                    LRN.: &nbsp;
+                                </h1>
+                                <h1 class="label-title  mt-3 bb-1">
+                                    {{ $student_lrn }}
+                                </h1>
+
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center  align-items-center ">
+                            <div class="mb-auto mr-2">
+                                <img src="{{ asset('media/logos/capellan_logo.png') }}" alt="logo"
+                                    class="img-fluid" loading="lazy" style="width: 75px; height: 75px;">
+                            </div>
+                            <div>
+                                <h1 class="title bold mt-3">
+                                    CAPELLAN INTITUTE OF TECHNOTOLY
+                                </h1>
+                                <h1 class="sub-title mt-2">
+                                    Pasig City / San Pablo City
+                                </h1>
+                                <h1 class="sub-title mt-2">
+                                    Tel. (02) 8641-5648 / (049) 501-1468
+                                </h1>
+                                <h1 class="sub-title mt-2 bold">
+                                    (CERTIFICATE OF MATRICULATION)
+                                </h1>
+                            </div>
+
+                        </div>
+                        <div class="d-flex justify-content-between mb-3 px-4">
+                            <div class="d-flex">
+                                <h1 class="label-title bold mt-3">
+                                    Name: &nbsp;
+                                </h1>
+                                <h1 class="label-title  mt-3 bb-1">
+                                    {{ $name }}
+                                </h1>
+
+                            </div>
+                            <div class="d-flex">
+                                <h1 class="label-title bold mt-3">
+                                    Strand: &nbsp;
+                                </h1>
+                                <h1 class="label-title  mt-3 bb-1">
+                                    {{ $strand }}
+                                </h1>
+
+                            </div>
+                            <div class="d-flex">
+                                <h1 class="label-title bold mt-3">
+                                    Program: &nbsp;
+                                </h1>
+                                <h1 class="label-title  mt-3 bb-1">
+                                    {{ $program }}
+                                </h1>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3 px-4">
+                            <div class="d-flex">
+                                <h1 class="label-title bold mt-3">
+                                    School Year: &nbsp;
+                                </h1>
+                                <h1 class="label-title  mt-3 bb-1">
+                                    {{ $school_year['school_year'] }}
+                                </h1>
+
+                            </div>
+                            <div class="d-flex">
+                                <h1 class="label-title bold mt-3">
+                                    Grade Level: &nbsp;
+                                </h1>
+                                <h1 class="label-title  mt-3 bb-1">
+                                    {{ $grade_level }}
+                                </h1>
+
+                            </div>
+                            <div class="d-flex">
+                                <h1 class="label-title bold mt-3">
+                                    Semester: &nbsp;
+                                </h1>
+                                <h1 class="label-title  mt-3 bb-1">
+                                    @if ($semester)
+                                        {{ $semester }}{{ $semester == 1 ? 'st' : 'nd' }}
+                                    @endif
+                                </h1>
+
+                            </div>
+                            <div class="d-flex">
+                                <h1 class="label-title bold mt-3">
+                                    Date Enrolled: &nbsp;
+                                </h1>
+                                <h1 class="label-title  mt-3 bb-1">
+                                    @if ($date_enrolled)
+                                        {{ date('M d, Y', strtotime($date_enrolled)) }}
+                                    @endif
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Table with stripped rows -->
+                    <table class="table table-bordered mb-1">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-center">SUBJECTS</th>
+                                <th scope="col" class="text-center">TIME</th>
+                                <th scope="col" class="text-center">DAY</th>
+                                <th scope="col" class="text-center">ROOM</th>
+                                <th scope="col" class="text-center">TEACHER</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($schedules as $schedule)
+                                <tr>
+                                    <td>{{ $schedule->subject->name }}</td>
+                                    <td>{{ date('H:i A', strtotime($schedule->start_time)) }} -
+                                        {{ date('H:i A', strtotime($schedule->start_time)) }}</td>
+                                    <td>
+                                        @foreach ($schedule->days as $day)
+                                            {{ toShort($day, 3) }}
+                                            @if (!$loop->last)
+                                                /
+                                            @endif
+                                        @endforeach
+                                    </td>
+                                    <td>{{ $schedule->section->section }}</td>
+                                    <td>{{ $schedule->teacher->name }}</td>
+                                </tr>
+
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="text-center"> Select student to view schedules</td>
+                                </tr>
+                            @endforelse
+
+                        </tbody>
+                    </table>
+                    <div class="row flex-column text-center">
+                        <div class="d-flex justify-content-between px-4">
+                            <div class="d-flex">
+                                <h1 class="label-title bold my-3">
+                                    Student's Copy
+                                </h1>
+                            </div>
+                            <div class="d-flex">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -77,14 +388,14 @@
 </div>
 @push('scripts')
     <script type="text/javascript">
-        function generatePDF() {
+        window.addEventListener('generatePDF', event => {
+
+            // Define the JavaScript function with a filename parameter
+
             var element = document.getElementById('wrapper');
-            // var filenameElement = document.getElementById('filename');
-            // var filename = filenameElement.textContent.trim(); // Get the text content of the filename element
-            var filename = 'certificate_of_matriculation'; // Get the text content of the filename element
             var opt = {
-                margin: .5,
-                filename: filename + '.pdf',
+                margin: .3,
+                filename: event.detail.filename + '.pdf',
                 image: {
                     type: 'jpeg',
                     quality: 0.98
@@ -99,6 +410,7 @@
                 }
             };
             html2pdf().set(opt).from(element).save();
-        };
+            alert('inside')
+        })
     </script>
 @endpush

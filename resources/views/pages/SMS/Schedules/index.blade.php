@@ -88,9 +88,9 @@
                                     <td>{{ $schedule->subject->semester->sem }}</td>
 
                                     <td>
-                                        <button class="btn btn-outline-danger btn-sm" data-toggle="modal"
+                                        <button class="btn btn-outline-danger btn-sm text-danger" data-toggle="modal"
                                             data-target="#delete{{ $schedule->id }}">
-                                            <i class="fas fa-trash text-danger"></i>
+                                            <i class="fas fa-trash "></i>
                                         </button>
                                         @include('pages.SMS.Schedules.modal._delete')
                                     </td>

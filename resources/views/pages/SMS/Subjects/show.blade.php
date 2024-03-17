@@ -3,9 +3,9 @@
 
 @section('styles')
     <style>
-        tr.bg-orange th {
+        /* tr.bg-orange th {
             background-color: #f8cbad;
-        }
+        } */
 
         table.table-bordered {
             border-collapse: collapse;
@@ -17,11 +17,43 @@
         table.table-bordered td {
             border: 1px solid black;
             /* Adjust border width as needed */
-            padding: 8px;
-            /* Add padding to cells for better spacing */
+            padding: 0px 8px ;
+            font-size: 16px;
+            font-family: Calibri !important;
+            font-weight: 700 !important;
+        }
+
+        .bold {
+            font-weight: 700 !important;
+        }
+        .bb-1 {
+            border-bottom: 1px solid black;
+        }
+        .bb-dashed {
+            border-bottom: 2px dashed black;
+        }
+
+        .title,
+        .label-title {}
+
+        .title {
+            font-size: 23px !important;
+            font-family: Cambria !important;
+
+        }
+
+        .sub-title {
+            font-size: 17px;
+            font-family: Calibri !important;
+        }
+
+        .label-title {
+            font-size: 16px;
+            font-family: Calibri !important;
         }
     </style>
     @livewireStyles()
+    @stack('styles')
 @endsection
 @section('info')
     <!--begin::Info-->

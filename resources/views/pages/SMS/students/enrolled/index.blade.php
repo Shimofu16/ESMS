@@ -51,7 +51,6 @@
             <table class="table table-separate table-head-custom table-checkable" id="example">
                 <thead>
                     <tr>
-                        <th></th>
                         <th>Full Name</th>
                         <th>Grade</th>
                         <th>Track</th>
@@ -71,8 +70,12 @@
                             <td>{{ $student->enrollment->specialization->specialization }}</td>
                             <td>
                                 <div class="d-flex flex-column align-items-center">
-                                    <a href="{{route('enrolled_student.show', $student->enrollment->student->id)}}">View</a>
-                                    <a href="{{route('enroll_student_subject.create', $student->enrollment->student->id)}}">Enroll Subject</a>
+                                    <a href="{{route('students.enrolled.show', $student->enrollment->student->id)}}"
+                                        class="btn btn-outline-info btn-sm"
+                                        >
+                                        <i class="fas fa-eye"></i> View
+                                    </a>
+
                                 </div>
                             </td>
                         </tr>

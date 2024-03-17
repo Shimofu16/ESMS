@@ -33,3 +33,9 @@ if (!function_exists('toLetter')) {
         return Str::substr($word, 0);
     }
 }
+if (!function_exists('toShort')) {
+    function toShort($word, $length)
+    {
+        return Str::substr($word, $length - 1);
+    }
+}

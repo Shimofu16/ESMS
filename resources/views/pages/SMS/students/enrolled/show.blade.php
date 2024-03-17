@@ -331,16 +331,15 @@
                                 {{-- <span class="text-muted font-weight-bold font-size-sm mt-1">This is the student's
                                     information.</span> --}}
                             </div>
-                            @can('Student Records Permission')
+                            {{-- @can('edit-student')
                             <div class="card-toolbar">
                                 <a class="btn btn-success mr-2"
-                                    href="{{ route('enrolled_student.edit', $student->enrollment->student->id) }}">
+                                    href="{{ route('enrollededit', $student->enrollment->student->id) }}">
                                     <span class="menu-icon flaticon-edit-1">
                                     </span>
                                     Edit Info</a>
-                                {{-- <button type="reset" class="btn btn-secondary">Cancel</button> --}}
                             </div>
-                            @endcan
+                            @endcan --}}
                         </div>
                         <!--end::Header-->
                         <!--begin::Form-->
@@ -1175,7 +1174,7 @@
                                     <i aria-hidden="true" class="ki ki-close"></i>
                                 </button>
                             </div>
-                            <form action="{{ route('enrolled_student.drop', $student->enrollment->student->id) }}"
+                            <form action="{{ route('students.enrolled.drop', $student->id) }}"
                                 method="post">
                                 @csrf
                                 @method('PUT')

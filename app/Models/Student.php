@@ -13,7 +13,10 @@ class Student extends Model
     protected $guarded = [''];
 
     // full name attribute
-    protected $appends = ['full_name'];
+    protected $appends = [
+        'full_name',
+        'full_name_family_name_first',
+    ];
 
     public function memos()
     {
@@ -51,6 +54,12 @@ class Student extends Model
     // get full name of student
     public function getFullNameAttribute()
     {
-        return "{$this->first_name} {$this->middle_name} {$this->last_name}";
+        return "{$this->first_name} {$this->middle_name}, {$this->last_name}";
     }
+    // get full name of student
+    public function getFullNameFamilyNameFirstAttribute()
+    {
+        return "{$this->last_name} {$this->first_name}, {$this->middle_name}";
+    }
+
 }

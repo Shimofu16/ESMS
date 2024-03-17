@@ -116,8 +116,8 @@ class EnrollmentForm extends Component
         switch ($this->current_step) {
             case 1:
                 $this->validate([
-                    'student_lrn' => 'required',
-                    'student_no' => 'required',
+                    'student_lrn' => ['required', 'numeric', 'digits:12'],
+                    'student_no' => ['required', 'numeric', 'digits:6'],
                     'first_name' => 'required',
                     'middle_name' => 'required',
                     'last_name' => 'required',

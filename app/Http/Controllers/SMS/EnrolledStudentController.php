@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\SMS;
 
 use App\Http\Controllers\Controller;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class EnrolledStudentController extends Controller
@@ -46,9 +47,11 @@ class EnrolledStudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $student_id)
     {
-        //
+        return view('pages.SMS.students.enrolled.show',[
+            'student' => Student::with('enrollment.student', 'document')->where('id', $student_id)->first()
+        ]);
     }
 
     /**
