@@ -351,10 +351,7 @@
                                         {{ date('H:i A', strtotime($schedule->start_time)) }}</td>
                                     <td>
                                         @foreach ($schedule->days as $day)
-                                            {{ toShort($day, 3) }}
-                                            @if (!$loop->last)
-                                                /
-                                            @endif
+                                            {{ Str::ucfirst(toShort($day, 3)) }}{{ !$loop->last ? ',' : '' }}
                                         @endforeach
                                     </td>
                                     <td>{{ $schedule->section->section }}</td>
@@ -394,7 +391,7 @@
 
             var element = document.getElementById('wrapper');
             var opt = {
-                margin: .3,
+                margin: .1,
                 filename: event.detail.filename + '.pdf',
                 image: {
                     type: 'jpeg',
@@ -410,7 +407,6 @@
                 }
             };
             html2pdf().set(opt).from(element).save();
-            alert('inside')
         })
     </script>
 @endpush

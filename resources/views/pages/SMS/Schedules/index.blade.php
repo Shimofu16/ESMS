@@ -76,9 +76,9 @@
                                     <td>
                                         <span>
                                             @foreach ($schedule->days as $day)
-                                                {{ $day }},
-                                                @if ($loop->last)
-                                                    {{ $day }}
+                                                {{ $day }}
+                                                @if (!$loop->last)
+                                                    ,
                                                 @endif
                                             @endforeach
                                         </span><br>

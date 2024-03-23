@@ -28,4 +28,9 @@ class Subject extends Model
     {
         return $this->belongsTo(Sem::class);
     }
+
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class, 'subject_id');
+    }
 }

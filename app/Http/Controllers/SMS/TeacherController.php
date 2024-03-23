@@ -67,9 +67,9 @@ class TeacherController extends Controller
         $setting = getCurrentSettings();
 
         $schedules = $teacher->schedules()
-        ->where('school_year_id', $setting->school_year_id)
-        ->where('semester_id', $setting->semester_id)
-        ->get();
+            ->where('school_year_id', $setting['school_year_id'])
+            ->where('semester_id', $setting['semester_id'])
+            ->get();
         return view('pages.SMS.Teachers.show', compact('teacher', 'schedules', 'setting'));
     }
 

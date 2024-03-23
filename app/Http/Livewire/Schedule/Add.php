@@ -112,7 +112,7 @@ class Add extends Component
                 'teacher_id' => $this->teacher_id,
                 'subject_id' => $this->subject_id,
                 'section_id' => $this->section_id,
-                'school_year_id' => $setting->school_year_id,
+                'school_year_id' =>  $setting['school_year_id'],
                 'semester_id' => $this->semester_id,
                 'days' => $this->days,
                 'start_time' => $this->start_time,

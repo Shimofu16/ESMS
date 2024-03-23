@@ -36,7 +36,7 @@ class Enrollment extends Component
         $this->transactions = collect();
         // dd(getCurrentSettings());
         $this->school_year =  getCurrentSettings();
-        $this->students = getStudentsByStatus(0);
+        $this->students = getStudentsByStatus(1);
     }
 
     public function updatedStudentId($value)
@@ -51,7 +51,7 @@ class Enrollment extends Component
             if ($enrollment->section_id == null) {
                 return session()->flash('error', 'The student has no section');
             }
-            if ($schedules) {
+            if (!$schedules) {
                 return session()->flash('error', 'The student has no schedules');
             }
 
@@ -88,17 +88,14 @@ class Enrollment extends Component
 
     public function generatePDF()
     {
-        if ($this->student_id) {
-            // Define the filename variable
-            $filename = toLetter($this->student->first_name) . '_' . Str::lower($this->student->last_name) . '_certificate_of_matriculation';
-
-            // Dispatch the browser event with the filename as data
-            $this->dispatchBrowserEvent('generatePDF', ['filename' => $filename]);
+        if (!$this->student_id) {
+            return session()->flash('error', 'Select Student First.');
         }
-        return session()->flash('error', 'Select Student First.');
-    }
-    public function save()
-    {
+        // Define the filename variable
+        $filename = toLetter($this->student->first_name) . '_' . Str::lower($this->student->last_name) . '_certificate_of_matriculation';
+
+        // Dispatch the browser event with the filename as data
+        $this->dispatchBrowserEvent('generatePDF', ['filename' => $filename]);
     }
 
     public function render()
