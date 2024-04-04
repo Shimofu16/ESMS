@@ -32,7 +32,7 @@
                 </button>
             </div>
             <div class="border p-3">
-                <div id="wrapper">
+                <div id="wrapper p-0 m-0">
                     <div class="row flex-column text-center mb-3">
                         <div class="d-flex justify-content-between mb-3 px-4">
                             <div class="d-flex">
@@ -54,8 +54,10 @@
 
                             </div>
                         </div>
-                        <div class="d-flex justify-content-center  align-items-center ">
-                            <div class="mb-auto mr-2">
+                        <div class="d-flex justify-content-between  align-items-center ">
+                            <div class="div"></div>
+                            <div class="div">
+                                <div class="mb-auto mr-2">
                                 <img src="{{ asset('media/logos/capellan_logo.png') }}" alt="logo" class="img-fluid"
                                     loading="lazy" style="width: 75px; height: 75px;">
                             </div>
@@ -72,6 +74,10 @@
                                 <h1 class="sub-title mt-2 bold">
                                     (CERTIFICATE OF MATRICULATION)
                                 </h1>
+                            </div></div>
+                            <div class="div">
+                                <img src="{{ asset($image) }}" alt="Student Photo" class="img-fluid"
+                                    loading="lazy" style="width: 96px; height: 96px;">
                             </div>
 
                         </div>
@@ -369,11 +375,54 @@
                     <div class="row flex-column text-center">
                         <div class="d-flex justify-content-between px-4">
                             <div class="d-flex">
-                                <h1 class="label-title bold my-3">
-                                    Student's Copy
+                                <h1 class="label-title bold mt-3">
+                                    Old/New: &nbsp;
+                                </h1>
+                                <h1 class="label-title  mt-3 bb-1">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </h1>
+
+                            </div>
+                            <div class="d-flex">
+                                <h1 class="label-title bold mt-3">
+                                    In Charge of Enrollment: &nbsp;
+                                </h1>
+                                <h1 class="label-title  mt-3 bb-1">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row flex-column text-center">
+                        <div class="d-flex justify-content-between px-4">
+                            <div class="d-flex">
+                                <h1 class="label-title bold mt-3">
+                                    Approved By: &nbsp;
+                                </h1>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row flex-column text-center mt-2">
+                        <div class="d-flex justify-content-between px-4">
+                            <div class="d-flex">
+                                <h1 class="label-title bold bt-1">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Technical Director  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </h1>
                             </div>
                             <div class="d-flex">
+                                <h1 class="label-title bold bt-1">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Registrar  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </h1>
+                            </div>
+                            <div class="d-flex">
+                                <h1 class="label-title bold bt-1">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       Student`s Signature  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </h1>
                             </div>
                         </div>
                     </div>
@@ -388,7 +437,7 @@
         window.addEventListener('generatePDF', event => {
 
             // Define the JavaScript function with a filename parameter
-
+            console.log('print');
             var element = document.getElementById('wrapper');
             var opt = {
                 margin: .1,
@@ -407,6 +456,8 @@
                 }
             };
             html2pdf().set(opt).from(element).save();
+            console.log('print');
+            console.log( html2pdf().set(opt).from(element).save());
         })
     </script>
 @endpush

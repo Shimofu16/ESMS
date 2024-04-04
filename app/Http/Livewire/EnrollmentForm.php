@@ -219,10 +219,10 @@ class EnrollmentForm extends Component
         $this->validateData();
 
         try {
-            $folderPath = "public/student/";
+            $folderPath = "students/";
             $extension = $this->student_photo->getClientOriginalExtension();
             $fileName = uniqid() . '.' . $extension;
-            $file = $folderPath . $fileName;
+            $file = 'storage/'.$folderPath . $fileName;
             $this->student_photo->storeAs($folderPath, $fileName);
 
             $student = new Student();
@@ -267,7 +267,7 @@ class EnrollmentForm extends Component
 
 
 
-            $student->image = $fileName;
+            $student->image = $file;
             $student->save();
 
             $school_year = Active_SchoolYearAndSem::first();

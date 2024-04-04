@@ -17,6 +17,7 @@ class Enrollment extends Component
     public $transactions;
 
     public $student;
+    public $image;
     public $student_number;
     public $student_lrn;
     public $name;
@@ -55,6 +56,7 @@ class Enrollment extends Component
                 return session()->flash('error', 'The student has no schedules');
             }
 
+            $this->image = $student->image;
             $this->student_number = $student->std_num;
             $this->student_lrn = $student->lrn;
             $this->name = $student->full_name_family_name_first;
@@ -88,6 +90,7 @@ class Enrollment extends Component
 
     public function generatePDF()
     {
+
         if (!$this->student_id) {
             return session()->flash('error', 'Select Student First.');
         }

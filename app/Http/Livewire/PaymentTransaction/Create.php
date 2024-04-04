@@ -14,6 +14,7 @@ use Livewire\Component;
 class Create extends Component
 {
     public $students;
+    public bool $hasRegistrationFee = false;
     public $student_id;
     public $fees;
     public $array_selected_fees;
@@ -84,11 +85,11 @@ class Create extends Component
     public function save()
     {
         // Check if there's enough amount for registration fee
-        foreach ($this->selected_fees as $fee) {
-            if ($fee['type'] == 'registration' && (int)$this->amount[$fee['id']] != $fee['amount']) {
-                return session()->flash('error', 'Insufficient amount for registration fee');
-            }
-        }
+        // foreach ($this->selected_fees as $fee) {
+        //     if ($fee['type'] == 'registration' && (int)$this->amount[$fee['id']] != $fee['amount']) {
+        //         return session()->flash('error', 'Insufficient amount for registration fee');
+        //     }
+        // }
 
         // Get student and active transaction
         $student = Student::find($this->student_id);
@@ -103,8 +104,11 @@ class Create extends Component
         } else {
             $this->processNewTransaction($student);
         }
-
-        return redirect(route('transaction.create'))->with('toast_success', 'Successfully Created Transactions');
+        $toast_message = 'Successfully Created Transactions';
+        if ($this->hasRegistrationFee) {
+            $toast_message = "{$toast_message} and enrolled students";
+        }
+        return redirect(route('transaction.create'))->with('toast_success', $toast_message);
     }
 
     // Process existing transaction
@@ -175,11 +179,16 @@ class Create extends Component
                 'type' => $fee['type']
             ]);
 
-            if ($fee['type'] == 'registration' && (int)$this->amount[$fee['id']] >= $fee['amount']) {
+            if ($fee['type'] == 'registration') {
+                $this->hasRegistrationFee = true;
                 $this->updateStudentStatusAndAssignToSection($student);
-            } else {
-                $this->createTransactionFeeBalance($transaction_fee, $fee);
             }
+            // if ($fee['type'] == 'registration' && (int)$this->amount[$fee['id']] >= $fee['amount']) {
+            //     $this->updateStudentStatusAndAssignToSection($student);
+            // } else {
+            //     $this->createTransactionFeeBalance($transaction_fee, $fee);
+            // }
+            $this->createTransactionFeeBalance($transaction_fee, $fee);
         }
     }
 

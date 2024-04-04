@@ -113,11 +113,7 @@ Route::prefix('students')->name('students.')->group(function () {
     });
 });
 
-//Enroll Student Subject
-Route::group(['prefix' => 'enroll_student_subject', 'middleware' => ['auth']], function () {
-    Route::get('/create/{student_id}', [App\Http\Controllers\SMS\EnrollStudentSubjectController::class, 'create'])->name('enroll_student_subject.create');
-    Route::post('/store/{student_id}', [App\Http\Controllers\SMS\EnrollStudentSubjectController::class, 'store'])->name('enroll_student_subject.store');
-});
+
 
 //Documents
 Route::group(['prefix' => 'document', 'middleware' => ['auth']], function () {

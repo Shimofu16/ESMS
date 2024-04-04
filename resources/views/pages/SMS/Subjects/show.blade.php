@@ -4,8 +4,8 @@
 @section('styles')
     <style>
         /* tr.bg-orange th {
-            background-color: #f8cbad;
-        } */
+                                background-color: #f8cbad;
+                            } */
 
         table.table-bordered {
             border-collapse: collapse;
@@ -17,7 +17,7 @@
         table.table-bordered td {
             border: 1px solid black;
             /* Adjust border width as needed */
-            padding: 0px 8px ;
+            padding: 0px 8px;
             font-size: 16px;
             font-family: Calibri !important;
             font-weight: 700 !important;
@@ -26,9 +26,15 @@
         .bold {
             font-weight: 700 !important;
         }
+
         .bb-1 {
             border-bottom: 1px solid black;
         }
+
+        .bt-1 {
+            border-top: 1px solid black;
+        }
+
         .bb-dashed {
             border-bottom: 2px dashed black;
         }
@@ -52,6 +58,9 @@
             font-family: Calibri !important;
         }
     </style>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+     integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     @livewireStyles()
     @stack('styles')
 @endsection
@@ -77,9 +86,6 @@
     </div>
 @endsection
 @section('scripts')
-@livewireScripts()
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"
-        integrity="sha512-YcsIPGdhPK4P/uRW6/sruonlYj+Q7UHWeKfTAkBW+g83NKM+jMJFJ4iAPfSnVp7BKD4dKMHmVSvICUbE/V1sSw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        @stack('scripts')
+    @livewireScripts()
+    @stack('scripts')
 @endsection
