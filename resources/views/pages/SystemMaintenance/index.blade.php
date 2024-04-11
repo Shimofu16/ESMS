@@ -203,6 +203,7 @@
                                 <th scope="col">Section</th>
                                 <th scope="col">Specialization Name</th>
                                 <th scope="col">Grade</th>
+                                <th scope="col">Class List</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -218,6 +219,11 @@
                                     </td>
                                     <td>
                                         {{ $section->gradelevel->grade_level }}
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('section.show', ['id' => $section->id]) }}">
+                                            View
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach

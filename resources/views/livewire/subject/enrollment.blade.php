@@ -63,7 +63,7 @@
                             </div>
                             <div>
                                 <h1 class="title bold mt-3">
-                                    CAPELLAN INTITUTE OF TECHNOTOLY
+                                    CAPELLAN INTITUTE OF TECHNOLOGY
                                 </h1>
                                 <h1 class="sub-title mt-2">
                                     Pasig City / San Pablo City
@@ -254,7 +254,7 @@
                             </div>
                             <div>
                                 <h1 class="title bold mt-3">
-                                    CAPELLAN INTITUTE OF TECHNOTOLY
+                                    CAPELLAN INTITUTE OF TECHNOLOGY
                                 </h1>
                                 <h1 class="sub-title mt-2">
                                     Pasig City / San Pablo City

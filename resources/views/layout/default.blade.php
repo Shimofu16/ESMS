@@ -29,7 +29,7 @@
 
         {{-- Includable CSS --}}
         @yield('styles')
-        
+
     </head>
 
     <body {{ Metronic::printAttrs('body') }} {{ Metronic::printClasses('body') }}>
@@ -56,7 +56,7 @@
         @yield('scripts')
         {{-- sweetalert --}}
         @include('sweetalert::alert')
-    
+        <script src="{{ asset('html2pdf/html2pdf.main.js') }}"></script>
     </body>
 </html>
 

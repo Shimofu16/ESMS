@@ -75,8 +75,8 @@
                                     <h4 class="fw-bold"><strong>CAPELLAN INSTITUTE OF TECHNOLOGY</strong></h4>
                                     <h6 class="mb-4 text-center">San Pablo City Branch</h6>
                                     <h4 class="fw-bold mb-3">Class Schedule</h4>
-                                    <h4 class="fw-bold mb-3">SY: {{ $setting->school_year }}</h4>
-                                    <h4 class="fw-bold">{{ $setting->semester_id }}{{ ($setting->semester_id == 1? 'st' : 'nd') }} Semester</h4>
+                                    <h4 class="fw-bold mb-3">SY: {{ $setting['school_year'] }}</h4>
+                                    <h4 class="fw-bold">{{ $setting['semester_id'] }}{{ ($setting['semester_id'] == 1? 'st' : 'nd') }} Semester</h4>
                                 </div>
                             </div>
                             <div class="px-3 mt-5 d-flex justify-content-between">
