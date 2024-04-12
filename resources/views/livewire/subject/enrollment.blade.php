@@ -32,7 +32,7 @@
                 </button>
             </div>
             <div class="border p-3">
-                <div id="wrapper p-0 m-0">
+                <div id="wrapper">
                     <div class="row flex-column text-center mb-3">
                         <div class="d-flex justify-content-between mb-3 px-4">
                             <div class="d-flex">
@@ -433,6 +433,7 @@
     </div>
 </div>
 @push('scripts')
+
     <script type="text/javascript">
         window.addEventListener('generatePDF', event => {
 
@@ -455,9 +456,9 @@
                     orientation: 'portrait'
                 }
             };
+            console.log(element);
             html2pdf().set(opt).from(element).save();
-            console.log('print');
-            console.log( html2pdf().set(opt).from(element).save());
+            // console.log( html2pdf().set(opt).from(element).save());
         })
     </script>
 @endpush
