@@ -28,7 +28,7 @@
                     <option value="">Select student first before selecting fees</option>
                     @foreach ($fees as $fee)
                         <option value="{{ $fee->id }}" @if (old('fee_id') == $fee->id) selected @endif>
-                            {{ $fee->name }} - {{ $fee->amount }}
+                            {{ $fee->name }} - {{ $fee->amount }} - {{ $fee->type }}
                         </option>
                     @endforeach
                 </select>

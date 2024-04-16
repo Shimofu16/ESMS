@@ -46,6 +46,7 @@ class Create extends Component
         if ($value) {
             // Get the final list of fees based on the merged fee IDs
             $this->fees = $this->getFees($value);
+            $this->array_selected_fees = [];
         }
     }
 
@@ -108,7 +109,7 @@ class Create extends Component
         if ($this->hasRegistrationFee) {
             $toast_message = "{$toast_message} and enrolled students";
         }
-        return redirect(route('transaction.create'))->with('toast_success', $toast_message);
+        return redirect(route('transaction.create'))->with('success', $toast_message);
     }
 
     // Process existing transaction
@@ -139,7 +140,8 @@ class Create extends Component
             'type' => $fee['type']
         ]);
 
-        if ($fee['type'] == 'registration' && (int)$this->amount[$fee['id']] >= $fee['amount']) {
+        // if ($fee['type'] == 'registration' && (int)$this->amount[$fee['id']] >= $fee['amount']) {
+        if ($fee['type'] == 'registration') {
             $this->updateStudentStatusAndAssignToSection($student);
         } else {
             $this->createTransactionFeeBalance($transaction_fee, $fee);
@@ -156,7 +158,8 @@ class Create extends Component
             'amount' => $this->amount[$fee['id']]
         ]);
 
-        if ($fee['type'] == 'registration' && (int)$this->amount[$fee['id']] >= $fee['amount']) {
+        // if ($fee['type'] == 'registration' && (int)$this->amount[$fee['id']] >= $fee['amount']) {
+        if ($fee['type'] == 'registration') {
             $this->updateStudentStatusAndAssignToSection($student);
         }
     }
@@ -260,7 +263,9 @@ class Create extends Component
         $fees_ids = array_merge($fee_ids_with_balance, $fee_ids_without_balance);
         return Fee::whereIn('id', $fee_ids_with_balance)
             ->orWhereNotIn('id', $fees_ids)
-            ->get();
+            ->orderBy('type')
+            ->get()
+            ;
     }
 
     public function render()

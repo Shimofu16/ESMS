@@ -146,11 +146,11 @@
                                             <td class="text-center">
                                                 <button class="btn btn-outline-primary btn-sm" data-toggle="modal"
                                                     data-target="#edit{{ $secondSemSubject->id }}">
-                                                    <i class="fas fa-edit text-primary"></i>
+                                                    <i class="fas fa-edit "></i>
                                                 </button>
                                                 <button class="btn btn-outline-danger btn-sm" data-toggle="modal"
                                                     data-target="#delete{{ $secondSemSubject->id }}">
-                                                    <i class="fas fa-trash text-danger"></i>
+                                                    <i class="fas fa-trash"></i>
                                                 </button>
                                             </td>
                                         </tr>

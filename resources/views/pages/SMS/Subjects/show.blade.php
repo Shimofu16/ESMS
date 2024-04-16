@@ -6,7 +6,9 @@
         /* tr.bg-orange th {
                                 background-color: #f8cbad;
                             } */
-
+                table{
+                    font-size: 14px;
+                }
         table.table-bordered {
             border-collapse: collapse;
             border: 1px solid black;
@@ -18,7 +20,7 @@
             border: 1px solid black;
             /* Adjust border width as needed */
             padding: 0px 8px;
-            font-size: 16px;
+            font-size: 14px;
             font-family: Calibri !important;
             font-weight: 700 !important;
         }
@@ -43,18 +45,18 @@
         .label-title {}
 
         .title {
-            font-size: 23px !important;
+            font-size: 21px !important;
             font-family: Cambria !important;
 
         }
 
         .sub-title {
-            font-size: 17px;
+            font-size: 15px;
             font-family: Calibri !important;
         }
 
         .label-title {
-            font-size: 16px;
+            font-size: 14px;
             font-family: Calibri !important;
         }
     </style>
@@ -68,7 +70,7 @@
 
         <!--begin::Page Title-->
         <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-            Subjects
+             Enrollment
         </h5>
         <!--end::Page Title-->
 

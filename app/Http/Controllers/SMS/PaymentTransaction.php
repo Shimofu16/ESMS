@@ -107,4 +107,31 @@ class PaymentTransaction extends Controller
     {
         //
     }
+    public function soa(?int $grade_level_id = null)
+    {
+        $setting = getCurrentSettings();
+        $payment_transactions = SMSPaymentTransaction::query()->where('school_year_id', $setting['school_year_id']);
+        $transactions_temp = $payment_transactions->get();
+        foreach ($transactions_temp as $key => $temp) {
+            if (!checkIfStudentHasTuitionFee($temp)) {
+                return redirect()->route('transaction.index')->with('error', 'Some students do not have a tuition fee.');
+            }
+            if ($temp->student->enrollment->section_id == null) {
+                return redirect()->route('transaction.index')->with('error', "Student {$temp->student->full_name} do not have an assigned section.");
+            }
+        }
+
+        if ($grade_level_id) {
+            $payment_transactions= $payment_transactions->whereHas('student', function ($query) use ($grade_level_id){
+                $query->whereHas('enrollment', function ($que) use ($grade_level_id){
+                    $que->where('gradelevel_id', $grade_level_id);
+                });
+            });
+        }
+        return view('pages.SMS.Exports.soa',
+        [
+            'payment_transactions' => $payment_transactions->get()
+        ]
+    );
+    }
 }

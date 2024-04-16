@@ -36,9 +36,13 @@
                     </div>
                     <div class="card-toolbar">
                         <!-- Button trigger modal-->
-                        <a href="{{ route('transaction.create') }}" class="btn btn-primary font-weight-bold btn-sm">
+                        <a href="{{ route('transaction.create') }}" class="btn btn-primary font-weight-bold btn-sm mr-1">
                             <i class="flaticon2-cube"></i>
                             Add transaction
+                        </a>
+                        <a href="{{ route('transaction.soa') }}" class="btn btn-primary font-weight-bold btn-sm">
+                            <i class="fa-solid fa-file-arrow-down"></i>
+                            Download SOA
                         </a>
                     </div>
                 </div>
@@ -62,7 +66,7 @@
                                     <td>PHP {{ number_format(getTotalBalance($transaction->transactions), 2) }}</td>
                                     <td>
                                         <a class="btn btn-outline-info btn-sm" href="{{ route('transaction.show', ['transaction_id' => $transaction->id]) }}">
-                                            <i class="fas fa-eye text-info"></i>
+                                            <i class="fas fa-eye"></i>
                                             View
                                         </a>
                                     </td>

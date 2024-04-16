@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\SMS\PaymentTransaction;
 use App\Models\SMS\StudentSubject;
+use App\Models\SMS\TransactionFee;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -50,6 +51,13 @@ class Student extends Model
     {
         return $this->hasMany(PaymentTransaction::class);
     }
+    public function getTransactionFeeValueBy($transaction_id, $type)
+    {
+        $transaction = TransactionFee::where('type', $type)
+            ->where('transaction_id', $transaction_id)
+            ->first();
+        return $transaction->fee_amount;
+    }
 
     // get full name of student
     public function getFullNameAttribute()
@@ -61,5 +69,4 @@ class Student extends Model
     {
         return "{$this->last_name} {$this->first_name}, {$this->middle_name}";
     }
-
 }

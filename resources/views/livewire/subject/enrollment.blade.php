@@ -58,26 +58,27 @@
                             <div class="div"></div>
                             <div class="div">
                                 <div class="mb-auto mr-2">
-                                <img src="{{ asset('media/logos/capellan_logo.png') }}" alt="logo" class="img-fluid"
-                                    loading="lazy" style="width: 75px; height: 75px;">
+                                    <img src="{{ asset('media/logos/capellan_logo.png') }}" alt="logo"
+                                        class="img-fluid" loading="lazy" style="width: 75px; height: 75px;">
+                                </div>
+                                <div>
+                                    <h1 class="title bold mt-3">
+                                        CAPELLAN INTITUTE OF TECHNOLOGY
+                                    </h1>
+                                    <h1 class="sub-title mt-2">
+                                        Pasig City / San Pablo City
+                                    </h1>
+                                    <h1 class="sub-title mt-2">
+                                        Tel. (02) 8641-5648 / (049) 501-1468
+                                    </h1>
+                                    <h1 class="sub-title mt-2 bold">
+                                        (CERTIFICATE OF MATRICULATION)
+                                    </h1>
+                                </div>
                             </div>
-                            <div>
-                                <h1 class="title bold mt-3">
-                                    CAPELLAN INTITUTE OF TECHNOLOGY
-                                </h1>
-                                <h1 class="sub-title mt-2">
-                                    Pasig City / San Pablo City
-                                </h1>
-                                <h1 class="sub-title mt-2">
-                                    Tel. (02) 8641-5648 / (049) 501-1468
-                                </h1>
-                                <h1 class="sub-title mt-2 bold">
-                                    (CERTIFICATE OF MATRICULATION)
-                                </h1>
-                            </div></div>
                             <div class="div">
-                                <img src="{{ asset($image) }}" alt="Student Photo" class="img-fluid"
-                                    loading="lazy" style="width: 96px; height: 96px;">
+                                <img src="{{ asset($image) }}" alt="Student Photo" class="img-fluid" loading="lazy"
+                                    style="width: 96px; height: 96px;">
                             </div>
 
                         </div>
@@ -100,6 +101,9 @@
                                 </h1>
 
                             </div>
+
+                        </div>
+                        <div class="d-flex justify-content-between mb-3 px-4">
                             <div class="d-flex">
                                 <h1 class="label-title bold mt-3">
                                     Program: &nbsp;
@@ -108,8 +112,6 @@
                                     {{ $program }}
                                 </h1>
                             </div>
-                        </div>
-                        <div class="d-flex justify-content-between mb-3 px-4">
                             <div class="d-flex">
                                 <h1 class="label-title bold mt-3">
                                     School Year: &nbsp;
@@ -119,6 +121,10 @@
                                 </h1>
 
                             </div>
+
+                        </div>
+                        <div class="d-flex justify-content-between mb-3 px-4">
+
                             <div class="d-flex">
                                 <h1 class="label-title bold mt-3">
                                     Grade Level: &nbsp;
@@ -195,13 +201,25 @@
                                 <tr>
                                     <td> &nbsp;</td>
                                     <td>{{ $transaction->fee->name }}</td>
-                                    <td>{{ number_format($transaction->amount, 2) }}</td>
                                     <td>
-                                        @if ($transaction->fee_amount > $transaction->amount)
-                                            {{ number_format($transaction->fee_amount - $transaction->amount, 2) }}
+                                        @if (checkIfStudentHasBalance($transaction))
+                                            {{ number_format(getTotalAmountPayed($transaction)['total_amount'], 2) }}
+                                        @else
+                                            {{ number_format($transaction->amount, 2) }}
                                         @endif
                                     </td>
-                                    <td>{{ date('M d, Y', strtotime($transaction->created_at)) }}</td>
+                                    <td>
+                                        @if (checkIfStudentHasBalance($transaction))
+                                            {{ number_format(getLatestBalance($transaction)->balance, 2) }}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if (checkIfStudentHasBalance($transaction))
+                                            {{ date('M d, Y', strtotime(getLatestBalance($transaction)->created_at)) }}
+                                        @else
+                                            {{ date('M d, Y', strtotime($transaction->created_at)) }}
+                                        @endif
+                                    </td>
                                 </tr>
 
                             @empty
@@ -224,8 +242,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="bb-dashed mb-5">
-                    </div>
+                    <div class="bb-dashed mb-5" id="page2"></div>
+                    {{-- <div class=" mb-5" id="page2"></div> --}}
                     <div class="row flex-column text-center mb-3">
                         <div class="d-flex justify-content-between mb-3 px-4">
                             <div class="d-flex">
@@ -287,6 +305,8 @@
                                 </h1>
 
                             </div>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3 px-4">
                             <div class="d-flex">
                                 <h1 class="label-title bold mt-3">
                                     Program: &nbsp;
@@ -295,8 +315,6 @@
                                     {{ $program }}
                                 </h1>
                             </div>
-                        </div>
-                        <div class="d-flex justify-content-between mb-3 px-4">
                             <div class="d-flex">
                                 <h1 class="label-title bold mt-3">
                                     School Year: &nbsp;
@@ -306,6 +324,10 @@
                                 </h1>
 
                             </div>
+
+                        </div>
+                        <div class="d-flex justify-content-between mb-3 px-4">
+
                             <div class="d-flex">
                                 <h1 class="label-title bold mt-3">
                                     Grade Level: &nbsp;
@@ -354,7 +376,7 @@
                                 <tr>
                                     <td>{{ $schedule->subject->name }}</td>
                                     <td>{{ date('H:i A', strtotime($schedule->start_time)) }} -
-                                        {{ date('H:i A', strtotime($schedule->start_time)) }}</td>
+                                        {{ date('H:i A', strtotime($schedule->end_time)) }}</td>
                                     <td>
                                         @foreach ($schedule->days as $day)
                                             {{ Str::ucfirst(toShort($day, 3)) }}{{ !$loop->last ? ',' : '' }}
@@ -379,8 +401,10 @@
                                     Old/New: &nbsp;
                                 </h1>
                                 <h1 class="label-title  mt-3 bb-1">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </h1>
 
                             </div>
@@ -389,10 +413,14 @@
                                     In Charge of Enrollment: &nbsp;
                                 </h1>
                                 <h1 class="label-title  mt-3 bb-1">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </h1>
                             </div>
                         </div>
@@ -411,17 +439,19 @@
                         <div class="d-flex justify-content-between px-4">
                             <div class="d-flex">
                                 <h1 class="label-title bold bt-1">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Technical Director  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Technical Director &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </h1>
                             </div>
                             <div class="d-flex">
                                 <h1 class="label-title bold bt-1">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Registrar  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Registrar
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </h1>
                             </div>
                             <div class="d-flex">
                                 <h1 class="label-title bold bt-1">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       Student`s Signature  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Student`s Signature
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </h1>
                             </div>
                         </div>
@@ -433,7 +463,6 @@
     </div>
 </div>
 @push('scripts')
-
     <script type="text/javascript">
         window.addEventListener('generatePDF', event => {
 
@@ -441,14 +470,15 @@
             console.log('print');
             var element = document.getElementById('wrapper');
             var opt = {
-                margin: .1,
+                // pagebreak: { mode: 'avoid-all', before: '#page2' },
+                margin: .2,
                 filename: event.detail.filename + '.pdf',
                 image: {
                     type: 'jpeg',
                     quality: 0.98
                 },
                 html2canvas: {
-                    scale: 2
+                    scale: 1
                 },
                 jsPDF: {
                     unit: 'in',

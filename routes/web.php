@@ -210,6 +210,7 @@ Route::prefix('transaction')
     ->middleware(['auth'])
     ->group(function () {
         Route::get('/create/{student_id?}', [App\Http\Controllers\SMS\PaymentTransaction::class, 'create'])->name('create');
+        Route::get('/download/soa/{grade_level_id?}', [App\Http\Controllers\SMS\PaymentTransaction::class, 'soa'])->name('soa');
         Route::get('/{transaction_id}/{fee_type?}', [App\Http\Controllers\SMS\PaymentTransaction::class, 'show'])->name('show');
         Route::get('/', [App\Http\Controllers\SMS\PaymentTransaction::class, 'index'])->name('index');
     });

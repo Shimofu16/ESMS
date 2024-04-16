@@ -67,12 +67,12 @@ class Enrollment extends Component
             $this->date_enrolled = $enrollment->created_at;
             $this->total_tuition_fee = getFeeByType('tuition')->amount;
 
-            $transaction = $student
+            $student = $student
                 ->transactions()
                 ->where('school_year_id', $this->school_year['school_year_id'])
                 ->first();
-            $this->transactions = $transaction->transactions;
-            $this->total_other_fees = $this->getTotalTransactions($transaction->transactions);
+            $this->transactions = $student->transactions;
+            $this->total_other_fees = $this->getTotalTransactions($student->transactions);
             $this->total = $this->total_tuition_fee + $this->total_other_fees;
 
             $this->schedules = $schedules;

@@ -111,6 +111,77 @@ if (!function_exists('checkIfStudentPayRegistrationFee')) {
         return false;
     }
 }
+if (!function_exists('checkIfStudentHasTuitionFee')) {
+    function checkIfStudentHasTuitionFee($payment_transactions)
+    {
+        $setting = getCurrentSettings();
+        $payment_transactions = $payment_transactions->where('school_year_id', $setting['school_year_id'])->get();
+        foreach ($payment_transactions as $key => $payment_transaction) {
+            $tuition_fee = $payment_transaction->transactions()->where('type', 'tuition')->first();
+            if ($tuition_fee) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+if (!function_exists('checkIfStudentHasBalance')) {
+    function checkIfStudentHasBalance($transaction)
+    {
+        $latest_balance = $transaction->balances()->latest()->first();
+        if ($latest_balance) {
+            return true;
+        }
+        return false;
+    }
+}
+if (!function_exists('getTotalAmountPayed')) {
+    function getTotalAmountPayed($transaction)
+    {
+        $total_balance = 0;
+        $total_amount = 0;
+        foreach ($transaction->balances as $key => $balance) {
+            $total_balance = $total_balance + $balance->balance;
+            $total_amount = $total_amount + $balance->amount;
+        }
+        // dd($transaction->balances());
+        return [
+            'total_balance' => $total_balance,
+            'total_amount' => $total_amount,
+        ];
+    }
+}
+if (!function_exists('getLatestBalance')) {
+    function getLatestBalance($transaction)
+    {
+        return $transaction->balances()->latest()->first();
+    }
+}
+if (!function_exists('getFirstBalance')) {
+    function getFirstBalance($transaction, $column)
+    {
+        $balance = $transaction->balances()->first();
+
+        if ($balance) {
+            return $balance->$column;
+        }
+
+        return null; // or return a default value if needed
+    }
+}
+if (!function_exists('getBalanceByDate')) {
+    function getBalanceByDate($transaction, $date, $column)
+    {
+        $balance = $transaction->balances()->whereDate('created_at', $date)->first();
+
+        if ($balance) {
+            return $balance->$column;
+        }
+
+        return null; // or return a default value if needed
+    }
+}
+
 if (!function_exists('getSchedulesUsingSection')) {
     function getSchedulesUsingSection($section_id)
     {
