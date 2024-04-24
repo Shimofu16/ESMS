@@ -16,8 +16,9 @@ class CreateFeesTable extends Migration
         Schema::create('fees', function (Blueprint $table) {
             $table->id();
             $table->text('name');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->enum('type', ['tuition', 'registration', 'miscellaneous', 'activity', 'other']);
+            $table->enum('gender', ['male', 'female'])->nullable();
             $table->double('amount');
             $table->timestamps();
         });

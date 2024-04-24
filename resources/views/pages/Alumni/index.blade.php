@@ -69,7 +69,7 @@
 
                         <tr>
                             <td>
-                                <a href="{{ route('enrolled_student.show', ['student_id' =>  $student->id]) }}" class="btn btn-primary btn-sm">
+                                <a href="{{ route('students.enrolled.show', ['student_id' =>  $student->id]) }}" class="btn btn-primary btn-sm">
                                     View
                                 </a>
                             </td>

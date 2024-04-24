@@ -13,14 +13,23 @@
         <div class="row mb-3">
             <div class="col-6">
                 <label for="student_id" class="form-label fw-bold text-black">Student</label>
-                <select name="student_id" id="student_id" wire:model='student_id' class="form-control" required>
+                <input list="students" type="text" name="student_id" id="student_id" class="form-control"
+                    wire:model.lazy='student_id' autofocus required>
+                <datalist id="students">
+                    @foreach ($students as $student)
+                        <option value="{{ $student->id }}">
+                            {{ $student->full_name }}
+                        </option>
+                    @endforeach
+                </datalist>
+                {{-- <select name="student_id" id="student_id" wire:model='student_id' class="form-control" required>
                     <option value="">Select student</option>
                     @foreach ($students as $student)
                         <option value="{{ $student->id }}" @if (old('student_id') == $student->id) selected @endif>
                             {{ $student->full_name }}
                         </option>
                     @endforeach
-                </select>
+                </select> --}}
             </div>
             <div class="col-6">
                 <label for="fee_id" class="form-label fw-bold text-black">Fees</label>
@@ -42,11 +51,12 @@
                             <th scope="col">Name</th>
                             <th scope="col">Amount/Balance</th>
                             <th scope="col">Payment</th>
+                            <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($selected_fees as $selected_fee)
-                            <tr>
+                        @forelse ($selected_fees as $key=> $selected_fee)
+                            <tr wire:key='{{ $key }}'>
                                 <td>
                                     {{ $selected_fee['name'] }}
                                 </td>
@@ -60,6 +70,10 @@
                                         name="amount.{{ $selected_fee['id'] }}"
                                         wire:model.prevent='amount.{{ $selected_fee['id'] }}'
                                         value="{{ old('amount') }}" placeholder="Amount">
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-danger"
+                                        wire:click='removeFee({{ $key }})'>X</button>
                                 </td>
                                 @php
                                     $total = $total + $selected_fee['amount'];

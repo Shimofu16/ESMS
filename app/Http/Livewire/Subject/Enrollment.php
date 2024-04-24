@@ -42,6 +42,9 @@ class Enrollment extends Component
 
     public function updatedStudentId($value)
     {
+        if (count($this->students) == 0) {
+            return session()->flash('error', 'No Enrolled Students');
+        }
         if ($value) {
             $student = Student::find($value);
             $enrollment = getStudentEnrollment($student->id);

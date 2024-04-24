@@ -17,12 +17,15 @@
             </div>
             <div class="row mb-3">
                 <label for="student_id" class="form-label fw-bold text-black">Students</label>
-                <select class="form-control" name="student_id" id="student_id" wire:model='student_id'>
-                    <option value="">Select a student</option>
-                    @foreach ($students as $key => $student)
-                        <option value="{{ $student->id }}">{{ $student->full_name }}</option>
+                <input list="students" type="text" name="student_id" id="student_id" class="form-control"
+                    wire:model.lazy='student_id' autofocus required>
+                <datalist id="students">
+                    @foreach ($students as $student)
+                        <option value="{{ $student->id }}">
+                            {{ $student->full_name }}
+                        </option>
                     @endforeach
-                </select>
+                </datalist>
             </div>
             <div class="row justify-content-center my-3">
                 <button class="btn btn-primary {{ session()->has('error') ? 'pe-none' : '' }}" wire:click="generatePDF"

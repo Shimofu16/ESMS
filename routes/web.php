@@ -105,7 +105,7 @@ Route::prefix('students')->name('students.')->group(function () {
     Route::prefix('enrolled')->name('enrolled.')->group(function () {
         Route::get('/', [App\Http\Controllers\SMS\EnrolledStudentController::class, 'index'])->name('index');
         Route::get('/show/{student_id}', [App\Http\Controllers\SMS\EnrolledStudentController::class, 'show'])->name('show');
-        Route::put('/drop/{student_id}', [App\Http\Controllers\SMS\EnrolledStudentController::class, 'drop'])->name('drop');
+        Route::put('/drop/{student_id}', [App\Http\Controllers\SMS\EnrolledStudentController::class, 'destroy'])->name('destroy');
     });
     Route::prefix('enrollee')->name('enrollee.')->group(function () {
         Route::get('/', [App\Http\Controllers\SMS\EnrolleeStudentController::class, 'index'])->name('index');

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\SMS;
 
+use App\Helpers\Activity;
 use App\Http\Controllers\Controller;
 use App\Models\Student;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class EnrolledStudentController extends Controller
@@ -15,7 +17,7 @@ class EnrolledStudentController extends Controller
      */
     public function index()
     {
-        return view('pages.SMS.students.enrolled.index',[
+        return view('pages.SMS.students.enrolled.index', [
             'students' => getStudentsByStatus(1)
         ]);
     }
@@ -49,7 +51,7 @@ class EnrolledStudentController extends Controller
      */
     public function show(int $student_id)
     {
-        return view('pages.SMS.students.enrolled.show',[
+        return view('pages.SMS.students.enrolled.show', [
             'student' => Student::with('enrollment.student', 'document')->where('id', $student_id)->first()
         ]);
     }
@@ -83,8 +85,16 @@ class EnrolledStudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $student =    Student::find($id);
+        $student->update([
+            'status' => 2,
+            'reason_for_dropout' => $request->reason_for_dropout,
+            'dropout_date' =>  Carbon::now(),
+        ]);
+
+        Activity::log(auth()->user()->id, 'Student Management', 'Dropped Student ' . $student->full_name);
+        return redirect()->route('students.enrolled.index')->with('toast_success', 'Added Successfully');
     }
 }

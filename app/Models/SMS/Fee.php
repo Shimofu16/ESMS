@@ -14,7 +14,8 @@ class Fee extends Model
         'description',
         'type',
         'amount',
+        'gender',
     ];
 
-    
+
 }

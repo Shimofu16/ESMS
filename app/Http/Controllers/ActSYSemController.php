@@ -11,6 +11,7 @@ class ActSYSemController extends Controller
 {
     public function update(Request $request, $id)
     {
+        $message = '';
         try {
             $active = Active_SchoolYearAndSem::findOrFail($id);
             if ($request->school_year == $active->active_SY_id) {
@@ -30,7 +31,8 @@ class ActSYSemController extends Controller
                             ]);
                         }
                     }
-                    Activity::log(auth()->user()->id, 'Active School Year Management', 'Update Semester to 2nd sem');
+                    $message ='Update Semester to 2nd sem';
+                    Activity::log(auth()->user()->id, 'Active School Year Management', $message);
                 }
             }else if ($request->school_year > $active->active_SY_id) {
                 $students = Student::with('enrollment')
@@ -51,13 +53,15 @@ class ActSYSemController extends Controller
             $sem_id = $request->sem;
             if ($request->school_year > $active->active_SY_id) {
                 $sem_id = 1;
-                Activity::log(auth()->user()->id, 'Active School Year Management', 'Update SY to '. $request->$request->school_year. ' and Semester to 1st sem');
+                $message ='Update SY to '. $request->school_year. ' and Semester to 1st sem';
+                Activity::log(auth()->user()->id, 'Active School Year Management', $message);
             }
 
             $active->active_SY_id = $request->school_year;
             $active->active_sem_id = $sem_id;
             $active->save();
-            return redirect()->route('sys_main.index');
+
+            return redirect()->route('sys_main.index')->with('success', $message);
         } catch (\Throwable $th) {
             return back()->with('error', $th->getMessage());
         }

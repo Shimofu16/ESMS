@@ -32,57 +32,129 @@ class Create extends Component
         $this->array_selected_fees = [];
         $this->fees = collect();
         if ($this->student_id) {
+            $student = Student::find($this->student_id);
             // Get the final list of fees based on the merged fee IDs
-            $this->fees = $this->getFees($this->student_id);
+            $this->fees = $this->getFees($student->id, $student->sex);
         }
         $this->selected_fees = collect();
-        // $this->array_selected_fees[] = Fee::where('type', 'registration')->first()->id;
-        // $this->fees = Fee::whereNotIn('id', $this->array_selected_fees)->get();
-        // $this->selected_fees = Fee::find($this->array_selected_fees);
-        // dd($this->selected_fees);
     }
     public function updatedStudentId($value)
     {
         if ($value) {
+            $student = Student::find($value);
             // Get the final list of fees based on the merged fee IDs
-            $this->fees = $this->getFees($value);
+            $this->selected_fees = collect();
             $this->array_selected_fees = [];
+            $this->fees = $this->getStudentFees($student->id, $student->sex);
         }
     }
 
 
     public function updatedFeeId($value)
     {
+
         if ($value) {
             $this->array_selected_fees[] = $value;
-            $transaction = PaymentTransaction::with('student', 'transactions')
-                ->where('student_id', $this->student_id)
-                ->where('school_year_id', $this->school_year['school_year_id'])
-                ->first();
-
-            $this->selected_fees = collect(Fee::find($this->array_selected_fees))->map(function ($fee) use ($transaction) {
-                $fee->balance = 0;
-                if ($transaction) {
-                    $temp_transaction =  $transaction->transactions()->with('balances')
-                        ->where('fee_id', $fee->id)
-                        ->first();
-                    if ($temp_transaction && !empty($temp_transaction->balances)) {
-                        $latest_balance = $temp_transaction->balances()->latest()->first();
-                        // Convert the array of selected fees to a collection of objects
-                        if ($latest_balance) {
-                            // Add the balance to the fee
-                            $fee->balance = $latest_balance->balance;
-                        }
-                    }
-                }
-                return  $fee; // Cast each item to an object
-            });
-            // dd($this->selected_fees);
-
+            $this->getFees();
+            $student = Student::find($this->student_id);
+            // Get the final list of fees based on the merged fee IDs
+            $this->fees = $this->getStudentFees($student->id, $student->sex);
         }
     }
+    private function getFees()
+    {
+        $transaction = PaymentTransaction::with('student', 'transactions')
+            ->where('student_id', $this->student_id)
+            ->where('school_year_id', $this->school_year['school_year_id'])
+            ->first();
 
+        $this->selected_fees = collect(Fee::find($this->array_selected_fees))->map(function ($fee) use ($transaction) {
+            $fee->balance = 0;
+            if ($transaction) {
+                $temp_transaction =  $transaction->transactions()->with('balances')
+                    ->where('fee_id', $fee->id)
+                    ->first();
+                if ($temp_transaction && !empty($temp_transaction->balances)) {
+                    $latest_balance = $temp_transaction->balances()->latest()->first();
+                    // Convert the array of selected fees to a collection of objects
+                    if ($latest_balance) {
+                        // Add the balance to the fee
+                        $fee->balance = $latest_balance->balance;
+                    }
+                }
+            }
+            return  $fee; // Cast each item to an object
+        });
+    }
+    private function getStudentFees($student_id, $gender)
+    {
+        // Initialize an empty array to store fee IDs with balances
+        $fee_ids_with_balance = [];
+        // Initialize an empty array to store fee IDs without balances
+        $fee_ids_without_balance = [];
+        // Initialize an empty array to store fee IDs without balances
+        $fees_ids = [];
 
+        // Find the payment transaction for the selected student in the active school year
+        $transaction = PaymentTransaction::with('student', 'transactions')
+            ->where('student_id', $student_id)
+            ->where('school_year_id', $this->school_year['school_year_id'])
+            ->first();
+
+        if ($transaction) {
+            // Iterate through each transaction associated with the payment transaction
+            foreach ($transaction->transactions as $transaction_fee) {
+                // Check if the transaction has balances
+                if ($transaction_fee->balances->count() > 0) {
+                    $latest_balance = $transaction_fee->balances()->latest()->first();
+                    if ($latest_balance->balance == 0) {
+                        // Store the fee ID with balance
+                        $fee_ids_without_balance[] = $transaction_fee->fee_id;
+                    } else {
+                        $fee_ids_with_balance[] = $transaction_fee->fee_id;
+                    }
+                } else {
+                    // Store the fee ID without balance
+                    $fee_ids_without_balance[] = $transaction_fee->fee_id;
+                }
+            }
+        }
+        $fees_ids = array_merge($fee_ids_with_balance, $fee_ids_without_balance,);
+        $fees_with_gender = Fee::whereIn('id', $fee_ids_with_balance)
+            ->orWhereNotIn('id', $fees_ids)
+            ->where('gender', $gender)
+            ->orderBy('type')
+            ->pluck('id')
+            ->toArray();
+        $fees_without_gender = Fee::whereIn('id', $fee_ids_with_balance)
+            ->orWhereNotIn('id', $fees_ids)
+            ->whereNull('gender')
+            ->orderBy('type')
+            ->pluck('id')
+            ->toArray();
+            $fees_ids = array_merge($fees_ids, $fees_with_gender, $fees_without_gender);
+            if ($this->array_selected_fees) {
+
+                return Fee::whereIn('id', $fees_ids)
+                    ->whereNotIn('id', $this->array_selected_fees)
+                    ->orderBy('type')
+                    ->get();
+            } else {
+
+            }
+            return Fee::whereIn('id', $fees_ids)
+                ->orderBy('type')
+                ->get();
+    }
+
+    public function removeFee($key)
+    {
+        if (array_key_exists($key, $this->selected_fees->toArray()) &&  array_key_exists($key, $this->array_selected_fees)) {
+            unset($this->selected_fees->toArray()[$key]);
+            unset($this->array_selected_fees[$key]);
+            $this->getFees();
+        }
+    }
     public function save()
     {
         // Check if there's enough amount for registration fee
@@ -227,46 +299,7 @@ class Create extends Component
         }
     }
 
-    private function getFees($student_id)
-    {
-        // Initialize an empty array to store fee IDs with balances
-        $fee_ids_with_balance = [];
-        // Initialize an empty array to store fee IDs without balances
-        $fee_ids_without_balance = [];
-        // Initialize an empty array to store fee IDs without balances
-        $fees_ids = [];
 
-        // Find the payment transaction for the selected student in the active school year
-        $transaction = PaymentTransaction::with('student', 'transactions')
-            ->where('student_id', $student_id)
-            ->where('school_year_id', $this->school_year['school_year_id'])
-            ->first();
-
-        if ($transaction) {
-            // Iterate through each transaction associated with the payment transaction
-            foreach ($transaction->transactions as $transaction_fee) {
-                // Check if the transaction has balances
-                if ($transaction_fee->balances->count() > 0) {
-                    $latest_balance = $transaction_fee->balances()->latest()->first();
-                    if ($latest_balance->balance == 0) {
-                        // Store the fee ID with balance
-                        $fee_ids_without_balance[] = $transaction_fee->fee_id;
-                    } else {
-                        $fee_ids_with_balance[] = $transaction_fee->fee_id;
-                    }
-                } else {
-                    // Store the fee ID without balance
-                    $fee_ids_without_balance[] = $transaction_fee->fee_id;
-                }
-            }
-        }
-        $fees_ids = array_merge($fee_ids_with_balance, $fee_ids_without_balance);
-        return Fee::whereIn('id', $fee_ids_with_balance)
-            ->orWhereNotIn('id', $fees_ids)
-            ->orderBy('type')
-            ->get()
-            ;
-    }
 
     public function render()
     {

@@ -21,7 +21,7 @@
                     <div class="row mb-3">
                         <div class="col-12">
                             <label for="description" class="form-label fw-bold text-black">Description</label>
-                            <textarea class="form-control" id="description" name="description" cols="30" rows="10" required></textarea>
+                            <textarea class="form-control" id="description" name="description" cols="30" rows="10"></textarea>
                             @error('description')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -29,7 +29,7 @@
                     </div>
 
                     <div class="row mb-3">
-                        <div class="col-12">
+                        <div class="col-6">
                             <label for="type" class="form-label fw-bold text-black">Type</label>
                             <select name="type" id="type" class="form-control" required>
                                 <option value="">Select type</option>
@@ -48,7 +48,17 @@
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-
+                        <div class="col-6">
+                            <label for="gender" class="form-label fw-bold text-black">Gender</label>
+                            <select name="gender" id="gender" class="form-control">
+                                <option value="">Select gender</option>
+                                <option value="male" @if (old('gender') == 'male') selected @endif>Male</option>
+                                <option value="female" @if (old('gender') == 'female') selected @endif>Female</option>
+                            </select>
+                            @error('gender')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-12">

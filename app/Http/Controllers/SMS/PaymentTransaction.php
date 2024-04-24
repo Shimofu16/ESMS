@@ -112,8 +112,11 @@ class PaymentTransaction extends Controller
         $setting = getCurrentSettings();
         $payment_transactions = SMSPaymentTransaction::query()->where('school_year_id', $setting['school_year_id']);
         $transactions_temp = $payment_transactions->get();
+        if ($payment_transactions->get()) {
+            return redirect()->route('transaction.index')->with('error', 'No Transactions yet.');
+        }
         foreach ($transactions_temp as $key => $temp) {
-            if (!checkIfStudentHasTuitionFee($temp)) {
+            if (!checkIfStudentHasTuitionFee($transactions_temp)) {
                 return redirect()->route('transaction.index')->with('error', 'Some students do not have a tuition fee.');
             }
             if ($temp->student->enrollment->section_id == null) {

@@ -1,9 +1,18 @@
 <?php
 
+use App\Models\SchoolYear;
+use App\Models\SMS\Fee;
+use App\Models\Specialization;
+use App\Models\Student;
+use App\Models\Student_Specialization_GradeLevel_SchoolYear;
+use Carbon\Carbon;
+use Faker\Factory;
 use Database\Seeders\SubjectSeeder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
@@ -32,8 +41,14 @@ class DatabaseSeeder extends Seeder
         DB::table('sems')->insert([
             'sem' => '2',
         ]);
+        // DB::table('school_years')->insert([
+        //     'school_year' => '2022-2023',
+        // ]);
+        // DB::table('school_years')->insert([
+        //     'school_year' => '2023-2024',
+        // ]);
         DB::table('school_years')->insert([
-            'school_year' => '2022-2023',
+            'school_year' => '2024-2025',
         ]);
         DB::table('active__school_year_and_sems')->insert([
             'active_SY_id' => '1',
@@ -377,6 +392,198 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $Accounting->assignRole($roleAccounting);
+
+        $school_years = SchoolYear::all();
+        $faker = Factory::create();
+        foreach ($school_years as $key => $school_year) {
+            for ($i = 0; $i < 10; $i++) {
+
+                // $number = random_int(1, 2);
+                // $photoPath = Storage::get(public_path('sample-images/student-sample-' . $number . '.jpg'));
+                // $folderPath = "students/";
+                // $photoName = pathinfo($photoPath, PATHINFO_FILENAME);
+                // $extension = pathinfo($photoPath, PATHINFO_EXTENSION);
+                $student_number = random_int(000000, 100000);
+                $student_lrn = 'LRN-' . random_int(000000, 100000);
+                $birth_date = $faker->dateTimeBetween('-16 years', '-5 years');
+
+                $student = new Student();
+                $student->lrn = $student_lrn;
+                $student->std_num = $student_number;
+                $student->last_name = $faker->lastName();
+                $student->first_name = $faker->firstName();
+                $student->middle_name = $faker->lastName();
+                $student->civil_status = $faker->randomElement(['Single', 'Married']);
+                $student->age = Carbon::parse($birth_date)->age;
+                $student->sex = $faker->randomElement(['Male', 'Female']);
+                $student->nationality = 'Filipino';
+                $student->b_date = $birth_date;
+                $student->contact_num = '09' . random_int(100000000, 10000000000);
+                $student->house_num = $faker->randomNumber(5);
+                $student->purok = $faker->randomNumber(1);
+                $student->brgy = $faker->streetName;
+                $student->municipality = $faker->city();
+                $student->province = $faker->state;
+                $student->f_name = $faker->name();
+                $student->f_occu = $faker->jobTitle;
+                $student->m_name = $faker->name();
+                $student->m_occu = $faker->jobTitle;
+                $student->g_name = $faker->name();
+                $student->relationship = 'Father';
+                $student->g_contact_num = '09' . random_int(100000000, 10000000000);
+                $student->g_add = $faker->address;
+                $student->prev_school = $faker->text(60);
+                $student->prev_school_type = $faker->randomElement(['Public', 'Private', 'ALS', 'Transferee']);
+                $student->jhs_yrs = 4;
+                $student->year_grad = '2016';
+                $student->gen_ave = $faker->randomElement(['80', '83', '79', '87']);
+                $student->prim_grade = $faker->text(60);
+                $student->prim_grade_yr = '2007';
+                $student->intermediate = $faker->text(60);
+                $student->intermediate_yr = '2013';
+                $student->junior_hs = $faker->text(60);
+                $student->junior_hs_yr = '2024';
+                $student->type = $faker->randomElement(['Regular', 'Iregular']);
+                $student->status = 0;
+
+                // $folderPath = "students/";
+                // $fileName = $photoName . '.' . $extension;
+                // $file = 'storage/' . $folderPath . $fileName;
+                // File::copy($photoPath, public_path($file)); // Copy photo to storage
+                // $student->image = $file;
+                $student->save();
+
+                $enrollment_id = Student_Specialization_GradeLevel_SchoolYear::create([
+                    'student_id' => $student->id,
+                    'specialization_id' => Specialization::find(random_int(1,   Specialization::count()))->id,
+                    'gradelevel_id' => random_int(1, 2),
+                    'school_year_id' => $school_year->id,
+                    'sem_id' => 1,
+                ]);
+
+                Student::where('id', $student->id)->update([
+                    'enrollment_id' => $enrollment_id->id,
+                ]);
+            }
+        }
+        $fees = [
+            [
+                'name' => 'VOUCHER BENEFICIARY',
+                'description' => 'Tuition fee for voucher beneficiary students',
+                'type' => 'tuition',
+                'gender' => null,
+                'amount' => 250.00,
+            ],
+            [
+                'name' => 'ESC GRANTEE',
+                'description' => 'Tuition fee for ESC grantee students',
+                'type' => 'tuition',
+                'gender' => null,
+                'amount' => 600.00,
+            ],
+            [
+                'name' => 'OVAP GRANTEE',
+                'description' => 'Tuition fee for OVAP grantee students',
+                'type' => 'tuition',
+                'gender' => null,
+                'amount' => 250.00,
+            ],
+            [
+                'name' => 'REGULAR PAYEE',
+                'description' => 'Tuition fee for regular payee students',
+                'type' => 'tuition',
+                'gender' => null,
+                'amount' => 2000.00,
+            ],
+
+            [
+                'name' => 'Polo & Slacks',
+                'description' => 'MALE FORMAL UNIFORM',
+                'type' => 'other',
+                'gender' => 'male',
+                'amount' => 1250.00,
+            ],
+            [
+                'name' => 'Polo Only',
+                'description' => 'MALE FORMAL UNIFORM',
+                'type' => 'other',
+                'gender' => 'male',
+                'amount' => 750.00,
+            ],
+            [
+                'name' => 'Slacks Only',
+                'description' => 'MALE FORMAL UNIFORM',
+                'type' => 'other',
+                'gender' => 'male',
+                'amount' => 750.00,
+            ],
+            [
+                'name' => 'Blouse & Skirt',
+                'description' => 'FEMALE FORMAL UNIFORM',
+                'type' => 'other',
+                'gender' => 'female',
+                'amount' => 1250.00,
+            ],
+            [
+                'name' => 'Blouse Only',
+                'description' => 'FEMALE FORMAL UNIFORM',
+                'type' => 'other',
+                'gender' => 'female',
+                'amount' => 750.00,
+            ],
+            [
+                'name' => 'Skirt Only',
+                'description' => 'FEMALE FORMAL UNIFORM',
+                'type' => 'other',
+                'gender' => 'female',
+                'amount' => 750.00,
+            ],
+            [
+                'name' => 'Skirt Only',
+                'description' => 'FEMALE FORMAL UNIFORM',
+                'type' => 'other',
+                'gender' => null,
+                'amount' => 750.00,
+            ],
+            [
+                'name' => 'Department Shirt (M/F)',
+                'description' => 'DEPARTMENT SHIRT MALE/FEMALE',
+                'type' => 'other',
+                'gender' => null,
+                'amount' => 750.00,
+            ],
+            [
+                'name' => 'T-shirt & Jogging Pants',
+                'description' => 'P.E UNIFORM MALE/FEMALE',
+                'type' => 'other',
+                'gender' => null,
+                'amount' => 750.00,
+            ],
+            [
+                'name' => 'T-shirt Only',
+                'description' => 'P.E UNIFORM MALE/FEMALE',
+                'type' => 'other',
+                'gender' => null,
+                'amount' => 750.00,
+            ],
+            [
+                'name' => 'Jogging Pants Only',
+                'description' => 'P.E UNIFORM MALE/FEMALE',
+                'type' => 'other',
+                'gender' => null,
+                'amount' => 750.00,
+            ],
+            [
+                'name' => 'ID with Lace',
+                'description' => 'SCHOOL ID',
+                'type' => 'other',
+                'gender' => null,
+                'amount' => 750.00,
+            ],
+        ];
+        foreach ($fees as $key => $fee) {
+            Fee::create($fee);
+        }
 
         // seed subjects
         $this->call([
