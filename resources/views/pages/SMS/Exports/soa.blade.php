@@ -222,11 +222,10 @@
                                 $fifth_month = $first_month->addMonths(4);
 
                             @endphp
-                            {{-- @dd(getBalanceByDate($transaction, getFirstBalance($transaction, 'created_at')->format('Y-m-d'), 'amount'), $transaction->created_at,$first_month) --}}
+                            {{-- @dd(getBalanceByDate($transaction, getFirstBalance($transaction, 'created_at')->format('Y-m-d'), 'amount'), $transaction->created_at->addMonths(1), $first_month) --}}
                             <tr>
                                 <td class="text-center">1<sup>st</sup></td>
                                 <td class="text-center">
-                                    {{-- {{ getBalanceByDate($transaction, $first_month->format('Y-m-d'), 'amount') }} --}}
                                     @if (checkIfStudentHasBalance($transaction))
                                         {{ date('M d, Y', strtotime(getFirstBalance($transaction, 'created_at'))) }}
                                     @else
@@ -243,61 +242,114 @@
                                     @endif
                                 </td>
                                 <td>
+                                    @if (checkIfStudentHasBalance($transaction))
+                                        {{ getBalanceByDate($transaction, getFirstBalance($transaction, 'created_at')->format('Y-m-d'), 'amount') }}
+                                    @else
+                                        {{ getBalanceByDate($transaction, $transaction->created_at, 'amount') }}
+                                    @endif
                                 </td>
                             </tr>
                             <tr>
                                 <td class="text-center">2<sup>nd</sup></td>
-                                <td>
-                                    {{ getBalanceByDate($transaction, $second_month->format('Y-m-d'), 'amount') }}
+                                <td class="text-center">
+                                    @if (checkIfStudentHasBalance($transaction))
+                                        {{ date('M d, Y', strtotime(getFirstBalance($transaction, 'created_at')->addMonths(1))) }}
+                                    @else
+                                        {{ date('M d, Y', strtotime($transaction->created_at->addMonths(1))) }}
+                                    @endif
                                 </td>
-                                <td>
+                                <td class="text-center">
 
+                                    {{-- {{ getBalanceByDate($transaction, $first_month->format('Y-m-d'), 'amount') }} --}}
+                                    @if (checkIfStudentHasBalance($transaction))
+                                        {{ getBalanceByDate($transaction, getFirstBalance($transaction, 'created_at')->addMonths(1)->format('Y-m-d'), 'amount') }}
+                                    @else
+                                        {{ getBalanceByDate($transaction, $transaction->created_at->addMonths(1), 'amount') }}
+                                    @endif
                                 </td>
                                 <td>
-                                    @if (getBalanceByDate($transaction, $second_month->format('Y-m-d'), 'amount'))
-                                        {{ date('M d, Y', strtotime($second_month)) }}
+                                    @if (checkIfStudentHasBalance($transaction))
+                                        {{ getBalanceByDate($transaction, getFirstBalance($transaction, 'created_at')->addMonths(1)->format('Y-m-d'), 'amount') }}
+                                    @else
+                                        {{ getBalanceByDate($transaction, $transaction->created_at->addMonths(1), 'amount') }}
                                     @endif
                                 </td>
                             </tr>
                             <tr>
                                 <td class="text-center">3<sup>rd</sup></td>
-                                <td>
-                                    {{ getBalanceByDate($transaction, $third_month->format('Y-m-d'), 'amount') }}
+                                <td class="text-center">
+                                    @if (checkIfStudentHasBalance($transaction))
+                                        {{ date('M d, Y', strtotime(getFirstBalance($transaction, 'created_at')->addMonths(2))) }}
+                                    @else
+                                        {{ date('M d, Y', strtotime($transaction->created_at->addMonths(2))) }}
+                                    @endif
                                 </td>
-                                <td>
+                                <td class="text-center">
 
+                                    {{-- {{ getBalanceByDate($transaction, $first_month->format('Y-m-d'), 'amount') }} --}}
+                                    @if (checkIfStudentHasBalance($transaction))
+                                        {{ getBalanceByDate($transaction, getFirstBalance($transaction, 'created_at')->addMonths(2)->format('Y-m-d'), 'amount') }}
+                                    @else
+                                        {{ getBalanceByDate($transaction, $transaction->created_at->addMonths(2), 'amount') }}
+                                    @endif
                                 </td>
                                 <td>
-                                    @if (getBalanceByDate($transaction, $third_month->format('Y-m-d'), 'amount'))
-                                        {{ date('M d, Y', strtotime($third_month)) }}
+                                    @if (checkIfStudentHasBalance($transaction))
+                                        {{ getBalanceByDate($transaction, getFirstBalance($transaction, 'created_at')->addMonths(2)->format('Y-m-d'), 'amount') }}
+                                    @else
+                                        {{ getBalanceByDate($transaction, $transaction->created_at->addMonths(2), 'amount') }}
                                     @endif
                                 </td>
                             </tr>
                             <tr>
                                 <td class="text-center">4<sup>th</sup></td>
-                                <td>
-                                    {{ getBalanceByDate($transaction, $fourth_month->format('Y-m-d'), 'amount') }}
+                                <td class="text-center">
+                                    @if (checkIfStudentHasBalance($transaction))
+                                        {{ date('M d, Y', strtotime(getFirstBalance($transaction, 'created_at')->addMonths(3))) }}
+                                    @else
+                                        {{ date('M d, Y', strtotime($transaction->created_at > addMonths(3))) }}
+                                    @endif
                                 </td>
-                                <td>
+                                <td class="text-center">
 
+                                    {{-- {{ getBalanceByDate($transaction, $first_month->format('Y-m-d'), 'amount') }} --}}
+                                    @if (checkIfStudentHasBalance($transaction))
+                                        {{ getBalanceByDate($transaction, getFirstBalance($transaction, 'created_at')->addMonths(3)->format('Y-m-d'), 'amount') }}
+                                    @else
+                                        {{ getBalanceByDate($transaction, $transaction->created_at > addMonths(3), 'amount') }}
+                                    @endif
                                 </td>
                                 <td>
-                                    @if (getBalanceByDate($transaction, $fourth_month->format('Y-m-d'), 'amount'))
-                                        {{ date('M d, Y', strtotime($fourth_month)) }}
+                                    @if (checkIfStudentHasBalance($transaction))
+                                        {{ getBalanceByDate($transaction, getFirstBalance($transaction, 'created_at')->addMonths(3)->format('Y-m-d'), 'amount') }}
+                                    @else
+                                        {{ getBalanceByDate($transaction, $transaction->created_at > addMonths(3), 'amount') }}
                                     @endif
                                 </td>
                             </tr>
                             <tr>
                                 <td class="text-center">5<sup>th</sup></td>
-                                <td>
-                                    {{ getBalanceByDate($transaction, $fifth_month->format('Y-m-d'), 'amount') }}
+                                <td class="text-center">
+                                    @if (checkIfStudentHasBalance($transaction))
+                                        {{ date('M d, Y', strtotime(getFirstBalance($transaction, 'created_at')->addMonths(4))) }}
+                                    @else
+                                        {{ date('M d, Y', strtotime($transaction->created_at->addMonths(4))) }}
+                                    @endif
                                 </td>
-                                <td>
+                                <td class="text-center">
 
+                                    {{-- {{ getBalanceByDate($transaction, $first_month->format('Y-m-d'), 'amount') }} --}}
+                                    @if (checkIfStudentHasBalance($transaction))
+                                        {{ getBalanceByDate($transaction, getFirstBalance($transaction, 'created_at')->addMonths(4)->format('Y-m-d'), 'amount') }}
+                                    @else
+                                        {{ getBalanceByDate($transaction, $transaction->created_at->addMonths(4), 'amount') }}
+                                    @endif
                                 </td>
                                 <td>
-                                    @if (getBalanceByDate($transaction, $fifth_month->format('Y-m-d'), 'amount'))
-                                        {{ date('M d, Y', strtotime($fifth_month)) }}
+                                    @if (checkIfStudentHasBalance($transaction))
+                                        {{ getBalanceByDate($transaction, getFirstBalance($transaction, 'created_at')->addMonths(4)->format('Y-m-d'), 'amount') }}
+                                    @else
+                                        {{ getBalanceByDate($transaction, $transaction->created_at->addMonths(4), 'amount') }}
                                     @endif
                                 </td>
                             </tr>
@@ -377,6 +429,7 @@
                         </div>
                         @php
                             $total = 0;
+                            $total_tuition_fees = 0;
                         @endphp
                         <div class="d-flex justify-content-center align-items-center flex-column">
                             <div class="p-2 d-flex justify-content-center align-items-center flex-column">
@@ -385,20 +438,58 @@
                                     <strong class="border-bottom border-dark"> &nbsp;&nbsp;
                                         @if (checkIfStudentHasBalance($transaction))
                                             @php
-                                                $total = getBalanceByDate(
+                                                $total_tuition_fees = getBalanceByDate(
                                                     $transaction,
                                                     getFirstBalance($transaction, 'created_at')->format('Y-m-d'),
                                                     'amount',
-                                                );
+                                                ) +
+                                                getBalanceByDate(
+                                                    $transaction,
+                                                    getFirstBalance($transaction, 'created_at')->addMonths(1)->format('Y-m-d'),
+                                                    'amount',
+                                                ) +
+                                                getBalanceByDate(
+                                                    $transaction,
+                                                    getFirstBalance($transaction, 'created_at')->addMonths(2)->format('Y-m-d'),
+                                                    'amount',
+                                                ) +
+                                                getBalanceByDate(
+                                                    $transaction,
+                                                    getFirstBalance($transaction, 'created_at')->addMonths(3)->format('Y-m-d'),
+                                                    'amount',
+                                                ) +
+                                                getBalanceByDate(
+                                                    $transaction,
+                                                    getFirstBalance($transaction, 'created_at')->addMonths(4)->format('Y-m-d'),
+                                                    'amount',
+                                                )
+                                                ;
                                             @endphp
                                             {{ number_format(getBalanceByDate($transaction, getFirstBalance($transaction, 'created_at')->format('Y-m-d'), 'amount')) }}
                                         @else
                                             @php
-                                                $total = getBalanceByDate(
-                                                    $transaction,
-                                                    $transaction->created_at,
-                                                    'amount',
-                                                );
+                                                $total_tuition_fees =
+                                                    getBalanceByDate($transaction, $transaction->created_at, 'amount') +
+                                                    getBalanceByDate(
+                                                        $transaction,
+                                                        $transaction->created_at->addMonths(1),
+                                                        'amount',
+                                                    ) +
+                                                    getBalanceByDate(
+                                                        $transaction,
+                                                        $transaction->created_at->addMonths(2),
+                                                        'amount',
+                                                    ) +
+                                                    getBalanceByDate(
+                                                        $transaction,
+                                                        $transaction->created_at->addMonths(3),
+                                                        'amount',
+                                                    ) +
+                                                    getBalanceByDate(
+                                                        $transaction,
+                                                        $transaction->created_at->addMonths(4),
+                                                        'amount',
+                                                    );
                                             @endphp
                                             {{ number_format(getBalanceByDate($transaction, $transaction->created_at, 'amount')) }}
                                         @endif
@@ -418,7 +509,7 @@
 
                             </div>
                             @php
-                                $total = $total + $total_other_fees;
+                                $total = $total_tuition_fees + $total_other_fees;
                             @endphp
                             <div class="p-2 d-flex justify-content-center align-items-center flex-column">
                                 <span class="sub-title">
@@ -437,10 +528,12 @@
                     <div class="p-2 d-flex justify-content-between align-items-center">
                         <div class="d-flex flex-column">
                             <span class="sub-title bold border-bottom border-dark text-center">
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MR. ABELARDO R. LANDICHO JR &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MR. ABELARDO R. LANDICHO JR
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             </span>
                             <h1 class="label-title bold text-center">
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Assistant Technical Director &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Assistant Technical Director
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             </h1>
                         </div>
                         <div class="d-flex flex-column">

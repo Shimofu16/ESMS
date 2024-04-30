@@ -16,16 +16,36 @@
                 @endif
             </div>
             <div class="row mb-3">
-                <label for="student_id" class="form-label fw-bold text-black">Students</label>
-                <input list="students" type="text" name="student_id" id="student_id" class="form-control"
-                    wire:model.lazy='student_id' autofocus required>
-                <datalist id="students">
-                    @foreach ($students as $student)
-                        <option value="{{ $student->id }}">
-                            {{ $student->full_name }}
-                        </option>
-                    @endforeach
-                </datalist>
+                <div class="col-6">
+                    <label for="student_id" class="form-label fw-bold text-black">Students</label>
+                    <input list="students" type="text" name="student_id" id="student_id" class="form-control"
+                        wire:model.lazy='student_id' autofocus required>
+                    <datalist id="students">
+                        @foreach ($students as $student)
+                            <option wire:key="{{ $student->id }}" value="{{ $student->id }}">
+                                {{ $student->full_name }}
+                            </option>
+                        @endforeach
+                    </datalist>
+                </div>
+                <div class="col-6">
+                    @if (!$isRegular)
+                        <label for="subject_id" class="form-label fw-bold text-black">Subjects</label>
+                        <select name="subject_id" id="subject_id" wire:model.live='subject_id' class="form-control  p-0"
+                            required>
+                            @if ($student_id)
+                                <option value="">Select subject</option>
+                                @foreach ($subjects as $subject)
+                                    <option value="{{ $subject->id }}" @if (old('subject_id') == $subject->id) selected @endif>
+                                        {{ $subject->name }}
+                                    </option>
+                                @endforeach
+                            @else
+                                <option value="">Select student First</option>
+                            @endif
+                        </select>
+                    @endif
+                </div>
             </div>
             <div class="row justify-content-center my-3">
                 <button class="btn btn-primary {{ session()->has('error') ? 'pe-none' : '' }}" wire:click="generatePDF"

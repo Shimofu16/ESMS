@@ -114,8 +114,7 @@ if (!function_exists('checkIfStudentPayRegistrationFee')) {
 if (!function_exists('checkIfStudentHasTuitionFee')) {
     function checkIfStudentHasTuitionFee($payment_transactions)
     {
-        $setting = getCurrentSettings();
-        $payment_transactions = $payment_transactions->where('school_year_id', $setting['school_year_id'])->get();
+        // dd($payment_transactions);
         foreach ($payment_transactions as $key => $payment_transaction) {
             $tuition_fee = $payment_transaction->transactions()->where('type', 'tuition')->first();
             if ($tuition_fee) {
@@ -183,10 +182,16 @@ if (!function_exists('getBalanceByDate')) {
 }
 
 if (!function_exists('getSchedulesUsingSection')) {
-    function getSchedulesUsingSection($section_id)
+    function getSchedulesUsingSection($section_id, ?array $subject_ids =null)
     {
         $setting = getCurrentSettings();
-
+        if ($subject_ids) {
+            return  Schedule::with('section')
+                ->where('section_id', $section_id)
+                ->whereIn('subject_id', $subject_ids)
+                ->where('school_year_id', $setting['school_year_id'])
+                ->get();
+        }
         return  Schedule::with('section')
             ->where('section_id', $section_id)
             ->where('school_year_id', $setting['school_year_id'])

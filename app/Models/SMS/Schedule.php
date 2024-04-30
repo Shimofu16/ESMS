@@ -2,6 +2,7 @@
 
 namespace App\Models\SMS;
 
+use App\Casts\Json;
 use App\Models\Section;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,7 +14,7 @@ class Schedule extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'days' => 'array',
+        'days' => Json::class,
     ];
 
     public function teacher()

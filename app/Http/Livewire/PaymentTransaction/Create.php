@@ -32,33 +32,41 @@ class Create extends Component
         $this->array_selected_fees = [];
         $this->fees = collect();
         if ($this->student_id) {
-            $student = Student::find($this->student_id);
-            // Get the final list of fees based on the merged fee IDs
-            $this->fees = $this->getFees($student->id, $student->sex);
+            $this->resetThingsUp();
         }
         $this->selected_fees = collect();
     }
     public function updatedStudentId($value)
     {
         if ($value) {
-            $student = Student::find($value);
-            // Get the final list of fees based on the merged fee IDs
             $this->selected_fees = collect();
             $this->array_selected_fees = [];
-            $this->fees = $this->getStudentFees($student->id, $student->sex);
+            $this->resetThingsUp();
         }
     }
-
+    public function resetThingsUp($function_name = '')
+    {
+        if ($function_name == 'fees') {
+            $this->getFees();
+            $this->fee_id = null;
+        }
+        $student = Student::find($this->student_id);
+        // Get the final list of fees based on the merged fee IDs
+        $this->fees = $this->getStudentFees($student->id, $student->sex);
+        // dd( $this->getFees());
+    }
 
     public function updatedFeeId($value)
     {
-
         if ($value) {
-            $this->array_selected_fees[] = $value;
-            $this->getFees();
-            $student = Student::find($this->student_id);
-            // Get the final list of fees based on the merged fee IDs
-            $this->fees = $this->getStudentFees($student->id, $student->sex);
+            $this->array_selected_fees[$value] = $value;
+            $this->resetThingsUp('fees');
+            foreach ($this->selected_fees as $fee) {
+                if ($fee['type'] == 'registration') {
+
+                }
+
+            }
         }
     }
     private function getFees()
@@ -68,23 +76,24 @@ class Create extends Component
             ->where('school_year_id', $this->school_year['school_year_id'])
             ->first();
 
-        $this->selected_fees = collect(Fee::find($this->array_selected_fees))->map(function ($fee) use ($transaction) {
-            $fee->balance = 0;
-            if ($transaction) {
-                $temp_transaction =  $transaction->transactions()->with('balances')
-                    ->where('fee_id', $fee->id)
-                    ->first();
-                if ($temp_transaction && !empty($temp_transaction->balances)) {
-                    $latest_balance = $temp_transaction->balances()->latest()->first();
-                    // Convert the array of selected fees to a collection of objects
-                    if ($latest_balance) {
+        $this->selected_fees = collect(Fee::find($this->array_selected_fees))
+            ->keyBy('id') // Set the array key to fee id
+            ->map(function ($fee) use ($transaction) {
+                $fee->balance = 0;
+                if ($transaction) {
+                    $temp_transaction =  $transaction->transactions()->with('balances')
+                        ->where('fee_id', $fee->id)
+                        ->first();
+                    if ($temp_transaction && !empty($temp_transaction->balances)) {
+                        $latest_balance = $temp_transaction->balances()->latest()->first();
                         // Add the balance to the fee
-                        $fee->balance = $latest_balance->balance;
+                        if ($latest_balance) {
+                            $fee->balance = $latest_balance->balance;
+                        }
                     }
                 }
-            }
-            return  $fee; // Cast each item to an object
-        });
+                return  $fee;
+            });
     }
     private function getStudentFees($student_id, $gender)
     {
@@ -132,19 +141,17 @@ class Create extends Component
             ->orderBy('type')
             ->pluck('id')
             ->toArray();
-            $fees_ids = array_merge($fees_ids, $fees_with_gender, $fees_without_gender);
-            if ($this->array_selected_fees) {
+        $fees_ids = array_merge($fees_ids, $fees_with_gender, $fees_without_gender);
+        if ($this->array_selected_fees) {
 
-                return Fee::whereIn('id', $fees_ids)
-                    ->whereNotIn('id', $this->array_selected_fees)
-                    ->orderBy('type')
-                    ->get();
-            } else {
-
-            }
-            return Fee::whereIn('id', $fees_ids)
+            return    $this->fees = Fee::whereIn('id', $fees_ids)
+                ->whereNotIn('id', $this->array_selected_fees)
                 ->orderBy('type')
                 ->get();
+        }
+        return  $this->fees = Fee::whereIn('id', $fees_ids)
+            ->orderBy('type')
+            ->get();
     }
 
     public function removeFee($key)
@@ -152,7 +159,7 @@ class Create extends Component
         if (array_key_exists($key, $this->selected_fees->toArray()) &&  array_key_exists($key, $this->array_selected_fees)) {
             unset($this->selected_fees->toArray()[$key]);
             unset($this->array_selected_fees[$key]);
-            $this->getFees();
+            $this->resetThingsUp('fees');
         }
     }
     public function save()
@@ -214,6 +221,7 @@ class Create extends Component
 
         // if ($fee['type'] == 'registration' && (int)$this->amount[$fee['id']] >= $fee['amount']) {
         if ($fee['type'] == 'registration') {
+            $this->hasRegistrationFee = true;
             $this->updateStudentStatusAndAssignToSection($student);
         } else {
             $this->createTransactionFeeBalance($transaction_fee, $fee);
@@ -232,6 +240,7 @@ class Create extends Component
 
         // if ($fee['type'] == 'registration' && (int)$this->amount[$fee['id']] >= $fee['amount']) {
         if ($fee['type'] == 'registration') {
+            $this->hasRegistrationFee = true;
             $this->updateStudentStatusAndAssignToSection($student);
         }
     }
@@ -282,14 +291,15 @@ class Create extends Component
         foreach ($sections as $key => $section) {
             if ($section->students->count() < 30) {
                 $enrollment->update(['section_id' => $section->id]);
-                break;
             }
         }
+        // dd($enrollment, $section->id);
     }
 
     // Create transaction fee balance
     private function createTransactionFeeBalance($transaction_fee, $fee)
     {
+        //check if the amount is greater than the payed amount
         if ($fee['amount'] > $this->amount[$fee['id']]) {
             TransactionFeeBalance::create([
                 'transaction_fee_id' => $transaction_fee->id,

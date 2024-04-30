@@ -13,9 +13,14 @@ class Enrollment extends Component
 {
     public $students;
     public $student_id;
+    public $subjects;
+    public $subject_id;
+    public $selected_subjects;
     public $schedules;
     public $transactions;
+    public bool $isRegular = false;
 
+    public $enrollment;
     public $student;
     public $image;
     public $student_number;
@@ -33,28 +38,33 @@ class Enrollment extends Component
 
     public function mount()
     {
+        $this->selected_subjects = [];
         $this->schedules = collect();
         $this->transactions = collect();
         // dd(getCurrentSettings());
         $this->school_year =  getCurrentSettings();
         $this->students = getStudentsByStatus(1);
+        if (count($this->students) == 0) {
+            return session()->flash('error', 'No Enrolled Students');
+        }
     }
 
     public function updatedStudentId($value)
     {
-        if (count($this->students) == 0) {
-            return session()->flash('error', 'No Enrolled Students');
-        }
+
         if ($value) {
+            $this->isRegular = false;
+            $this->schedules = collect();
             $student = Student::find($value);
-            $enrollment = getStudentEnrollment($student->id);
-            $schedules = getSchedulesUsingSection($enrollment->section_id);
+            $this->enrollment = getStudentEnrollment($student->id);
+            if ($this->enrollment->section_id == null) {
+                return session()->flash('error', 'The student has no section');
+            }
+            $schedules = getSchedulesUsingSection($this->enrollment->section_id);
             if (!checkIfStudentPayRegistrationFee($student->transactions())) {
                 return session()->flash('error', 'The student has not yet paid the registration fee.');
             }
-            if ($enrollment->section_id == null) {
-                return session()->flash('error', 'The student has no section');
-            }
+
             if (!$schedules) {
                 return session()->flash('error', 'The student has no schedules');
             }
@@ -63,23 +73,48 @@ class Enrollment extends Component
             $this->student_number = $student->std_num;
             $this->student_lrn = $student->lrn;
             $this->name = $student->full_name_family_name_first;
-            $this->strand = $enrollment->specialization->strand->strand;
-            $this->program = $enrollment->specialization->specialization;
-            $this->grade_level = $enrollment->grade_level->grade_level;
-            $this->semester = $enrollment->sem->sem;
-            $this->date_enrolled = $enrollment->created_at;
+            $this->strand = $this->enrollment->specialization->strand->strand;
+            $this->program = $this->enrollment->specialization->specialization;
+            $this->grade_level = $this->enrollment->grade_level->grade_level;
+            $this->semester = $this->enrollment->sem->sem;
+            $this->date_enrolled = $this->enrollment->created_at;
             $this->total_tuition_fee = getFeeByType('tuition')->amount;
 
-            $student = $student
+            $student_transaction = $student
                 ->transactions()
                 ->where('school_year_id', $this->school_year['school_year_id'])
                 ->first();
-            $this->transactions = $student->transactions;
+            $this->transactions = $student_transaction->transactions;
             $this->total_other_fees = $this->getTotalTransactions($student->transactions);
             $this->total = $this->total_tuition_fee + $this->total_other_fees;
 
-            $this->schedules = $schedules;
+            $this->selected_subjects = [];
             $this->student = $student;
+            if ($student->type == 'Regular') {
+                $this->isRegular = true;
+                $this->schedules =   getSchedulesUsingSection($this->enrollment->section_id);
+            } else {
+                $this->subjects = Subject::where('specialization_id', $this->enrollment->specialization_id)
+                    ->where('grade_level_id', $this->enrollment->gradelevel_id)
+                    ->where('semester_id', $this->semester)
+                    ->get();
+            }
+            
+            // dd($this->subjects, $this->enrollment);
+        }
+    }
+    public function updatedSubjectId($value)
+    {
+        if ($value) {
+            $this->selected_subjects[$value] = $value;
+            $this->schedules =   getSchedulesUsingSection($this->enrollment->section_id,  $this->selected_subjects);
+            if (count( $this->selected_subjects) == count($this->schedules)) {
+                $this->subjects = Subject::where('specialization_id', $this->enrollment->specialization_id)
+                    ->whereNotIn('id',  $this->selected_subjects)
+                    ->where('grade_level_id', $this->enrollment->gradelevel_id)
+                    ->where('semester_id', $this->semester)
+                    ->get();
+            }
         }
     }
     private function getTotalTransactions($transactions)

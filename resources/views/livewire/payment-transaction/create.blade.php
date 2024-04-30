@@ -22,18 +22,31 @@
                         </option>
                     @endforeach
                 </datalist>
-                {{-- <select name="student_id" id="student_id" wire:model='student_id' class="form-control" required>
+                {{-- <select name="student_id" id="student_id_select2" wire:model.lazy='student_id' class="form-control  p-0" required>
                     <option value="">Select student</option>
                     @foreach ($students as $student)
                         <option value="{{ $student->id }}" @if (old('student_id') == $student->id) selected @endif>
                             {{ $student->full_name }}
                         </option>
                     @endforeach
-                </select> --}}
+                </select>
+                <div wire:ignore>
+                    @script()
+                    <script>
+                        $(document).ready(function() {
+                            $('#student_id_select2').select2().on('change', function (e) {
+                                console.log('value changed');
+                                @this.set('student_id', $('#student_id_select2').select2("val"));
+                            });
+                        });
+                    </script>
+                </div>
+                    @endscript --}}
+
             </div>
             <div class="col-6">
                 <label for="fee_id" class="form-label fw-bold text-black">Fees</label>
-                <select name="fee_id" id="fee_id" wire:model='fee_id' class="form-control" required>
+                <select name="fee_id" id="fee_id" wire:model='fee_id' class="form-control">
                     <option value="">Select student first before selecting fees</option>
                     @foreach ($fees as $fee)
                         <option value="{{ $fee->id }}" @if (old('fee_id') == $fee->id) selected @endif>
@@ -66,10 +79,9 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <input type="number" class="form-control" id="amount.{{ $selected_fee['id'] }}"
-                                        name="amount.{{ $selected_fee['id'] }}"
-                                        wire:model.prevent='amount.{{ $selected_fee['id'] }}'
-                                        value="{{ old('amount') }}" placeholder="Amount">
+                                    <input type="number" class="form-control" id="amount.{{ $key }}"
+                                        name="amount.{{ $key }}"
+                                        wire:model='amount.{{ $key }}' placeholder="Amount">
                                 </td>
                                 <td>
                                     <button type="button" class="btn btn-sm btn-danger"

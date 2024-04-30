@@ -1,7 +1,11 @@
 <?php
 
 use App\Models\SchoolYear;
+use App\Models\Section;
 use App\Models\SMS\Fee;
+use App\Models\SMS\Schedule;
+use App\Models\SMS\Subject;
+use App\Models\SMS\Teacher;
 use App\Models\Specialization;
 use App\Models\Student;
 use App\Models\Student_Specialization_GradeLevel_SchoolYear;
@@ -580,14 +584,95 @@ class DatabaseSeeder extends Seeder
                 'gender' => null,
                 'amount' => 750.00,
             ],
+            [
+                'name' => 'Registration Fee',
+                'description' => 'REGISTRATION FEE',
+                'type' => 'registration',
+                'gender' => null,
+                'amount' => 500.00,
+            ],
         ];
         foreach ($fees as $key => $fee) {
             Fee::create($fee);
         }
 
+        $sections = [
+            ['section' => 'Section-A-1', 'specialization_id' => 1, 'gradelevel_id' => 1],
+            ['section' => 'Section-B-1', 'specialization_id' => 2, 'gradelevel_id' => 1],
+            ['section' => 'Section-C-1', 'specialization_id' => 3, 'gradelevel_id' => 1],
+            ['section' => 'Section-D-1', 'specialization_id' => 4, 'gradelevel_id' => 1],
+            ['section' => 'Section-E-1', 'specialization_id' => 5, 'gradelevel_id' => 1],
+            ['section' => 'Section-F-1', 'specialization_id' => 6, 'gradelevel_id' => 1],
+            ['section' => 'Section-G-1', 'specialization_id' => 7, 'gradelevel_id' => 1],
+            ['section' => 'Section-H-1', 'specialization_id' => 8, 'gradelevel_id' => 1],
+            ['section' => 'Section-A-2', 'specialization_id' => 1, 'gradelevel_id' => 2],
+            ['section' => 'Section-B-2', 'specialization_id' => 2, 'gradelevel_id' => 2],
+            ['section' => 'Section-C-2', 'specialization_id' => 3, 'gradelevel_id' => 2],
+            ['section' => 'Section-D-2', 'specialization_id' => 4, 'gradelevel_id' => 2],
+            ['section' => 'Section-E-2', 'specialization_id' => 5, 'gradelevel_id' => 2],
+            ['section' => 'Section-F-2', 'specialization_id' => 6, 'gradelevel_id' => 2],
+            ['section' => 'Section-G-2', 'specialization_id' => 7, 'gradelevel_id' => 2],
+            ['section' => 'Section-H-2', 'specialization_id' => 8, 'gradelevel_id' => 2],
+            // Add more sections as needed
+        ];
+
+        foreach ($sections as $section) {
+            Section::create($section);
+        }
+
+        $teachers = [
+            [
+                'name' => 'John Doe',
+                'gender' => 'Male',
+                'age' => '30',
+                'contact' => '1234567890',
+                'email' => 'john@example.com',
+            ],
+            [
+                'name' => 'Jane Smith',
+                'gender' => 'Female',
+                'age' => '25',
+                'contact' => '9876543210',
+                'email' => 'jane@example.com',
+            ],
+            // Add more teachers as needed
+        ];
         // seed subjects
         $this->call([
             SubjectSeeder::class,
         ]);
+        foreach ($teachers as $teacher) {
+            Teacher::create($teacher);
+        }
+        $teacher = Teacher::find(random_int(1, Teacher::count()));
+        $school_year =  getCurrentSettings();
+        $sections = Section::all();
+
+        foreach ($sections as $key => $section) {
+            $subjects = Subject::where('specialization_id', $section->specialization_id)->where('grade_level_id', $section->gradelevel_id)->get();
+            foreach ($subjects as $key => $subject) {
+                Schedule::create([
+                    'teacher_id' => $teacher->id,
+                    'subject_id' => $subject->id,
+                    'section_id' => $section->id,
+                    'school_year_id' => $school_year['school_year_id'],
+                    'semester_id' => $school_year['semester_id'],
+                    'days' => ['Monday, Wednesday, Friday'],
+                    'start_time' => '08:00:00',
+                    'end_time' => '10:00:00',
+                ]);
+            }
+        }   
+
+
+
+
+
+
+
+
+
+
+
     }
 }

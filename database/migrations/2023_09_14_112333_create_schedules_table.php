@@ -21,7 +21,7 @@ class CreateSchedulesTable extends Migration
             $table->unsignedBigInteger('school_year_id');
             $table->unsignedBigInteger('semester_id');
             
-            $table->string('days');
+            $table->json('days');
             $table->time('start_time');
             $table->time('end_time');
             $table->foreign('teacher_id')->references('id')->on('teachers');

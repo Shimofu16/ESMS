@@ -1,6 +1,7 @@
 @extends('layout.default')
 
 @section('styles')
+    <link rel="stylesheet" href="{{ asset('select2-4.1.0-rc.0/css/select2.min.css') }}">
     @livewireStyles
 @endsection
 
@@ -52,4 +53,6 @@
 
 @section('scripts')
     @livewireScripts
+    <script src="{{ asset('select2-4.1.0-rc.0/js/select2.min.js') }}"></script>
+    @stack('scripts')
 @endsection
