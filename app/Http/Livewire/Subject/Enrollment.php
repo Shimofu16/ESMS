@@ -92,7 +92,12 @@ class Enrollment extends Component
             $this->student = $student;
             if ($student->type == 'Regular') {
                 $this->isRegular = true;
-                $this->schedules =   getSchedulesUsingSection($this->enrollment->section_id);
+                $subjects = Subject::where('specialization_id', $this->enrollment->specialization_id)
+                ->where('grade_level_id', $this->enrollment->gradelevel_id)
+                ->where('semester_id', $this->semester)
+                ->pluck('id')
+                ->toArray();
+                $this->schedules =   getSchedulesUsingSection($this->enrollment->section_id, $subjects);
             } else {
                 $this->subjects = Subject::where('specialization_id', $this->enrollment->specialization_id)
                     ->where('grade_level_id', $this->enrollment->gradelevel_id)

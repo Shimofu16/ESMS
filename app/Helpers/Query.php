@@ -190,11 +190,13 @@ if (!function_exists('getSchedulesUsingSection')) {
                 ->where('section_id', $section_id)
                 ->whereIn('subject_id', $subject_ids)
                 ->where('school_year_id', $setting['school_year_id'])
+                ->where('semester_id', $setting['semester_id'])
                 ->get();
         }
         return  Schedule::with('section')
             ->where('section_id', $section_id)
             ->where('school_year_id', $setting['school_year_id'])
+            ->where('semester_id', $setting['semester_id'])
             ->get();
     }
 }
