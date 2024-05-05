@@ -657,12 +657,12 @@ class DatabaseSeeder extends Seeder
                     'section_id' => $section->id,
                     'school_year_id' => $school_year['school_year_id'],
                     'semester_id' => $school_year['semester_id'],
-                    'days' => ['Monday, Wednesday, Friday'],
+                    'days' => ['Monday', 'Wednesday', 'Friday'],
                     'start_time' => '08:00:00',
                     'end_time' => '10:00:00',
                 ]);
             }
-        }   
+        }
 
 
 

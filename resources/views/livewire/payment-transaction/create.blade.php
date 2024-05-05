@@ -17,7 +17,7 @@
                     wire:model.lazy='student_id' autofocus required>
                 <datalist id="students">
                     @foreach ($students as $student)
-                        <option value="{{ $student->id }}">
+                        <option value="{{ $student->std_num }}">
                             {{ $student->full_name }}
                         </option>
                     @endforeach

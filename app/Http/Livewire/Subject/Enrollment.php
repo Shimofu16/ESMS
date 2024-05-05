@@ -55,7 +55,7 @@ class Enrollment extends Component
         if ($value) {
             $this->isRegular = false;
             $this->schedules = collect();
-            $student = Student::find($value);
+            $student = Student::where('std_num' ,$value)->first();
             $this->enrollment = getStudentEnrollment($student->id);
             if ($this->enrollment->section_id == null) {
                 return session()->flash('error', 'The student has no section');
@@ -104,7 +104,7 @@ class Enrollment extends Component
                     ->where('semester_id', $this->semester)
                     ->get();
             }
-            
+
             // dd($this->subjects, $this->enrollment);
         }
     }

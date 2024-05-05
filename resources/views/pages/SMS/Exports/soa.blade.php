@@ -307,7 +307,7 @@
                                     @if (checkIfStudentHasBalance($transaction))
                                         {{ date('M d, Y', strtotime(getFirstBalance($transaction, 'created_at')->addMonths(3))) }}
                                     @else
-                                        {{ date('M d, Y', strtotime($transaction->created_at > addMonths(3))) }}
+                                        {{ date('M d, Y', strtotime($transaction->created_at->addMonths(3))) }}
                                     @endif
                                 </td>
                                 <td class="text-center">
@@ -316,14 +316,14 @@
                                     @if (checkIfStudentHasBalance($transaction))
                                         {{ getBalanceByDate($transaction, getFirstBalance($transaction, 'created_at')->addMonths(3)->format('Y-m-d'), 'amount') }}
                                     @else
-                                        {{ getBalanceByDate($transaction, $transaction->created_at > addMonths(3), 'amount') }}
+                                        {{ getBalanceByDate($transaction, $transaction->created_at->addMonths(3), 'amount') }}
                                     @endif
                                 </td>
                                 <td>
                                     @if (checkIfStudentHasBalance($transaction))
                                         {{ getBalanceByDate($transaction, getFirstBalance($transaction, 'created_at')->addMonths(3)->format('Y-m-d'), 'amount') }}
                                     @else
-                                        {{ getBalanceByDate($transaction, $transaction->created_at > addMonths(3), 'amount') }}
+                                        {{ getBalanceByDate($transaction, $transaction->created_at->addMonths(3), 'amount') }}
                                     @endif
                                 </td>
                             </tr>
@@ -385,7 +385,13 @@
                                         @endif
                                     </td>
                                     <td class="text-center">
-                                        &nbsp;
+                                        @if (checkIfStudentHasBalance($transaction))
+                                            
+                                            {{ number_format(getTotalAmountPayed($transaction)['total_amount']) }}
+                                        @else
+                                            {{ number_format($transaction->amount) }}
+                                            
+                                        @endif
                                     </td>
                                 </tr>
                             @empty
@@ -550,18 +556,21 @@
                 </div>
 
                 @if ($count == 2 || $count == 3 || $loop->last)
-        </div> <!-- Close the row after 2 SOAs or on the last transaction -->
-        @endif
+                    </div> <!-- Close the row after 2 SOAs or on the last transaction -->
+                @endif
 
-        @if ($count == 4)
-            <div class="page-break"></div> <!-- Page break for printing -->
-        @endif
+                @if ($count == 4)
+                    @php
+                        $count = 1;
+                    @endphp
+                    <div class="page-break"></div> <!-- Page break for printing -->
+                @endif
 
-        @php
-            $count++;
-        @endphp
-        @endforeach
-    </div>
+                @php
+                    $count++;
+                @endphp
+            @endforeach
+        </div>
     </div>
 
 

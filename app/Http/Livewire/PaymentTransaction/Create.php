@@ -50,7 +50,7 @@ class Create extends Component
             $this->getFees();
             $this->fee_id = null;
         }
-        $student = Student::find($this->student_id);
+        $student = Student::where('std_num' , $this->student_id)->first();
         // Get the final list of fees based on the merged fee IDs
         $this->fees = $this->getStudentFees($student->id, $student->sex);
         // dd( $this->getFees());
@@ -172,7 +172,8 @@ class Create extends Component
         // }
 
         // Get student and active transaction
-        $student = Student::find($this->student_id);
+        $student = Student::where('std_num' , $this->student_id)->first();
+        // $student = Student::find($this->student_id);
         $transaction = PaymentTransaction::with('student', 'transactions')
             ->where('student_id', $student->id)
             ->where('school_year_id', $this->school_year['school_year_id'])

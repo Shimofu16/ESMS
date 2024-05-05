@@ -20,7 +20,7 @@
             border: 1px solid black;
             /* Adjust border width as needed */
             padding: 0px 8px;
-            font-size: 14px;
+            font-size: 12px;
             font-family: Calibri !important;
             font-weight: 700 !important;
         }
@@ -45,18 +45,18 @@
         .label-title {}
 
         .title {
-            font-size: 21px !important;
+            font-size: 18px !important;
             font-family: Cambria !important;
 
         }
 
         .sub-title {
-            font-size: 15px;
+            font-size: 13px;
             font-family: Calibri !important;
         }
 
         .label-title {
-            font-size: 14px;
+            font-size: 12px;
             font-family: Calibri !important;
         }
     </style>

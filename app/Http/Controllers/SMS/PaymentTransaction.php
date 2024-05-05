@@ -4,6 +4,7 @@ namespace App\Http\Controllers\SMS;
 
 use App\Http\Controllers\Controller;
 use App\Models\Active_SchoolYearAndSem;
+use App\Models\Section;
 use App\Models\SMS\Fee;
 use App\Models\SMS\PaymentTransaction as SMSPaymentTransaction;
 use App\Models\SMS\TransactionFee;
@@ -26,7 +27,7 @@ class PaymentTransaction extends Controller
                 'transactions' =>  SMSPaymentTransaction::all(),
                 'students' => Student::all(),
                 'fees' => Fee::all(),
-                'fees',
+                'sections' => Section::all(),
             ]
         );
     }
@@ -107,34 +108,40 @@ class PaymentTransaction extends Controller
     {
         //
     }
-    public function soa(?int $grade_level_id = null)
+    public function soa($section_id)
     {
-        $setting = getCurrentSettings();
-        $payment_transactions = SMSPaymentTransaction::query()->where('school_year_id', $setting['school_year_id']);
-        $transactions_temp = $payment_transactions->get();
-        if (!$payment_transactions->get()) {
-            return redirect()->route('transaction.index')->with('error', 'No Transactions yet.');
-        }
-        if (!checkIfStudentHasTuitionFee($transactions_temp)) {
-            return redirect()->route('transaction.index')->with('error', 'Some students do not have a tuition fee.');
-        }
-        foreach ($transactions_temp as $key => $temp) {
-            if ($temp->student->enrollment->section_id == null) {
-                return redirect()->route('transaction.index')->with('error', "Student {$temp->student->full_name} do not have an assigned section.");
-            }
-        }
+        try {
+            //code...
 
-        if ($grade_level_id) {
-            $payment_transactions= $payment_transactions->whereHas('student', function ($query) use ($grade_level_id){
-                $query->whereHas('enrollment', function ($que) use ($grade_level_id){
-                    $que->where('gradelevel_id', $grade_level_id);
-                });
-            });
+            $setting = getCurrentSettings();
+            $payment_transactions = SMSPaymentTransaction::query()
+                ->where('school_year_id', $setting['school_year_id'])
+                ->whereHas('student', function ($query) use ($section_id) {
+                    $query->whereHas('enrollment', function ($que) use ($section_id) {
+                        $que->where('section_id', $section_id);
+                    });
+                })
+                ->get();
+            if (!$payment_transactions) {
+                return redirect()->route('transaction.index')->with('error', 'No Transactions yet.');
+            }
+            if (!checkIfStudentHasTuitionFee($payment_transactions)) {
+                return redirect()->route('transaction.index')->with('error', 'Some students do not have a tuition fee.');
+            }
+            foreach ($payment_transactions as $key => $temp) {
+                if ($temp->student->enrollment->section_id == null) {
+                    return redirect()->route('transaction.index')->with('error', "Student {$temp->student->full_name} do not have an assigned section.");
+                }
+            }
+
+            return view(
+                'pages.SMS.Exports.soa',
+                [
+                    'payment_transactions' => $payment_transactions
+                ]
+            );
+        } catch (\Throwable $th) {
+            return back()->with('toast_error', $th->getMessage());
         }
-        return view('pages.SMS.Exports.soa',
-        [
-            'payment_transactions' => $payment_transactions->get()
-        ]
-    );
     }
 }

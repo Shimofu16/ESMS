@@ -58,6 +58,7 @@ Route::group(['prefix' => 'section', 'middleware' => ['auth']], function () {
     Route::get('/index', [App\Http\Controllers\SectionController::class, 'index'])->name('section.index');
     Route::get('/class-list/{id}', [App\Http\Controllers\SectionController::class, 'show'])->name('section.show');
     Route::post('/store', [App\Http\Controllers\SectionController::class, 'store'])->name('section.store');
+    Route::put('/update/{id}', [App\Http\Controllers\SectionController::class, 'update'])->name('section.update');
 });
 
 //AddSectionToStudent
@@ -210,7 +211,7 @@ Route::prefix('transaction')
     ->middleware(['auth'])
     ->group(function () {
         Route::get('/create/{student_id?}', [App\Http\Controllers\SMS\PaymentTransaction::class, 'create'])->name('create');
-        Route::get('/download/soa/{grade_level_id?}', [App\Http\Controllers\SMS\PaymentTransaction::class, 'soa'])->name('soa');
+        Route::get('/download/soa/{section_id}', [App\Http\Controllers\SMS\PaymentTransaction::class, 'soa'])->name('soa');
         Route::get('/{transaction_id}/{fee_type?}', [App\Http\Controllers\SMS\PaymentTransaction::class, 'show'])->name('show');
         Route::get('/', [App\Http\Controllers\SMS\PaymentTransaction::class, 'index'])->name('index');
     });

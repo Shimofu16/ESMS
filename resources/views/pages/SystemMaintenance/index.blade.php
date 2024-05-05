@@ -204,6 +204,7 @@
                                 <th scope="col">Specialization Name</th>
                                 <th scope="col">Grade</th>
                                 <th scope="col">Class List</th>
+                                <th scope="col">Class List</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -224,6 +225,40 @@
                                         <a href="{{ route('section.show', ['id' => $section->id]) }}">
                                             View
                                         </a>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary font-weight-bold btn-sm" data-toggle="modal"
+                                            data-target="#section{{ $section->id }}">
+                                            Edit
+                                        </button>
+                                        <div class="modal fade" id="section{{ $section->id }}" data-backdrop="static" tabindex="-1" role="dialog"
+                                                aria-labelledby="staticBackdrop" aria-hidden="true">
+                                                <div class="modal-dialog modal-md" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="staticBackdropLabel">Edit Section</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <i aria-hidden="true" class="ki ki-close"></i>
+                                                            </button>
+                                                        </div>
+                                                        <form action="{{ route('section.update', ['id' => $section->id]) }}" method="POST">
+                                                            <div class="modal-body">
+                                                                @csrf
+                                                                @method('PUT')
+                                                                <div class="form-group">
+                                                                    <label>Section <span class="text-danger">*</span></label>
+                                                                    <input type="text" class="form-control" placeholder="Enter Track" name="section" value="{{ $section->section }}"/>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-light-primary font-weight-bold"
+                                                                    data-dismiss="modal">Close</button>
+                                                                <button type="submit" class="btn btn-primary font-weight-bold">Save</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
                                     </td>
                                 </tr>
                             @endforeach

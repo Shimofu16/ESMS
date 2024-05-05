@@ -38,6 +38,15 @@ class SectionController extends Controller
         Activity::log(auth()->user()->id, 'Section Management', 'Added section ' . $request->section . ' to Grade Level 1' . $request->gradelevel);
         return redirect()->route('sys_main.index');
     }
+    public function update(request $request, $id)
+    {
+        $section = Section::find($id);
+        $section->update([
+            'section' => $request->section,
+        ]);
+        Activity::log(auth()->user()->id, 'Section Management', 'Update section ' . $request->section . ' to Grade Level 1' . $request->gradelevel);
+        return redirect()->route('sys_main.index');
+    }
 
     public function show($id)
     {

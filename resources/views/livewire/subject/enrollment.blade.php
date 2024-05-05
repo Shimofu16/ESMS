@@ -22,7 +22,7 @@
                         wire:model.lazy='student_id' autofocus required>
                     <datalist id="students">
                         @foreach ($students as $student)
-                            <option wire:key="{{ $student->id }}" value="{{ $student->id }}">
+                            <option wire:key="{{ $student->id }}" value="{{ $student->std_num }}">
                                 {{ $student->full_name }}
                             </option>
                         @endforeach
@@ -36,7 +36,8 @@
                             @if ($student_id)
                                 <option value="">Select subject</option>
                                 @foreach ($subjects as $subject)
-                                    <option value="{{ $subject->id }}" @if (old('subject_id') == $subject->id) selected @endif>
+                                    <option value="{{ $subject->id }}"
+                                        @if (old('subject_id') == $subject->id) selected @endif>
                                         {{ $subject->name }}
                                     </option>
                                 @endforeach
@@ -79,10 +80,10 @@
                         </div>
                         <div class="d-flex justify-content-between  align-items-center ">
                             <div class="div"></div>
-                            <div class="div">
+                            <div class="div d-flex">
                                 <div class="mb-auto mr-2">
                                     <img src="{{ asset('media/logos/capellan_logo.png') }}" alt="logo"
-                                        class="img-fluid" loading="lazy" style="width: 75px; height: 75px;">
+                                        class="img-fluid" loading="lazy" style="width: 65px; height: 65px;">
                                 </div>
                                 <div>
                                     <h1 class="title bold mt-3">
@@ -212,36 +213,46 @@
                     <table class="table table-bordered mb-1">
                         <thead>
                             <tr>
-                                <th scope="col" class="text-center">O.R NO.</th>
-                                <th scope="col" class="text-center">PARTICULARS</th>
-                                <th scope="col" class="text-center">AMOUNT</th>
-                                <th scope="col" class="text-center">BALANCE</th>
-                                <th scope="col" class="text-center">DATE</th>
+                                <th scope="col" class="text-center label-title">O.R NO.</th>
+                                <th scope="col" class="text-center label-title">PARTICULARS</th>
+                                <th scope="col" class="text-center label-title">AMOUNT</th>
+                                <th scope="col" class="text-center label-title">BALANCE</th>
+                                <th scope="col" class="text-center label-title">DATE</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ($transactions as $transaction)
                                 <tr>
                                     <td> &nbsp;</td>
-                                    <td>{{ $transaction->fee->name }}</td>
                                     <td>
-                                        @if (checkIfStudentHasBalance($transaction))
-                                            {{ number_format(getTotalAmountPayed($transaction)['total_amount'], 2) }}
-                                        @else
-                                            {{ number_format($transaction->amount, 2) }}
-                                        @endif
+                                        <span class="label-title">
+                                            {{ $transaction->fee->name }}
+                                        </span>
                                     </td>
                                     <td>
-                                        @if (checkIfStudentHasBalance($transaction))
-                                            {{ number_format(getLatestBalance($transaction)->balance, 2) }}
-                                        @endif
+                                        <span class="label-title">
+                                            @if (checkIfStudentHasBalance($transaction))
+                                                {{ number_format(getTotalAmountPayed($transaction)['total_amount'], 2) }}
+                                            @else
+                                                {{ number_format($transaction->amount, 2) }}
+                                            @endif
+                                        </span>
                                     </td>
                                     <td>
-                                        @if (checkIfStudentHasBalance($transaction))
-                                            {{ date('M d, Y', strtotime(getLatestBalance($transaction)->created_at)) }}
-                                        @else
-                                            {{ date('M d, Y', strtotime($transaction->created_at)) }}
-                                        @endif
+                                        <span class="label-title">
+                                            @if (checkIfStudentHasBalance($transaction))
+                                                {{ number_format(getLatestBalance($transaction)->balance, 2) }}
+                                            @endif
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="label-title">
+                                            @if (checkIfStudentHasBalance($transaction))
+                                                {{ date('M d, Y', strtotime(getLatestBalance($transaction)->created_at)) }}
+                                            @else
+                                                {{ date('M d, Y', strtotime($transaction->created_at)) }}
+                                            @endif
+                                        </span>
                                     </td>
                                 </tr>
 
@@ -291,7 +302,7 @@
                         <div class="d-flex justify-content-center  align-items-center ">
                             <div class="mb-auto mr-2">
                                 <img src="{{ asset('media/logos/capellan_logo.png') }}" alt="logo"
-                                    class="img-fluid" loading="lazy" style="width: 75px; height: 75px;">
+                                    class="img-fluid" loading="lazy" style="width: 65px; height: 65px;">
                             </div>
                             <div>
                                 <h1 class="title bold mt-3">
@@ -304,7 +315,7 @@
                                     Tel. (02) 8641-5648 / (049) 501-1468
                                 </h1>
                                 <h1 class="sub-title mt-2 bold">
-                                    (CERTIFICATE OF MATRICULATION)
+                                    (CERTIFICATE OF ENROLLMENT)
                                 </h1>
                             </div>
 
@@ -387,26 +398,45 @@
                     <table class="table table-bordered mb-1">
                         <thead>
                             <tr>
-                                <th scope="col" class="text-center">SUBJECTS</th>
-                                <th scope="col" class="text-center">TIME</th>
-                                <th scope="col" class="text-center">DAY</th>
-                                <th scope="col" class="text-center">ROOM</th>
-                                <th scope="col" class="text-center">TEACHER</th>
+                                <th scope="col" class="text-center label-title">SUBJECTS</th>
+                                <th scope="col" class="text-center label-title">TIME</th>
+                                <th scope="col" class="text-center label-title">DAY</th>
+                                <th scope="col" class="text-center label-title">ROOM</th>
+                                <th scope="col" class="text-center label-title">TEACHER</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ($schedules as $schedule)
                                 <tr>
-                                    <td>{{ $schedule->subject->name }}</td>
-                                    <td>{{ date('H:i A', strtotime($schedule->start_time)) }} -
-                                        {{ date('H:i A', strtotime($schedule->end_time)) }}</td>
                                     <td>
-                                        @foreach ($schedule->days as $day)
-                                            {{ Str::ucfirst(toShort($day, 3)) }}{{ !$loop->last ? ',' : '' }}
-                                        @endforeach
+                                        <span class="label-title">
+                                            {{ $schedule->subject->name }}
+                                        </span>
                                     </td>
-                                    <td>{{ $schedule->section->section }}</td>
-                                    <td>{{ $schedule->teacher->name }}</td>
+                                    <td>
+                                        <span class="label-title">
+                                            {{ date('H:i A', strtotime($schedule->start_time)) }} -
+                                            {{ date('H:i A', strtotime($schedule->end_time)) }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="label-title">
+                                            @foreach ($schedule->days as $day)
+                                                {{ Str::ucfirst(toShort($day, 3)) }}{{ !$loop->last ? ',' : '' }}
+                                            @endforeach
+                                        </span>
+                                        {{-- @dd($schedule->days) --}}
+                                    </td>
+                                    <td>
+                                        <span class="label-title">
+                                            {{ $schedule->section->section }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="label-title">
+                                            {{ $schedule->teacher->name }}
+                                        </span>
+                                    </td>
                                 </tr>
 
                             @empty
