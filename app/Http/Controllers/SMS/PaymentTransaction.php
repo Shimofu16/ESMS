@@ -137,7 +137,11 @@ class PaymentTransaction extends Controller
             return view(
                 'pages.SMS.Exports.soa',
                 [
-                    'payment_transactions' => $payment_transactions
+                    'payment_transactions' => $payment_transactions,
+                    // 'tuitions' => $payment_transactions->whereHas('transactions', function($query){
+                    //     $query->where('type', 'tuition');
+                    // })
+                    // ->get(),
                 ]
             );
         } catch (\Throwable $th) {

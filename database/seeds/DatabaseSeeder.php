@@ -476,28 +476,28 @@ class DatabaseSeeder extends Seeder
                 'description' => 'Tuition fee for voucher beneficiary students',
                 'type' => 'tuition',
                 'gender' => null,
-                'amount' => 250.00,
+                'amount' => (250.00 * 5),
             ],
             [
                 'name' => 'ESC GRANTEE',
                 'description' => 'Tuition fee for ESC grantee students',
                 'type' => 'tuition',
                 'gender' => null,
-                'amount' => 600.00,
+                'amount' => (600.00 * 5),
             ],
             [
                 'name' => 'OVAP GRANTEE',
                 'description' => 'Tuition fee for OVAP grantee students',
                 'type' => 'tuition',
                 'gender' => null,
-                'amount' => 250.00,
+                'amount' => (250.00 * 5),
             ],
             [
                 'name' => 'REGULAR PAYEE',
                 'description' => 'Tuition fee for regular payee students',
                 'type' => 'tuition',
                 'gender' => null,
-                'amount' => 2000.00,
+                'amount' =>( 2000.00 * 5),
             ],
 
             [

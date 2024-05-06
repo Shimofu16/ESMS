@@ -77,7 +77,7 @@
                             <td>
                                 <div class="d-flex flex-column align-items-center">
                                     <a
-                                        href="{{ route('transaction.create', ['student_id' => $student->enrollment->student->id]) }}">Pay
+                                        href="{{ route('transaction.create', ['student_id' => $student->std_num]) }}">Pay
                                         Registration Fee</a>
                                 </div>
                             </td>
