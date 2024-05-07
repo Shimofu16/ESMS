@@ -110,6 +110,7 @@ Route::prefix('students')->name('students.')->group(function () {
     });
     Route::prefix('enrollee')->name('enrollee.')->group(function () {
         Route::get('/', [App\Http\Controllers\SMS\EnrolleeStudentController::class, 'index'])->name('index');
+        Route::delete('/{student_id}', [App\Http\Controllers\SMS\EnrolleeStudentController::class, 'destroy'])->name('destroy');
         Route::post('/payment/{student_id}', [App\Http\Controllers\SMS\EnrolleeStudentController::class, 'store'])->name('store');
     });
 });

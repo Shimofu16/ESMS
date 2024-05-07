@@ -39,7 +39,7 @@ class EnrolleeStudentController extends Controller
      */
     public function store(Request $request, $student_id)
     {
-       
+
     }
 
     /**
@@ -82,8 +82,20 @@ class EnrolleeStudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($student_id)
     {
-        //
+        try {
+            $student = Student::find($student_id);
+            Activity::log(auth()->user()->id, 'Student Management', 'Delete student ' . $student->full_name);
+            if ($student->transactions()->count() > 0) {
+                return back()->with('info', 'Student has transactions');
+            }
+
+            $student->enrollment()->delete();
+            $student->delete();
+            return back()->with('toast_success', 'Student deleted Successfully');
+        } catch (\Throwable $th) {
+            return back()->with('error', $th->getMessage());
+        }
     }
 }

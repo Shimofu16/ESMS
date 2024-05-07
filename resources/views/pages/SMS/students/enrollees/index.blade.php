@@ -69,17 +69,24 @@
                 <tbody>
                     @foreach ($students as $student)
                         <tr>
-                            <td>{{ $student->enrollment->student->full_name }}</td>
+                            <td>{{ $student->full_name }}</td>
                             <td>{{ $student->enrollment->grade_level->grade_level }}</td>
                             <td>{{ $student->enrollment->specialization->strand->track->track }}</td>
                             <td>{{ $student->enrollment->specialization->strand->strand }}</td>
                             <td>{{ $student->enrollment->specialization->specialization }}</td>
                             <td>
-                                <div class="d-flex flex-column align-items-center">
+                                <div class="d-flex align-items-center">
                                     <a
-                                        href="{{ route('transaction.create', ['student_id' => $student->std_num]) }}">Pay
+                                        href="{{ route('transaction.create', ['student_id' => $student->std_num]) }}" class="btn btn-sm btn-outline-info mr-2">Pay
                                         Registration Fee</a>
+                                        <button class="btn btn-sm btn-outline-danger" data-toggle="modal"
+                                            data-target="#delete{{ $student->id }}">
+                                            <i class="fas fa-trash"></i>
+                                            Delete
+                                        </button>
                                 </div>
+                                @include('pages.SMS.students.enrollees.modals._delete')
+
                             </td>
                         </tr>
                     @endforeach
