@@ -117,7 +117,7 @@ class EnrollmentForm extends Component
             case 1:
                 $this->validate([
                     'student_lrn' => ['required', 'numeric', 'digits:12'],
-                    'student_no' => ['required', 'numeric', 'digits:6'],
+                    'student_no' => ['required', 'string', 'min:8'],
                     'first_name' => 'required',
                     'middle_name' => 'required',
                     'last_name' => 'required',
@@ -223,7 +223,7 @@ class EnrollmentForm extends Component
             $extension = $this->student_photo->getClientOriginalExtension();
             $fileName = uniqid() . '.' . $extension;
             $file = 'storage/'.$folderPath . $fileName;
-            $this->student_photo->storeAs($folderPath, $fileName);
+            $this->student_photo->storeAs('public/'.$folderPath, $fileName);
 
             $student = new Student();
             $student->lrn = $this->student_lrn;

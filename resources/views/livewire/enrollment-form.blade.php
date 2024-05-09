@@ -35,7 +35,8 @@
                             <label for="student_no" class="block text-sm font-medium leading-6 text-gray-900">Student
                                 No.</label>
                             <div class="mt-2">
-                                <input type="number" name="student_no" id="student_no" wire:model='student_no'
+                                <input type="strong" name="student_no" id="student_no" wire:model='student_no'
+                                    placeholder="XX-XXXXX"
                                     class="block w-full @error('student_no')
                         border-red-500
                         @enderror px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
@@ -630,8 +631,8 @@
                             @enderror
                         </div>
                         <div class="col-span-2 lg:col-span-3">
-                            <label for="junior_highschool"
-                                class="block text-sm font-medium leading-6 text-gray-900">Junior Highschool</label>
+                            <label for="junior_highschool" class="block text-sm font-medium leading-6 text-gray-900">Junior
+                                Highschool</label>
                             <div class="mt-2">
                                 <input type="text" name="junior_highschool" id="junior_highschool"
                                     wire:model='junior_highschool'

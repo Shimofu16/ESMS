@@ -1,25 +1,26 @@
 <?php
 
-use App\Models\SchoolYear;
-use App\Models\Section;
-use App\Models\SMS\Fee;
-use App\Models\SMS\Schedule;
-use App\Models\SMS\Subject;
-use App\Models\SMS\Teacher;
-use App\Models\Specialization;
-use App\Models\Student;
-use App\Models\Student_Specialization_GradeLevel_SchoolYear;
 use Carbon\Carbon;
 use Faker\Factory;
-use Database\Seeders\SubjectSeeder;
+use App\Models\Section;
+use App\Models\SMS\Fee;
+use App\Models\Student;
+use App\Models\SchoolYear;
+use App\Models\SMS\Subject;
+use App\Models\SMS\Teacher;
+use Illuminate\Support\Str;
+use App\Models\SMS\Schedule;
+use App\Models\Specialization;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
+use Database\Seeders\SubjectSeeder;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
+use App\Models\Student_Specialization_GradeLevel_SchoolYear;
 
 
 class DatabaseSeeder extends Seeder
@@ -402,12 +403,12 @@ class DatabaseSeeder extends Seeder
         foreach ($school_years as $key => $school_year) {
             for ($i = 0; $i < 10; $i++) {
 
-                // $number = random_int(1, 2);
+                $number = random_int(1, 2);
                 // $photoPath = Storage::get(public_path('sample-images/student-sample-' . $number . '.jpg'));
                 // $folderPath = "students/";
                 // $photoName = pathinfo($photoPath, PATHINFO_FILENAME);
                 // $extension = pathinfo($photoPath, PATHINFO_EXTENSION);
-                $student_number = random_int(000000, 100000);
+                $student_number = date('y', strtotime(now())) . '-' . Str::padLeft($i + 1,5,0);
                 $student_lrn = 'LRN-' . random_int(000000, 100000);
                 $birth_date = $faker->dateTimeBetween('-16 years', '-5 years');
 
@@ -450,7 +451,7 @@ class DatabaseSeeder extends Seeder
                 $student->type = $faker->randomElement(['Regular', 'Iregular']);
                 $student->status = 0;
 
-                // $folderPath = "students/";
+                $folderPath = "students/";
                 // $fileName = $photoName . '.' . $extension;
                 // $file = 'storage/' . $folderPath . $fileName;
                 // File::copy($photoPath, public_path($file)); // Copy photo to storage
@@ -497,7 +498,7 @@ class DatabaseSeeder extends Seeder
                 'description' => 'Tuition fee for regular payee students',
                 'type' => 'tuition',
                 'gender' => null,
-                'amount' =>( 2000.00 * 5),
+                'amount' => (2000.00 * 5),
             ],
 
             [
@@ -663,16 +664,5 @@ class DatabaseSeeder extends Seeder
                 ]);
             }
         }
-
-
-
-
-
-
-
-
-
-
-
     }
 }

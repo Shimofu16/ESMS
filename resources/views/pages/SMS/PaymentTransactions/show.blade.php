@@ -67,7 +67,8 @@
                                 <th scope="col">Fee</th>
                                 <th scope="col">Fee Amount</th>
                                 <th scope="col">Payment</th>
-                                <th scope="col">Balances</th>
+                                <th scope="col">Balance</th>
+                                <th scope="col">History</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
@@ -77,6 +78,7 @@
                                     <td>{{ $transaction->fee->name }}</td>
                                     <td>PHP {{ number_format($transaction->fee_amount, 2) }}</td>
                                     <td>PHP {{ number_format($transaction->amount, 2) }}</td>
+                                    <td>PHP {{ number_format($transaction->current_balance, 2) }}</td>
                                     <td>
                                         @if ($transaction->balances->count() > 0)
                                             <button class="btn btn-outline-info btn-sm" data-toggle="modal"

@@ -6,6 +6,7 @@ use App\Helpers\Activity;
 use App\Http\Controllers\Controller;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use File;
 
 class EnrolleeStudentController extends Controller
 {
@@ -16,6 +17,8 @@ class EnrolleeStudentController extends Controller
      */
     public function index()
     {
+        // dd(public_path('sample-images\student-sample-1.jpg'));
+        // dd(Storage::get(public_path('sample-images/student-sample-1.jpg')));
         return view('pages.SMS.students.enrollees.index',[
             'students' => getStudentsByStatus(0)
         ]);

@@ -146,7 +146,7 @@
                             </div> --}}
 
                                 <div class="text-center justify-content-center mx-auto my-3">
-                                    <img class="rounded" src="{{ $student->image != null ? asset('storage/student/' . $student->image) : asset('media/capellan/no-profile-image.png')  }}"
+                                    <img class="rounded" src="{{ asset($student->image) }}"
                                         alt="Image" height="150px" width="150px">
 
                                 </div>
