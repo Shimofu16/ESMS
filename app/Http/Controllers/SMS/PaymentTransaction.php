@@ -37,7 +37,7 @@ class PaymentTransaction extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(?int $student_id = null)
+    public function create( $student_id = null)
     {
         return view('pages.SMS.PaymentTransactions.create', [
             'students' =>  Student::all(),
