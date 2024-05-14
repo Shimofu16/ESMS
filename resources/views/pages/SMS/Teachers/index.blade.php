@@ -36,12 +36,10 @@
                     </div>
                     <div class="card-toolbar">
                         <!-- Button trigger modal-->
-                        <button type="button" class="btn btn-primary font-weight-bold btn-sm mr-1" data-toggle="modal"
-                            data-target="#add">
+                        <a href="{{ route('teacher.create')  }}" class="btn btn-primary font-weight-bold btn-sm mr-1">
                             <i class="flaticon2-cube"></i>
                             Add Teachers
-                        </button>
-                        @include('pages.SMS.Teachers.modal._add')
+                        </a>
 
                     </div>
                 </div>
@@ -52,7 +50,7 @@
                                 <th scope="col">Name</th>
                                 <th scope="col">Contact No</th>
                                 <th scope="col">Age</th>
-                                <th scope="col">Gender</th>
+                                <th scope="col">Sex</th>
                                 <th scope="col" class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -61,30 +59,45 @@
                                 <tr>
                                     <td>
                                         <div class="d-flex flex-column">
-                                            <h5 class="mb-0"> {{ $teacher->name }}</h5>
+                                            <h5 class="mb-0"> {{ $teacher->full_name }}</h5>
                                             <small>{{ $teacher->email }}</small>
                                         </div>
                                     </td>
-                                    <td>{{ $teacher->contact }}</td>
-                                    <td>{{ $teacher->age }}</td>
-                                    <td>{{ $teacher->gender }}</td>
+                                    <td>{{ $teacher->phone_number }}</td>
+                                    <td>{{ $teacher->birthday->age }}</td>
+                                    <td>{{ $teacher->sex }}</td>
                                     <td class="text-center">
-                                        <button class="btn btn-sm btn-outline-primary" data-toggle="modal"
-                                            data-target="#edit{{ $teacher->id }}">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-danger" data-toggle="modal"
-                                            data-target="#delete{{ $teacher->id }}">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                        <a class="btn btn-sm btn-outline-info"
-                                            href="{{ route('teacher.show', ['id' => $teacher->id]) }}">
-                                            <i class="fas fa-eye"></i>
+                                        <div class="d-flex">
+                                            <a href="{{ route('teacher.edit', ['id' => $teacher->id]) }}" class="btn btn-sm btn-outline-primary mr-2" >
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <button class="btn btn-sm btn-outline-danger mr-2" data-toggle="modal"
+                                                data-target="#delete{{ $teacher->id }}">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                            <div class="dropdown">
+                                                <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button"
+                                                    id="dropdownMenuButton1" data-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    
+                                                        <li>
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('teacher.show', ['id' => $teacher->id, 'type' => 'schedules']) }}">Schedules</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('teacher.show', ['id' => $teacher->id, 'type' => 'information']) }}">information</a>
+                                                        </li>
+    
+                                                </ul>
+                    
+                                            </div>
 
-                                        </a>
+                                        </div>
                                     </td>
                                 </tr>
-                                @include('pages.SMS.Teachers.modal._edit')
                                 @include('pages.SMS.Teachers.modal._delete')
                             @endforeach
 

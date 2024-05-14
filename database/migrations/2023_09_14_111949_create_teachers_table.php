@@ -15,11 +15,20 @@ class CreateTeachersTable extends Migration
     {
         Schema::create('teachers', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('gender');
-            $table->string('age');
-            $table->string('contact');
+            $table->string('picture');
+            $table->string('first_name');
+            $table->string('middle_name');
+            $table->string('last_name');
             $table->string('email')->unique();
+            $table->string('sex');
+            $table->string('address');
+            $table->string('phone_number');
+            $table->date('birthday');
+            $table->string('civil_status');
+            $table->string('height');
+            $table->string('weight');
+            $table->string('nationality');
+            $table->string('occupation');
             $table->boolean('isResigned')->default(0);
             $table->timestamps();
         });

@@ -137,7 +137,7 @@
                         <div class="menu-submenu">
 
                             <ul class="menu-subnav">
-                                @can('manage-students')
+                                @can('manage-students-enrolled')
                                     <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                         <a href="{{ route('students.enrolled.index') }}" class="menu-link menu-toggle">
                                             <i class="menu-bullet menu-bullet-line">
@@ -150,7 +150,7 @@
                                         </a>
                                     </li>
                                 @endcan
-                                @can('manage-students')
+                                @can('manage-students-pending')
                                     <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                         <a href="{{ route('students.enrollee.index') }}" class="menu-link menu-toggle">
                                             <i class="menu-bullet menu-bullet-line">
@@ -163,16 +163,18 @@
                                         </a>
                                     </li>
                                 @endcan
-                                <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                    <a href="{{ route('subject.create') }}" class="menu-link menu-toggle">
-                                        <i class="menu-bullet menu-bullet-line">
-                                            <span></span>
-                                        </i>
-                                        <span class="menu-text">Enrollment</span>
+                                @can('manage-students-enrolled')
+                                    <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                        <a href="{{ route('subject.create') }}" class="menu-link menu-toggle">
+                                            <i class="menu-bullet menu-bullet-line">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Enrollment</span>
 
-                                    </a>
+                                        </a>
 
-                                </li>
+                                    </li>
+                                @endcan
                                 @can('manage-alumni')
                                     <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                         <a href="{{ route('alumni.index') }}" class="menu-link menu-toggle">

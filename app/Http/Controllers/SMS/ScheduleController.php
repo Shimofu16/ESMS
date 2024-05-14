@@ -115,9 +115,9 @@ class ScheduleController extends Controller
             $title = $schedule->subject->name;
             $schedule->delete();
             Activity::log(auth()->user()->id, 'Schedule Management', 'Deleted a schedule ' . $title);
-            return redirect()->back()->with('successToast', 'Schedule deleted successfully');
+            return redirect()->back()->with('success', 'Schedule deleted successfully');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('errorAlert', $th->getMessage());
+            return redirect()->back()->with('error', $th->getMessage());
         }
     }
 }

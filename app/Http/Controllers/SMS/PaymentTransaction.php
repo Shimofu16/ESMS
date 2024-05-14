@@ -108,36 +108,13 @@ class PaymentTransaction extends Controller
     {
         //
     }
-    public function soa($section_id)
+    public function soa()
     {
         try {
-            //code...
-
-            $setting = getCurrentSettings();
-            $payment_transactions = SMSPaymentTransaction::query()
-                ->where('school_year_id', $setting['school_year_id'])
-                ->whereHas('student', function ($query) use ($section_id) {
-                    $query->whereHas('enrollment', function ($que) use ($section_id) {
-                        $que->where('section_id', $section_id);
-                    });
-                })
-                ->get();
-            if (!$payment_transactions) {
-                return redirect()->route('transaction.index')->with('error', 'No Transactions yet.');
-            }
-            if (!checkIfStudentHasTuitionFee($payment_transactions)) {
-                return redirect()->route('transaction.index')->with('error', 'Some students do not have a tuition fee.');
-            }
-            foreach ($payment_transactions as $key => $temp) {
-                if ($temp->student->enrollment->section_id == null) {
-                    return redirect()->route('transaction.index')->with('error', "Student {$temp->student->full_name} do not have an assigned section.");
-                }
-            }
-
             return view(
                 'pages.SMS.Exports.soa',
                 [
-                    'payment_transactions' => $payment_transactions,
+                    // 'payment_transactions' => $payment_transactions,
                     // 'tuitions' => $payment_transactions->whereHas('transactions', function($query){
                     //     $query->where('type', 'tuition');
                     // })

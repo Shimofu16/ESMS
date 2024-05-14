@@ -165,11 +165,11 @@ class Create extends Component
     public function save()
     {
         // Check if there's enough amount for registration fee
-        // foreach ($this->selected_fees as $fee) {
-        //     if ($fee['type'] == 'registration' && (int)$this->amount[$fee['id']] != $fee['amount']) {
-        //         return session()->flash('error', 'Insufficient amount for registration fee');
-        //     }
-        // }
+        foreach ($this->selected_fees as $fee) {
+            if ($fee['type'] == 'registration' && (int)$this->amount[$fee['id']] != $fee['amount']) {
+                return session()->flash('error', 'Insufficient amount for registration fee');
+            }
+        }
 
         // Get student and active transaction
         $student = Student::where('std_num' , $this->student_id)->first();

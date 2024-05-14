@@ -13,7 +13,7 @@
                         <div class="col-12">
                             <label for="name" class="form-label fw-bold text-black">Name</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                value="{{ $teacher->name }}">
+                                value="{{ $teacher->full_name }}">
                             @error('name')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror

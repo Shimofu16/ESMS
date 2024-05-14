@@ -12,9 +12,9 @@ class TransactionFee extends Model
 
     protected $guarded = [];
 
-    protected $appends = [
-        'current_balance',
-    ];
+    // protected $appends = [
+    //     'current_balance',
+    // ];
 
     public function getCurrentBalanceAttribute()
     {

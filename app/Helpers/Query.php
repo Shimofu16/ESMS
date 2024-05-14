@@ -180,6 +180,18 @@ if (!function_exists('getBalanceByDate')) {
         return null; // or return a default value if needed
     }
 }
+if (!function_exists('getTransaction')) {
+    function getTransaction($transaction, $date, $column)
+    {
+        $balance = $transaction->balances()->whereDate('created_at', $date)->first();
+
+        if ($balance) {
+            return $balance->$column;
+        }
+
+        return null; // or return a default value if needed
+    }
+}
 
 if (!function_exists('getSchedulesUsingSection')) {
     function getSchedulesUsingSection($section_id, ?array $subject_ids =null)

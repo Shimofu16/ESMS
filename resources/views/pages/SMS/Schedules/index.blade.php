@@ -65,7 +65,7 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $schedule->subject->name }}</td>
-                                    <td>{{ $schedule->teacher->name }}</td>
+                                    <td>{{ $schedule->teacher->full_name }}</td>
                                     <td>
                                         <a href="{{ route('schedule.show', ['section_id' => $schedule->section_id]) }}">
                                             {{ $schedule->section->section }}

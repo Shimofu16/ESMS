@@ -40,21 +40,11 @@
                             <i class="flaticon2-cube"></i>
                             Add transaction
                         </a>
-                        <div class="dropdown">
-                            <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button"
-                                id="dropdownMenuButton1" data-toggle="dropdown" aria-expanded="false">
-                                Specializations
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                @foreach ($sections as $section)
-                                    <li>
-                                        <a class="dropdown-item"
-                                            href="{{ route('transaction.soa', ['section_id' => $section->id]) }}">{{ $section->section }}</a>
-                                    </li>
-                                @endforeach
-                            </ul>
-
-                        </div>
+                        <a href="{{ route('transaction.soa') }}" class="btn btn-primary font-weight-bold btn-sm mr-1">
+                            <i class="flaticon2-cube"></i>
+                            Download SOA
+                        </a>
+                        
                     </div>
                 </div>
                 <div class="card-body">

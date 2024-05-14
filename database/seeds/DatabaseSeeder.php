@@ -154,7 +154,10 @@ class DatabaseSeeder extends Seeder
                 'name' => toSlug('Manage Enrollments'),
             ],
             [
-                'name' => toSlug('Manage Students'),
+                'name' => toSlug('Manage Students Enrolled'),
+            ],
+            [
+                'name' => toSlug('Manage Students Pending'),
             ],
             [
                 'name' => toSlug('Edit Student'),
@@ -281,7 +284,7 @@ class DatabaseSeeder extends Seeder
         $roleRegistrar->givePermissionTo(toSlug('Manage Alumni'));
         $roleRegistrar->givePermissionTo(toSlug('Add Alumni'));
         $roleRegistrar->givePermissionTo(toSlug('Manage dropouts'));
-        $roleRegistrar->givePermissionTo(toSlug('Manage Students'));
+        $roleRegistrar->givePermissionTo(toSlug('Manage Students Enrolled'));
         $roleRegistrar->givePermissionTo(toSlug('Edit Student'));
         $roleRegistrar->givePermissionTo(toSlug('Accept Student'));
         $roleRegistrar->givePermissionTo(toSlug('Drop Student'));
@@ -306,6 +309,9 @@ class DatabaseSeeder extends Seeder
         $roleAccounting = Role::create(['name' => 'Accounting']);
         $roleAccounting->givePermissionTo(toSlug('View Dashboard'));
         $roleAccounting->givePermissionTo(toSlug('Manage Accounting'));
+        $roleAccounting->givePermissionTo(toSlug('Manage Enrollments'));
+        // $roleAccounting->givePermissionTo(toSlug('Manage Students Enrolled'));
+        $roleAccounting->givePermissionTo(toSlug('Manage Students Pending'));
         $roleAccounting->givePermissionTo(toSlug('Manage Fees'));
         $roleAccounting->givePermissionTo(toSlug('Manage Transactions'));
         $roleAccounting->givePermissionTo(toSlug('Add Transaction'));
@@ -313,7 +319,8 @@ class DatabaseSeeder extends Seeder
 
         $roleTeacher = Role::create(['name' => 'Teacher']);
         $roleTeacher->givePermissionTo(toSlug('View Dashboard'));
-        $roleTeacher->givePermissionTo(toSlug('Manage Students'));
+        $roleTeacher->givePermissionTo(toSlug('Manage Students Enrolled'));
+        $roleTeacher->givePermissionTo(toSlug('Manage Students Pending'));
         $roleTeacher->givePermissionTo(toSlug('Manage Schedules'));
 
 
@@ -322,7 +329,8 @@ class DatabaseSeeder extends Seeder
         $roleDirector = Role::create(['name' => 'Director']);
         $roleDirector->givePermissionTo(toSlug('View Dashboard'));
         $roleDirector->givePermissionTo(toSlug('Manage Enrollments'));
-        $roleDirector->givePermissionTo(toSlug('Manage Students'));
+        $roleDirector->givePermissionTo(toSlug('Manage Students Enrolled'));
+        $roleDirector->givePermissionTo(toSlug('Manage Students Pending'));
         $roleDirector->givePermissionTo(toSlug('Manage Alumni'));
         $roleDirector->givePermissionTo(toSlug('Add Alumni'));
         $roleDirector->givePermissionTo(toSlug('Manage dropouts'));
@@ -623,18 +631,34 @@ class DatabaseSeeder extends Seeder
 
         $teachers = [
             [
-                'name' => 'John Doe',
-                'gender' => 'Male',
-                'age' => '30',
-                'contact' => '1234567890',
-                'email' => 'john@example.com',
+                'first_name' => $faker->firstName(),
+                'middle_name' => $faker->lastName(),
+                'last_name' => $faker->lastName(),
+                'email' => $faker->safeEmail(),
+                'sex' => $faker->randomElement(['Male', 'Female']),
+                'address' => $faker->address(),
+                'phone_number' => $faker->phoneNumber(),
+                'birthday' => $faker->dateTimeBetween('-50 years','-30 years'),
+                'civil_status' => $faker->randomElement(['Single','Married']),
+                'height' => $faker->randomElement(['5`3', '5`5', '5`7', '5`9', '6`3']) . ' feet',
+                'weight' => $faker->numberBetween() . ' kg',
+                'nationality' => 'Filipino',
+                'occupation' => 'Employee',
             ],
             [
-                'name' => 'Jane Smith',
-                'gender' => 'Female',
-                'age' => '25',
-                'contact' => '9876543210',
-                'email' => 'jane@example.com',
+                'first_name' => $faker->firstName(),
+                'middle_name' => $faker->lastName(),
+                'last_name' => $faker->lastName(),
+                'email' => $faker->safeEmail(),
+                'sex' => $faker->randomElement(['Male', 'Female']),
+                'address' => $faker->address(),
+                'phone_number' => $faker->phoneNumber(),
+                'birthday' => $faker->dateTimeBetween('-50 years','-30 years'),
+                'civil_status' => $faker->randomElement(['Single','Married']),
+                'height' => $faker->randomElement(['5`3', '5`5', '5`7', '5`9', '6`3']) . ' feet',
+                'weight' => $faker->numberBetween() . ' kg',
+                'nationality' => 'Filipino',
+                'occupation' => 'Employee',
             ],
             // Add more teachers as needed
         ];
@@ -645,24 +669,24 @@ class DatabaseSeeder extends Seeder
         foreach ($teachers as $teacher) {
             Teacher::create($teacher);
         }
-        $teacher = Teacher::find(random_int(1, Teacher::count()));
-        $school_year =  getCurrentSettings();
-        $sections = Section::all();
+        // $teacher = Teacher::find(random_int(1, Teacher::count()));
+        // $school_year =  getCurrentSettings();
+        // $sections = Section::all();
 
-        foreach ($sections as $key => $section) {
-            $subjects = Subject::where('specialization_id', $section->specialization_id)->where('grade_level_id', $section->gradelevel_id)->get();
-            foreach ($subjects as $key => $subject) {
-                Schedule::create([
-                    'teacher_id' => $teacher->id,
-                    'subject_id' => $subject->id,
-                    'section_id' => $section->id,
-                    'school_year_id' => $school_year['school_year_id'],
-                    'semester_id' => $school_year['semester_id'],
-                    'days' => ['Monday', 'Wednesday', 'Friday'],
-                    'start_time' => '08:00:00',
-                    'end_time' => '10:00:00',
-                ]);
-            }
-        }
+        // foreach ($sections as $key => $section) {
+        //     $subjects = Subject::where('specialization_id', $section->specialization_id)->where('grade_level_id', $section->gradelevel_id)->get();
+        //     foreach ($subjects as $key => $subject) {
+        //         Schedule::create([
+        //             'teacher_id' => $teacher->id,
+        //             'subject_id' => $subject->id,
+        //             'section_id' => $section->id,
+        //             'school_year_id' => $school_year['school_year_id'],
+        //             'semester_id' => $school_year['semester_id'],
+        //             'days' => ['Monday', 'Wednesday', 'Friday'],
+        //             'start_time' => '08:00:00',
+        //             'end_time' => '10:00:00',
+        //         ]);
+        //     }
+        // }
     }
 }

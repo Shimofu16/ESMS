@@ -84,7 +84,7 @@
                                         <div class="card bg-transparent border-0">
                                             <div class="card-body px-1 text-center">
                                                     <h6>{{ $schedule->subject->name }}</h6>
-                                                    <span>{{ $schedule->teacher->name }}</span>
+                                                    <span>{{ $schedule->teacher->full_name }}</span>
                                             </div>
                                         </div>
                                     </td>

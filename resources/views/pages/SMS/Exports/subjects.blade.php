@@ -135,7 +135,7 @@
                             <tbody>
                                 @foreach ($schedules as $schedule)
                                     <tr>
-                                        <td>{{ $schedule->teacher->name }}</td>
+                                        <td>{{ $schedule->teacher->full_name }}</td>
                                         <td>{{ $schedule->subject->name }}</td>
                                         <td>
                                             <span>

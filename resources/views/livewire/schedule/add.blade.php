@@ -57,7 +57,7 @@
                     <select class="form-control" name="teacher_id" id="teacher_id" wire:model="teacher_id">
                         <option value="">Select a teacher</option>
                         @foreach ($teachers as $teacher)
-                            <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
+                            <option value="{{ $teacher->id }}">{{ $teacher->full_name }}</option>
                         @endforeach
                     </select>
                     @error('teacher_id')

@@ -212,7 +212,7 @@ Route::prefix('transaction')
     ->middleware(['auth'])
     ->group(function () {
         Route::get('/create/{student_id?}', [App\Http\Controllers\SMS\PaymentTransaction::class, 'create'])->name('create');
-        Route::get('/download/soa/{section_id}', [App\Http\Controllers\SMS\PaymentTransaction::class, 'soa'])->name('soa');
+        Route::get('/download/soa', [App\Http\Controllers\SMS\PaymentTransaction::class, 'soa'])->name('soa');
         Route::get('/{transaction_id}/{fee_type?}', [App\Http\Controllers\SMS\PaymentTransaction::class, 'show'])->name('show');
         Route::get('/', [App\Http\Controllers\SMS\PaymentTransaction::class, 'index'])->name('index');
     });
@@ -233,7 +233,9 @@ Route::prefix('teacher')
     ->middleware(['auth'])
     ->group(function () {
         Route::get('/', [App\Http\Controllers\SMS\TeacherController::class, 'index'])->name('index');
-        Route::get('/{id}', [App\Http\Controllers\SMS\TeacherController::class, 'show'])->name('show');
+        Route::get('/create', [App\Http\Controllers\SMS\TeacherController::class, 'create'])->name('create');
+        Route::get('/edit/{id}', [App\Http\Controllers\SMS\TeacherController::class, 'edit'])->name('edit');
+        Route::get('/{id}/{type}', [App\Http\Controllers\SMS\TeacherController::class, 'show'])->name('show');
         Route::post('/store', [App\Http\Controllers\SMS\TeacherController::class, 'store'])->name('store');
         Route::put('/update/{id}', [App\Http\Controllers\SMS\TeacherController::class, 'update'])->name('update');
         Route::delete('/destroy/{id}', [App\Http\Controllers\SMS\TeacherController::class, 'destroy'])->name('destroy');
