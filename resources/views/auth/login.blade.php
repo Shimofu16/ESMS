@@ -44,7 +44,8 @@
     <!--begin::Main-->
     <div class="d-flex flex-column flex-root">
         <!--begin::Login-->
-        <div class="login login-2 login-signin-on d-flex flex-column flex-lg-row flex-column-fluid bg-white" id="kt_login">
+        <div class="login login-2 login-signin-on d-flex flex-column flex-lg-row flex-column-fluid bg-white"
+            id="kt_login">
             <!--begin::Aside-->
             <div
                 class="login-aside order-2 order-lg-1 d-flex flex-column-fluid flex-lg-row-auto bgi-size-cover bgi-no-repeat p-7 p-lg-10 border border-secondary">
@@ -65,22 +66,25 @@
 
                             <form method="POST" action="{{ route('login') }}" class="form" novalidate="novalidate">
                                 @csrf
-                            <!--begin::Form-->
+                                <!--begin::Form-->
                                 <div class="form-group py-3 m-0">
                                     <input class="form-control h-auto border-0 px-0 placeholder-dark-75" type="text"
-                                        placeholder="Username" name="username" value="{{ old('username') }}" autocomplete="off" />
-                                        {{-- <input id="username" type="username" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus> --}}
+                                        placeholder="Username" name="username" value="{{ old('username') }}"
+                                        autocomplete="off" />
+                                    {{-- <input id="username" type="username" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus> --}}
 
-                                @error('username')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                    @error('username')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
-                                <div class="form-group py-3 border-top m-0">
-                                    <input class="form-control h-auto border-0 px-0 placeholder-dark-75" type="Password"
-                                        placeholder="Password" name="password" id = "password"/>
+                                <div class="form-group py-3 border-top m-0 d-flex align-items-center">
+                                    <input class="form-control h-auto border-0 px-0 placeholder-dark-75" type="password"
+                                        placeholder="Password" name="password" id="password">
+                                    <i class="fas fa-eye ml-2 text-muted" id="togglePassword"></i>
                                 </div>
+
 
                                 {{-- <div
                                     class="form-group d-flex flex-wrap justify-content-between align-items-center mt-3">
@@ -102,7 +106,8 @@
                                             Register
                                         </a>
                                     </div> --}}
-                                    <button class="btn btn-primary font-weight-bold px-9 py-4 my-3" type="submit">Sign In</button>
+                                    <button class="btn btn-primary font-weight-bold px-9 py-4 my-3" type="submit">Sign
+                                        In</button>
                                 </div>
                             </form>
                             <!--end::Form-->
@@ -219,6 +224,21 @@
     <!--end::Main-->
 
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#togglePassword').click(function() {
+                const passwordInput = $('#password');
+                const type = passwordInput.attr('type') === 'password' ? 'text' : 'password';
+
+                passwordInput.attr('type', type);
+                $(this).toggleClass('fa-eye-slash'); // Use jQuery for class toggle
+            });
+        });
+    </script>
     <script>
         var HOST_URL = "https://preview.keenthemes.com/metronic/theme/html/tools/preview";
     </script>
