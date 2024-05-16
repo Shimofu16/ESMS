@@ -29,9 +29,9 @@ class ScheduleController extends Controller
     public function index()
     {
         $schedules = Schedule::all();
-        $teachers = Teacher::select('id', 'name')->get();
+        $teachers = Teacher::all();
         $sections = Section::select('id', 'section')->get();
-        $subjects = Subject::select('id', 'name')->get();
+        $subjects = Subject::all();
         $semesters = Sem::select('id', 'sem')->get();
 
 
