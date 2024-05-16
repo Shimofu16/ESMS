@@ -12,13 +12,16 @@ class TransactionFee extends Model
 
     protected $guarded = [];
 
-    // protected $appends = [
-    //     'current_balance',
-    // ];
+    protected $appends = [
+        'current_balance',
+    ];
 
     public function getCurrentBalanceAttribute()
     {
-        return $this->balances()->latest()->first()->balance;
+        if ($this->balances->count() > 0) {
+            return $this->balances()->latest()->first()->balance;
+        }
+        return 0;
     }
 
     public function transaction()
@@ -33,5 +36,4 @@ class TransactionFee extends Model
     {
         return $this->hasMany(TransactionFeeBalance::class, 'transaction_fee_id');
     }
-
 }
