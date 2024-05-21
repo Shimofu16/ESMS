@@ -54,7 +54,9 @@
                                 <th scope="col">Name</th>
                                 <th scope="col">Type</th>
                                 <th scope="col">Amount</th>
-                                <th scope="col" class="text-center">Action</th>
+                                @can('delete-fee')
+                                    <th scope="col" class="text-center">Action</th>
+                                @endcan
                             </tr>
                         </thead>
                         <tbody>

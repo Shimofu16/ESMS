@@ -57,4 +57,15 @@ class SectionController extends Controller
 
         return view('pages.SMS.Exports.class-list', compact('section', 'students'));
     }
+    public function destroy($id)
+    {
+        $section = Section::with('students')->find($id);
+
+        if ($section->students->count() > 0) {
+            return redirect()->back()->with('error', 'Section: '. $section->section . ' has students');
+        }
+        Activity::log(auth()->user()->id, 'Section Management', 'Deleted section: '. $section->section);
+        $section->delete();
+        return redirect()->back()->with('success', 'Successfully deleted section');
+    }
 }

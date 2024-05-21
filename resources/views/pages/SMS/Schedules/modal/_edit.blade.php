@@ -1,4 +1,4 @@
-<div class="modal fade" id="edit{{ $subject->id }}" tabindex="-1">
+<div class="modal fade" id="edit{{ $schedule->id }}" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-primary">

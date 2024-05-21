@@ -56,7 +56,10 @@ class Student extends Model
         $transaction = TransactionFee::where('type', $type)
             ->where('transaction_id', $transaction_id)
             ->first();
-        return $transaction->fee_amount;
+        if ($transaction) {
+            return $transaction->fee_amount;
+        }
+        return 0;
     }
 
     // get full name of student

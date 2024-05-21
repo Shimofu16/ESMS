@@ -16,6 +16,8 @@ class Fee extends Model
         'amount',
         'gender',
     ];
-
+    public function transactionFee(){
+        return $this->hasMany(TransactionFee::class, 'fee_id');
+    }
 
 }

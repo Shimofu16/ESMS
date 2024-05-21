@@ -54,7 +54,7 @@
         </div>
         <div class="card-body">
             <!--begin: Datatable-->
-            <table class="table table-separate table-head-custom table-checkable" id="example">
+            <table class="table table-separate table-head-custom table-checkable" id="enrollee-students">
                 <thead>
                     <tr>
                         <th>Full Name</th>
@@ -105,70 +105,11 @@
     <script src="{{ asset('js/pages/crud/datatables/advanced/column-rendering.js') }}"></script> --}}
     {{-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> --}}
     <script src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/fixedheader/3.2.3/js/dataTables.fixedHeader.min.js"></script>
 
 
     <script>
         $(document).ready(function() {
-            // Setup - add a text input to each footer cell
-            $('#example thead tr')
-                .clone(true)
-                .addClass('filters')
-                .appendTo('#example thead');
-
-            var table = $('#example').DataTable({
-                orderCellsTop: true,
-                fixedHeader: true,
-                initComplete: function() {
-                    var api = this.api();
-
-                    // For each column
-                    api
-                        .columns()
-                        .eq(0)
-                        .each(function(colIdx) {
-                            // Set the header cell to contain the input element
-                            var cell = $('.filters th').eq(
-                                $(api.column(colIdx).header()).index()
-                            );
-                            var title = $(cell).text();
-                            $(cell).html('<input type="text" placeholder="' + title + '" />');
-
-                            // On every keypress in this input
-                            $(
-                                    'input',
-                                    $('.filters th').eq($(api.column(colIdx).header()).index())
-                                )
-                                .off('keyup change')
-                                .on('keyup change', function(e) {
-                                    e.stopPropagation();
-
-                                    // Get the search value
-                                    $(this).attr('title', $(this).val());
-                                    var regexr =
-                                        '({search})'; //$(this).parents('th').find('select').val();
-
-                                    var cursorPosition = this.selectionStart;
-                                    // Search the column for that value
-                                    api
-                                        .column(colIdx)
-                                        .search(
-                                            this.value != '' ?
-                                            regexr.replace('{search}', '(((' + this.value +
-                                                ')))') :
-                                            '',
-                                            this.value != '',
-                                            this.value == ''
-                                        )
-                                        .draw();
-
-                                    $(this)
-                                        .focus()[0]
-                                        .setSelectionRange(cursorPosition, cursorPosition);
-                                });
-                        });
-                },
-            });
+            $('#enrollee-students').DataTable();
         });
     </script>
 

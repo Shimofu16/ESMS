@@ -93,9 +93,11 @@ class FeeController extends Controller
     public function destroy($id)
     {
         $fee = Fee::find($id);
-
-        Activity::log(auth()->user()->id, 'Fee Management', 'Update Fee ' . $fee->name);
-        $fee->delete();
-        return back()->with('toast_success', 'Deleted Successfully');
+        if (!$fee->transactionFee) {
+            Activity::log(auth()->user()->id, 'Fee Management', 'Update Fee ' . $fee->name);
+            $fee->delete();
+            return back()->with('toast_success', 'Deleted Successfully');
+        }
+        return back()->with('error', "Error deleting fee '{$fee->name}': It has transaction history.");
     }
 }

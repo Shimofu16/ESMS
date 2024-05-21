@@ -99,7 +99,7 @@
                 <div class="col-md-7">
                     <div class="p-1">
                         @forelse ($days as $i => $day)
-                            <button class="badge bg-primary border-0 mx-1 mt-1" type="button"
+                            <button class="badge text-white bg-primary border-0 mx-1 mt-1" type="button"
                                 wire:click='removeDay({{ $i }})'>{{ $day }}</button>
                         @empty
                             <div class="d-flex justify-content-center align-items-center">

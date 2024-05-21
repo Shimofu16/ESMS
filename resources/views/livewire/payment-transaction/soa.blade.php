@@ -1,7 +1,16 @@
 <div class="container border">
     <div class="d-flex justify-content-center align-items-center my-5 ">
         <div class="card" style="width: 400px">
-            <div class="card-header">
+            @if (session()->has('error'))
+                <div class="card-header">
+                    <div class="col-12">
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    </div>
+                </div>
+            @endif
+            <div class="card-body">
                 <div class="d-flex flex-column">
                     <div class="col-12">
                         <label for="grade_level_id" class="form-label fw-bold text-black">Grade Level</label>
@@ -35,7 +44,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card-body">
+            <div class="card-footer">
                 <div class="d-flex flex-column">
                     <button type="button" class="btn btn-primary mb-1" onclick="generatePDF()">Download</button>
                     <a href="{{ route('transaction.index') }}" class="btn btn-outline-secondary">Back to

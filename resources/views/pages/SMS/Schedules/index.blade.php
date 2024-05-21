@@ -88,6 +88,11 @@
                                     <td>{{ $schedule->subject->semester->sem }}</td>
 
                                     <td>
+                                        <button class="btn btn-outline-primary btn-sm text-primary" data-toggle="modal"
+                                            data-target="#edit{{ $schedule->id }}">
+                                            <i class="fas fa-pen "></i>
+                                        </button>
+                                        @include('pages.SMS.Schedules.modal._edit')
                                         <button class="btn btn-outline-danger btn-sm text-danger" data-toggle="modal"
                                             data-target="#delete{{ $schedule->id }}">
                                             <i class="fas fa-trash "></i>

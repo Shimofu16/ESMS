@@ -204,7 +204,7 @@
                                 <th scope="col">Specialization Name</th>
                                 <th scope="col">Grade</th>
                                 <th scope="col">Class List</th>
-                                <th scope="col">Class List</th>
+                                <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -227,38 +227,75 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-primary font-weight-bold btn-sm" data-toggle="modal"
-                                            data-target="#section{{ $section->id }}">
+                                        <button type="button" class="btn btn-primary mb-1 font-weight-bold btn-sm"
+                                        data-toggle="modal" data-target="#section_edit{{ $section->id }}">
                                             Edit
                                         </button>
-                                        <div class="modal fade" id="section{{ $section->id }}" data-backdrop="static" tabindex="-1" role="dialog"
-                                                aria-labelledby="staticBackdrop" aria-hidden="true">
-                                                <div class="modal-dialog modal-md" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="staticBackdropLabel">Edit Section</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <i aria-hidden="true" class="ki ki-close"></i>
-                                                            </button>
-                                                        </div>
-                                                        <form action="{{ route('section.update', ['id' => $section->id]) }}" method="POST">
-                                                            <div class="modal-body">
-                                                                @csrf
-                                                                @method('PUT')
-                                                                <div class="form-group">
-                                                                    <label>Section <span class="text-danger">*</span></label>
-                                                                    <input type="text" class="form-control" placeholder="Enter Track" name="section" value="{{ $section->section }}"/>
-                                                                </div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-light-primary font-weight-bold"
-                                                                    data-dismiss="modal">Close</button>
-                                                                <button type="submit" class="btn btn-primary font-weight-bold">Save</button>
-                                                            </div>
+                                        <button type="button" class="btn btn-danger font-weight-bold btn-sm"
+                                            data-toggle="modal" data-target="#section_delete{{ $section->id }}">
+                                            Delete
+                                        </button>
+
+                                        <div class="modal fade" id="section_delete{{ $section->id }}" tabindex="-1">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header bg-danger">
+                                                        <h5 class="modal-title text-white">Delete</h5>
+
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Are you sure you want to delete this data?</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <form
+                                                            action="{{ route('section.destroy', ['id' => $section->id]) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Cancel</button>
+                                                            <button type="submit" class="btn btn-danger">Delete</button>
                                                         </form>
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+
+                                        <div class="modal fade" id="section_edit{{ $section->id }}" data-backdrop="static"
+                                            tabindex="-1" role="dialog" aria-labelledby="staticBackdrop"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog modal-md" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="staticBackdropLabel">Edit Section</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <i aria-hidden="true" class="ki ki-close"></i>
+                                                        </button>
+                                                    </div>
+                                                    <form action="{{ route('section.update', ['id' => $section->id]) }}"
+                                                        method="POST">
+                                                        <div class="modal-body">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <div class="form-group">
+                                                                <label>Section <span class="text-danger">*</span></label>
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Enter Track" name="section"
+                                                                    value="{{ $section->section }}" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button"
+                                                                class="btn btn-light-primary font-weight-bold"
+                                                                data-dismiss="modal">Close</button>
+                                                            <button type="submit"
+                                                                class="btn btn-primary font-weight-bold">Save</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

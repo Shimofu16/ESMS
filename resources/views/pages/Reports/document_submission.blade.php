@@ -50,7 +50,7 @@
                     Document Submission Report
                 </h3>
             </div>
-           
+
         </div>
         <div class="card-body">
             <!--begin: Datatable-->
@@ -71,7 +71,7 @@
 
                 <tbody>
                      @foreach ($students as $student)
-                        
+
                         <tr>
                             <td>{{ $student->enrollment->student->last_name }}, {{ $student->enrollment->student->first_name }} {{ $student->enrollment->student->middle_name }} {{ $student->enrollment->student->extension }}</td>
                             <td>{{ $student->enrollment->grade_level->grade_level}}</td>
@@ -81,10 +81,10 @@
                             <td>{{ $student->document != null ? $student->document->JHS_cert : 'Not Submitted'}}</td>
                             <td>{{ $student->document != null  ? $student->document->GoodMoral : 'Not Submitted'}}</td>
                             <td>{{ $student->document != null ? $student->document->Card : 'Not Submitted'}}</td>
-                            
+
                             <td>{{ $student->enrollment->student->prev_school}}</td>
                         </tr>
-                    @endforeach 
+                    @endforeach
                 </tbody>
 
             </table>
@@ -107,14 +107,10 @@
 
     <script>
         $(document).ready(function() {
-            // Setup - add a text input to each footer cell
-            $('#example thead tr')
-                .clone(true)
-                .addClass('filters')
-                .appendTo('#example thead');
-
+            // Setup - add a text input for global search
             var table = $('#example').DataTable({
-                dom: "<'row'<'col-sm-12 col-md-12 d-flex justify-content-between'Bl>>" + "tipr",
+                dom: "<'row'<'col-sm-12 col-md-12 d-flex justify-content-between'B><'col-sm-12 col-md-6'f>>" +
+                    "tipr",
                 buttons: [
                     'copyHtml5',
                     'excelHtml5',
@@ -122,58 +118,20 @@
                     'pdfHtml5',
                     'print'
                 ],
-
                 orderCellsTop: true,
                 fixedHeader: true,
                 initComplete: function() {
                     var api = this.api();
 
-                    // For each column
-                    api
-                        .columns()
-                        .eq(0)
-                        .each(function(colIdx) {
-                            // Set the header cell to contain the input element
-                            var cell = $('.filters th').eq(
-                                $(api.column(colIdx).header()).index()
-                            );
-                            var title = $(cell).text();
-                            $(cell).html('<input type="text" placeholder="' + title + '" />');
+                    // Add search input to the table header
+                    $('.filters th').eq(0).html('<input type="text" placeholder="Search all..." />');
 
-                            // On every keypress in this input
-                            $(
-                                    'input',
-                                    $('.filters th').eq($(api.column(colIdx).header()).index())
-                                )
-                                .off('keyup change')
-                                .on('keyup change', function(e) {
-                                    e.stopPropagation();
+                    var searchInput = $('.filters input');
 
-                                    // Get the search value
-                                    $(this).attr('title', $(this).val());
-                                    var regexr =
-                                    '({search})'; //$(this).parents('th').find('select').val();
-
-                                    var cursorPosition = this.selectionStart;
-                                    // Search the column for that value
-                                    api
-                                        .column(colIdx)
-                                        .search(
-                                            this.value != '' ?
-                                            regexr.replace('{search}', '(((' + this.value +
-                                                ')))') :
-                                            '',
-                                            this.value != '',
-                                            this.value == ''
-                                        )
-                                        .draw();
-
-                                    $(this)
-                                        .focus()[0]
-                                        .setSelectionRange(cursorPosition, cursorPosition);
-                                });
-                        });
-                },
+                    searchInput.on('keyup change', function() {
+                        api.search($(this).val()).draw();
+                    });
+                }
             });
         });
     </script>

@@ -127,9 +127,11 @@ if (!function_exists('checkIfStudentHasTuitionFee')) {
 if (!function_exists('checkIfStudentHasBalance')) {
     function checkIfStudentHasBalance($transaction)
     {
-        $latest_balance = $transaction->balances()->latest()->first();
-        if ($latest_balance) {
-            return true;
+        if ($transaction) {
+            $latest_balance = $transaction->balances()->latest()->first();
+            if ($latest_balance) {
+                return true;
+            }
         }
         return false;
     }

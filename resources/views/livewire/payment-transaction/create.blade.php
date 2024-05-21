@@ -80,12 +80,16 @@
                                 </td>
                                 <td>
                                     <input type="number" class="form-control" id="amount.{{ $key }}"
-                                        name="amount.{{ $key }}"
-                                        wire:model='amount.{{ $key }}' placeholder="Amount">
+                                        name="amount.{{ $key }}" wire:model='amount.{{ $key }}'
+                                        placeholder="Amount">
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-sm btn-danger"
-                                        wire:click='removeFee({{ $key }})'>X</button>
+                                    @if ($selected_fee['type'] != 'registration')
+                                        <button type="button" class="btn btn-sm btn-danger"
+                                            wire:click='removeFee({{ $key }})'>
+                                            X
+                                        </button>
+                                    @endif
                                 </td>
                                 @php
                                     $total = $total + $selected_fee['amount'];

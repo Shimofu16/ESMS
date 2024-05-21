@@ -548,13 +548,6 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Skirt Only',
                 'description' => 'FEMALE FORMAL UNIFORM',
                 'type' => 'other',
-                'gender' => 'female',
-                'amount' => 750.00,
-            ],
-            [
-                'name' => 'Skirt Only',
-                'description' => 'FEMALE FORMAL UNIFORM',
-                'type' => 'other',
                 'gender' => null,
                 'amount' => 750.00,
             ],

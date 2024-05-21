@@ -31,10 +31,11 @@ class Create extends Component
         $this->school_year =  getCurrentSettings();
         $this->array_selected_fees = [];
         $this->fees = collect();
+        $this->selected_fees = collect();
         if ($this->student_id) {
+            // dd($this->student_id);
             $this->resetThingsUp();
         }
-        $this->selected_fees = collect();
     }
     public function updatedStudentId($value)
     {
@@ -47,9 +48,9 @@ class Create extends Component
     public function resetThingsUp($function_name = '')
     {
         if ($function_name == 'fees') {
-            $this->getFees();
             $this->fee_id = null;
         }
+        $this->getFees();
         $student = Student::where('std_num' , $this->student_id)->first();
         // Get the final list of fees based on the merged fee IDs
         $this->fees = $this->getStudentFees($student->id, $student->sex);
@@ -71,17 +72,28 @@ class Create extends Component
     }
     private function getFees()
     {
-        $transaction = PaymentTransaction::with('student', 'transactions')
-            ->where('student_id', $this->student_id)
+        $student = Student::where('std_num' , $this->student_id)->first();
+        $payment_transaction = PaymentTransaction::with('student', 'transactions')
+            ->where('student_id', $student->id)
             ->where('school_year_id', $this->school_year['school_year_id'])
             ->first();
-
+            // dd( $payment_transaction);
+        if ($payment_transaction) {
+             $registration_fee = $payment_transaction->transactions()->where('type', 'registration')->first();
+            if (!$registration_fee) {
+                $this->array_selected_fees[Fee::where('type', 'registration')->first()->id] = Fee::where('type', 'registration')->first()->id;
+            }
+            // dd($registration_fee, $payment_transaction);
+        }else{
+            $this->array_selected_fees[Fee::where('type', 'registration')->first()->id] = Fee::where('type', 'registration')->first()->id;
+        }
+        // dd($this->array_selected_fees);
         $this->selected_fees = collect(Fee::find($this->array_selected_fees))
             ->keyBy('id') // Set the array key to fee id
-            ->map(function ($fee) use ($transaction) {
+            ->map(function ($fee) use ($payment_transaction) {
                 $fee->balance = 0;
-                if ($transaction) {
-                    $temp_transaction =  $transaction->transactions()->with('balances')
+                if ($payment_transaction) {
+                    $temp_transaction =  $payment_transaction->transactions()->with('balances')
                         ->where('fee_id', $fee->id)
                         ->first();
                     if ($temp_transaction && !empty($temp_transaction->balances)) {
@@ -167,7 +179,10 @@ class Create extends Component
         // Check if there's enough amount for registration fee
         foreach ($this->selected_fees as $fee) {
             if ($fee['type'] == 'registration' && (int)$this->amount[$fee['id']] != $fee['amount']) {
-                return session()->flash('error', 'Insufficient amount for registration fee');
+                return session()->flash('error', 'Insufficient or not exact amount for registration fee');
+            }
+            if ($fee['type'] != 'registration' && $fee['amount'] < (int)$this->amount[$fee['id']]) {
+                return session()->flash('error', 'Please pay exact amount');
             }
         }
 

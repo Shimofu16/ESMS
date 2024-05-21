@@ -18,26 +18,32 @@
 @endsection
 
 @section('info')
- <!--begin::Info-->
- <div class="d-flex align-items-center flex-wrap mr-2">
+    <!--begin::Info-->
+    <div class="d-flex align-items-center flex-wrap mr-2">
 
-    <!--begin::Page Title-->
-    <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-      Reports
+        <!--begin::Page Title-->
+        <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+            Reports
 
-      <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Navigation/Angle-right.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-            <polygon points="0 0 24 0 24 24 0 24"/>
-            <path d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000003, 11.999999) rotate(-270.000000) translate(-12.000003, -11.999999) "/>
-        </g>
-    </svg><!--end::Svg Icon--></span>
+            <span
+                class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Navigation/Angle-right.svg--><svg
+                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                    viewBox="0 0 24 24" version="1.1">
+                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <polygon points="0 0 24 0 24 24 0 24" />
+                        <path
+                            d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z"
+                            fill="#000000" fill-rule="nonzero"
+                            transform="translate(12.000003, 11.999999) rotate(-270.000000) translate(-12.000003, -11.999999) " />
+                    </g>
+                </svg><!--end::Svg Icon--></span>
 
-      Yearly Students Report
-    </h5>
-    <!--end::Page Title-->
+            Yearly Students Report
+        </h5>
+        <!--end::Page Title-->
 
-</div>
-<!--end::Info-->
+    </div>
+    <!--end::Info-->
 @endsection
 
 @section('content')
@@ -57,12 +63,12 @@
                 <thead>
                     <tr>
                         <th>Name</th>
-                     
+
                         {{-- <th>Track</th> --}}
                         <th>Strand</th>
                         <th>Specialization</th>
                         <th>School Year</th>
-                        
+
                     </tr>
                 </thead>
 
@@ -73,12 +79,12 @@
                                 {{ $student->first_name }}
                                 {{ $student->middle_name }}
                                 {{ $student->extension }}</td>
-                            
+
                             {{-- <td>{{ $student->specialization->strand->track->track }}</td> --}}
                             <td>{{ $student->enrollment->specialization->strand->strand }}</td>
                             <td>{{ $student->enrollment->specialization->specialization }}</td>
                             <td>{{ $student->enrollment->schoolyear->school_year }}</td>
-                            
+
 
                         </tr>
                     @endforeach
@@ -104,15 +110,10 @@
 
     <script>
         $(document).ready(function() {
-            // Setup - add a text input to each footer cell
-            $('#example thead tr')
-                .clone(true)
-                .addClass('filters')
-                .appendTo('#example thead');
-
+            // Setup - add a text input for global search
             var table = $('#example').DataTable({
-                dom: "<'row'<'col-sm-12 col-md-12 d-flex justify-content-between'Bl>>" + "tipr",
-                
+                dom: "<'row'<'col-sm-12 col-md-12 d-flex justify-content-between'B><'col-sm-12 col-md-6'f>>" +
+                    "tipr",
                 buttons: [
                     'copyHtml5',
                     'excelHtml5',
@@ -120,58 +121,20 @@
                     'pdfHtml5',
                     'print'
                 ],
-
                 orderCellsTop: true,
                 fixedHeader: true,
                 initComplete: function() {
                     var api = this.api();
 
-                    // For each column
-                    api
-                        .columns()
-                        .eq(0)
-                        .each(function(colIdx) {
-                            // Set the header cell to contain the input element
-                            var cell = $('.filters th').eq(
-                                $(api.column(colIdx).header()).index()
-                            );
-                            var title = $(cell).text();
-                            $(cell).html('<input type="text" placeholder="' + title + '" />');
+                    // Add search input to the table header
+                    $('.filters th').eq(0).html('<input type="text" placeholder="Search all..." />');
 
-                            // On every keypress in this input
-                            $(
-                                    'input',
-                                    $('.filters th').eq($(api.column(colIdx).header()).index())
-                                )
-                                .off('keyup change')
-                                .on('keyup change', function(e) {
-                                    e.stopPropagation();
+                    var searchInput = $('.filters input');
 
-                                    // Get the search value
-                                    $(this).attr('title', $(this).val());
-                                    var regexr =
-                                        '({search})'; //$(this).parents('th').find('select').val();
-
-                                    var cursorPosition = this.selectionStart;
-                                    // Search the column for that value
-                                    api
-                                        .column(colIdx)
-                                        .search(
-                                            this.value != '' ?
-                                            regexr.replace('{search}', '(((' + this.value +
-                                                ')))') :
-                                            '',
-                                            this.value != '',
-                                            this.value == ''
-                                        )
-                                        .draw();
-
-                                    $(this)
-                                        .focus()[0]
-                                        .setSelectionRange(cursorPosition, cursorPosition);
-                                });
-                        });
-                },
+                    searchInput.on('keyup change', function() {
+                        api.search($(this).val()).draw();
+                    });
+                }
             });
         });
     </script>

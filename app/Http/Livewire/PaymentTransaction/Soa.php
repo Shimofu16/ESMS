@@ -14,12 +14,14 @@ class Soa extends Component
     public $section_id;
     public $sections;
     public $payment_transactions;
-    public function updatedGradeLevelId($value){
+    public function updatedGradeLevelId($value)
+    {
         if ($value) {
             $this->sections = Section::where('gradelevel_id', $value)->get();
         }
     }
-    public function updatedSectionId($value){
+    public function updatedSectionId($value)
+    {
         if ($value) {
             $setting = getCurrentSettings();
             $this->payment_transactions = PaymentTransaction::query()
@@ -30,20 +32,33 @@ class Soa extends Component
                     });
                 })
                 ->get();
-            if (!$this->payment_transactions) {
-                return session()->flash('error', 'No Transactions yet.');
-            }
-            if (!checkIfStudentHasTuitionFee($this->payment_transactions)) {
-                return session()->flash('error', 'Some students do not have a tuition fee.');
-            }
-            foreach ($this->payment_transactions as $key => $temp) {
-                if ($temp->student->enrollment->section_id == null) {
-                    return session()->flash('error', "Student {$temp->student->full_name} do not have an assigned section.");
-                }
+                // dd($this->payment_transactions);
+        if (count($this->payment_transactions) == 0) {
+            return session()->flash('error', 'No Transactions yet.');
+        }
+        if (!checkIfStudentHasTuitionFee($this->payment_transactions)) {
+            return session()->flash('error', 'Some students do not have a tuition fee.');
+        }
+        foreach ($this->payment_transactions as $key => $temp) {
+            if ($temp->student->enrollment->section_id == null) {
+                return session()->flash('error', "Student {$temp->student->full_name} do not have an assigned section.");
             }
         }
     }
-    public function mount(){
+        // if ($value) {
+        //     $setting = getCurrentSettings();
+        //     $this->payment_transactions = PaymentTransaction::query()
+        //         ->where('school_year_id', $setting['school_year_id'])
+        //         ->whereHas('student', function ($query) use ($value) {
+        //             $query->whereHas('enrollment', function ($que) use ($value) {
+        //                 $que->where('section_id', $value);
+        //             });
+        //         })
+        //         ->get();
+        // }
+    }
+    public function mount()
+    {
         $this->grade_levels = GradeLevel::all();
         $this->sections = collect();
         $this->payment_transactions = collect();

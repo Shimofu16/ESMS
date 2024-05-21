@@ -59,6 +59,7 @@ Route::group(['prefix' => 'section', 'middleware' => ['auth']], function () {
     Route::get('/class-list/{id}', [App\Http\Controllers\SectionController::class, 'show'])->name('section.show');
     Route::post('/store', [App\Http\Controllers\SectionController::class, 'store'])->name('section.store');
     Route::put('/update/{id}', [App\Http\Controllers\SectionController::class, 'update'])->name('section.update');
+    Route::delete('/destroy/{id}', [App\Http\Controllers\SectionController::class, 'destroy'])->name('section.destroy');
 });
 
 //AddSectionToStudent

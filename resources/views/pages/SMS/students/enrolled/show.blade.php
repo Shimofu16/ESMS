@@ -298,10 +298,12 @@
                                         <a href="#documents" aria-controls="documents" role="tab"
                                             data-toggle="tab"><span class="navi-text">Documents Submission</span></a>
                                     </li>
-                                    <li role="presentation" class="navi-link py-4 d-flex justify-content-center mt-5">
-                                        <button class="btn btn-danger" data-toggle="modal" data-target="#dropStudent">Drop
-                                            this student</button>
-                                    </li>
+                                    @if ($student->status != 3)
+                                        <li role="presentation" class="navi-link py-4 d-flex justify-content-center mt-5">
+                                            <button class="btn btn-danger" data-toggle="modal" data-target="#dropStudent">Drop
+                                                this student</button>
+                                        </li>
+                                    @endif
                                 </ul>
 
 
@@ -1037,8 +1039,7 @@
                                     @csrf
                                     @method('POST')
                                     <div class="row mb-5">
-                                        @if (!empty($student->document->Form137))
-                                        @else
+
                                             <div class="col-12 p-2 pl-4">
                                                 <div class="row">
                                                     <div class="col-6">
@@ -1058,10 +1059,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        @endif
 
-                                        @if (!empty($student->document->JHS_cert))
-                                        @else
+
+
                                             <div class="col-12 p-2 pl-4">
                                                 <div class="row">
                                                     <div class="col-6">
@@ -1081,10 +1081,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        @endif
 
-                                        @if (!empty($student->document->PSA))
-                                        @else
+
+
                                             <div class="col-12 p-2 pl-4">
                                                 <div class="row">
                                                     <div class="col-6">
@@ -1103,10 +1102,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        @endif
+                                        
 
-                                        @if (!empty($student->document->GoodMoral))
-                                        @else
+                                        
                                             <div class="col-12 p-2 pl-4">
                                                 <div class="row">
                                                     <div class="col-6">
@@ -1126,10 +1124,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        @endif
+                                        
 
-                                        @if (!empty($student->document->Card))
-                                        @else
+
                                             <div class="col-12 p-2 pl-4">
                                                 <div class="row">
                                                     <div class="col-6">
@@ -1148,7 +1145,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        @endif
+
 
                                     </div>
 
