@@ -105,35 +105,35 @@
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
 
-    <script>
+      <script>
         $(document).ready(function() {
-            // Setup - add a text input for global search
-            var table = $('#example').DataTable({
-                dom: "<'row'<'col-sm-12 col-md-12 d-flex justify-content-between'B><'col-sm-12 col-md-6'f>>" +
-                    "tipr",
-                buttons: [
-                    'copyHtml5',
-                    'excelHtml5',
-                    // 'csvHtml5',
-                    'pdfHtml5',
-                    'print'
-                ],
-                orderCellsTop: true,
-                fixedHeader: true,
-                initComplete: function() {
-                    var api = this.api();
+         var table = $('#example').DataTable({
+             dom: "<'row'<'col-sm-6 col-md-6 d-flex justify-content-between'B><'col-sm-6 col-md-6'f>>" +
+                 "tipr",
+             buttons: [
+                 'copyHtml5',
+                 'excelHtml5',
+                 // 'csvHtml5',
+                 'pdfHtml5',
+                 'print'
+             ],
+             orderCellsTop: true,
+             fixedHeader: true,
+             initComplete: function() {
+                 var api = this.api();
 
-                    // Add search input to the table header
-                    $('.filters th').eq(0).html('<input type="text" placeholder="Search all..." />');
+                 // Move the search input to the right
+                 $('.filters th').eq(0).html('<div class="d-flex justify-content-end"><input type="text" placeholder="Search all..." /></div>');
 
-                    var searchInput = $('.filters input');
+                 var searchInput = $('.filters input');
 
-                    searchInput.on('keyup change', function() {
-                        api.search($(this).val()).draw();
-                    });
-                }
-            });
-        });
+                 searchInput.on('keyup change', function() {
+                     api.search($(this).val()).draw();
+                 });
+             }
+         });
+     });
+
     </script>
 @endsection
 

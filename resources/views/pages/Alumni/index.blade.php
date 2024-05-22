@@ -105,75 +105,33 @@
 
     <script>
         $(document).ready(function() {
-            // Setup - add a text input to each footer cell
-            $('#example thead tr')
-                .clone(true)
-                .addClass('filters')
-                .appendTo('#example thead');
+         var table = $('#example').DataTable({
+             dom: "<'row'<'col-sm-6 col-md-6 d-flex justify-content-between'B><'col-sm-6 col-md-6'f>>" +
+                 "tipr",
+             buttons: [
+                 'copyHtml5',
+                 'excelHtml5',
+                 // 'csvHtml5',
+                 'pdfHtml5',
+                 'print'
+             ],
+             orderCellsTop: true,
+             fixedHeader: true,
+             initComplete: function() {
+                 var api = this.api();
 
-            var table = $('#example').DataTable({
-                dom: "<'row'<'col-sm-12 col-md-12 d-flex justify-content-between'Bl>>" + "tipr",
-                buttons: [
-                    'copyHtml5',
-                    'excelHtml5',
-                    // 'csvHtml5',
-                    'pdfHtml5',
-                    'print'
-                ],
+                 // Move the search input to the right
+                 $('.filters th').eq(0).html('<div class="d-flex justify-content-end"><input type="text" placeholder="Search all..." /></div>');
 
-                orderCellsTop: true,
-                fixedHeader: true,
-                initComplete: function() {
-                    var api = this.api();
+                 var searchInput = $('.filters input');
 
-                    // For each column
-                    api
-                        .columns()
-                        .eq(0)
-                        .each(function(colIdx) {
-                            // Set the header cell to contain the input element
-                            var cell = $('.filters th').eq(
-                                $(api.column(colIdx).header()).index()
-                            );
-                            var title = $(cell).text();
-                            $(cell).html('<input type="text" placeholder="' + title + '" />');
+                 searchInput.on('keyup change', function() {
+                     api.search($(this).val()).draw();
+                 });
+             }
+         });
+     });
 
-                            // On every keypress in this input
-                            $(
-                                    'input',
-                                    $('.filters th').eq($(api.column(colIdx).header()).index())
-                                )
-                                .off('keyup change')
-                                .on('keyup change', function(e) {
-                                    e.stopPropagation();
-
-                                    // Get the search value
-                                    $(this).attr('title', $(this).val());
-                                    var regexr =
-                                    '({search})'; //$(this).parents('th').find('select').val();
-
-                                    var cursorPosition = this.selectionStart;
-                                    // Search the column for that value
-                                    api
-                                        .column(colIdx)
-                                        .search(
-                                            this.value != '' ?
-                                            regexr.replace('{search}', '(((' + this.value +
-                                                ')))') :
-                                            '',
-                                            this.value != '',
-                                            this.value == ''
-                                        )
-                                        .draw();
-
-                                    $(this)
-                                        .focus()[0]
-                                        .setSelectionRange(cursorPosition, cursorPosition);
-                                });
-                        });
-                },
-            });
-        });
     </script>
 @endsection
 
