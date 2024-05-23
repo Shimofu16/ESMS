@@ -69,7 +69,7 @@
                 <div class="row">
             @endif
 
-            <div class="col-md-6 {{ $count == 1 || $count == 2 ? 'mb-5' : '' }}">
+            <div class="col-md-6 {{ $count == 1 || $count == 2 ? 'mb-1' : '' }}">
                 <!-- Your SOA content goes here -->
                 <div class="d-flex justify-content-center align-items-center bb-blue px-auto">
                     <img src="{{ asset('media/logos/capellan_logo.png') }}" alt="logo" class="img-fluid"
@@ -549,20 +549,17 @@
                 <!-- Add more details as needed -->
             </div>
 
-            @if ($count == 2 || $count == 3 || $loop->last)
-    </div> <!-- Close the row after 2 SOAs or on the last transaction -->
-    @endif
+            @if ($count == 2 || $count == 4 ||$loop->last)
+                </div> <!-- Close the row after 2 SOAs or on the last transaction -->
+             @endif
+             @if ($count == 4)
+                 <div class="page-break"></div> <!-- Page break for printing -->
+             @endif
 
-    @if ($count == 4)
-        @php
-            $count = 1;
-        @endphp
-        <div class="page-break"></div> <!-- Page break for printing -->
-    @endif
 
-    @php
-        $count++;
-    @endphp
-    @endforeach
-</div>
+            @php
+                $count++;
+            @endphp
+        @endforeach
+    </div>
 </div>

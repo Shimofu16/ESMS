@@ -68,6 +68,9 @@
             font-size: 10px;
             font-family: Calibri !important;
         }
+        .page-break {
+            page-break-before: always;
+        }
     </style>
     @livewireStyles
 </head>
@@ -89,10 +92,6 @@
             console.log('print');
             var element = document.getElementById('wrapper');
             var opt = {
-                pagebreak: {
-                    mode: 'avoid-all',
-                    before: '.page-break'
-                },
                 margin: .2,
                 filename: 'SOA.pdf',
                 image: {
