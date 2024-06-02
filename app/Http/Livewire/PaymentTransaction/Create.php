@@ -51,7 +51,7 @@ class Create extends Component
             $this->fee_id = null;
         }
         $this->getFees();
-        $student = Student::where('std_num' , $this->student_id)->first();
+        $student = Student::where('std_num', $this->student_id)->first();
         // Get the final list of fees based on the merged fee IDs
         $this->fees = $this->getStudentFees($student->id, $student->sex);
         // dd( $this->getFees());
@@ -64,27 +64,25 @@ class Create extends Component
             $this->resetThingsUp('fees');
             foreach ($this->selected_fees as $fee) {
                 if ($fee['type'] == 'registration') {
-
                 }
-
             }
         }
     }
     private function getFees()
     {
-        $student = Student::where('std_num' , $this->student_id)->first();
+        $student = Student::where('std_num', $this->student_id)->first();
         $payment_transaction = PaymentTransaction::with('student', 'transactions')
             ->where('student_id', $student->id)
             ->where('school_year_id', $this->school_year['school_year_id'])
             ->first();
-            // dd( $payment_transaction);
+        // dd( $payment_transaction);
         if ($payment_transaction) {
-             $registration_fee = $payment_transaction->transactions()->where('type', 'registration')->first();
+            $registration_fee = $payment_transaction->transactions()->where('type', 'registration')->first();
             if (!$registration_fee) {
                 $this->array_selected_fees[Fee::where('type', 'registration')->first()->id] = Fee::where('type', 'registration')->first()->id;
             }
             // dd($registration_fee, $payment_transaction);
-        }else{
+        } else {
             $this->array_selected_fees[Fee::where('type', 'registration')->first()->id] = Fee::where('type', 'registration')->first()->id;
         }
         // dd($this->array_selected_fees);
@@ -187,7 +185,7 @@ class Create extends Component
         }
 
         // Get student and active transaction
-        $student = Student::where('std_num' , $this->student_id)->first();
+        $student = Student::where('std_num', $this->student_id)->first();
         // $student = Student::find($this->student_id);
         $transaction = PaymentTransaction::with('student', 'transactions')
             ->where('student_id', $student->id)
@@ -299,14 +297,16 @@ class Create extends Component
             'status' => 1
         ]);
 
-        $enrollment = getStudentEnrollment($student->id);
-        $sections = Section::where('specialization_id', $enrollment->specialization_id)
-            ->where('gradelevel_id', $enrollment->gradelevel_id)
-            ->get();
+        if ($student->type != 'Iregular') {
+            $enrollment = getStudentEnrollment($student->id);
+            $sections = Section::where('specialization_id', $enrollment->specialization_id)
+                ->where('gradelevel_id', $enrollment->gradelevel_id)
+                ->get();
 
-        foreach ($sections as $key => $section) {
-            if ($section->students->count() < 30) {
-                $enrollment->update(['section_id' => $section->id]);
+            foreach ($sections as $key => $section) {
+                if ($section->students->count() < 30) {
+                    $enrollment->update(['section_id' => $section->id]);
+                }
             }
         }
         // dd($enrollment, $section->id);

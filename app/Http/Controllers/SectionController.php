@@ -7,25 +7,52 @@ use Illuminate\Http\Request;
 use App\Models\Section;
 use App\Models\Student;
 use App\Models\Active_SchoolYearAndSem;
+use App\Models\GradeLevel;
+use App\Models\Specialization;
 
 class SectionController extends Controller
 {
 
-    public function index()
+    public function index($grade_level_id, $specialization_id = null)
     {
 
         $active = Active_SchoolYearAndSem::first();
-        $sections = Section::with('specialization', 'gradelevel')->get();
+        $sections = Section::with('specialization', 'gradelevel')
+            ->where('gradelevel_id', $grade_level_id)
+            ->where('specialization_id', $specialization_id)
+            ->get();
+        $grade_level = GradeLevel::find($grade_level_id);
+        $grade_levels = GradeLevel::all();
+        $specialization = Specialization::find($specialization_id);
+        $specializations = Specialization::all();
 
-        $student_without_sections = Student::with('enrollment')->whereHas('enrollment', function ($q) use ($active) {
+        $students = Student::with('enrollment')->whereHas('enrollment', function ($q) use (
+            $active,
+            $grade_level,
+            $specialization
+        ) {
             $q->where('section_id', null)
+                ->where('gradelevel_id', $grade_level->id)
+                ->where('specialization_id', $specialization->id)
                 ->where('sem_id', $active->active_sem_id)
                 ->where('school_year_id', $active->active_SY_id);
-        })->where('status', 1)->get();
+        })
+        ->where('status', 1)->get();
 
 
 
-        return view('pages.Section.index', compact('sections', 'student_without_sections', 'active'));
+        return view(
+            'pages.Section.index',
+            compact(
+                'sections',
+                'students',
+                'active',
+                'grade_levels',
+                'grade_level',
+                'specialization',
+                'specializations',
+            )
+        );
     }
 
     public function store(request $request)
@@ -62,9 +89,9 @@ class SectionController extends Controller
         $section = Section::with('students')->find($id);
 
         if ($section->students->count() > 0) {
-            return redirect()->back()->with('error', 'Section: '. $section->section . ' has students');
+            return redirect()->back()->with('error', 'Section: ' . $section->section . ' has students');
         }
-        Activity::log(auth()->user()->id, 'Section Management', 'Deleted section: '. $section->section);
+        Activity::log(auth()->user()->id, 'Section Management', 'Deleted section: ' . $section->section);
         $section->delete();
         return redirect()->back()->with('success', 'Successfully deleted section');
     }

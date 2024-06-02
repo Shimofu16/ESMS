@@ -12,7 +12,7 @@ class AddStudentoSectionController extends Controller
 {
     public function store(Request $request){
 
-        $section = Section::findorfail($request->section_id);
+        $section = Section::findOrFail($request->section_id);
 
         foreach($request->student_id as $student_id){
 
@@ -29,7 +29,7 @@ class AddStudentoSectionController extends Controller
 
         Activity::log(auth()->user()->id, 'Section Management', 'Added '. count($request->student_id) .' students to section ' . $section->section );
 
-        return redirect()->route('section.index');
+        return redirect()->back()->with('success', 'Added '. count($request->student_id) .' students to section ' . $section->section );
 
     }
 }

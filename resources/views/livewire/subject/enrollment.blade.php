@@ -429,11 +429,11 @@
                                     </td>
                                     <td>
                                         <span class="label-title">
-                                            @if ($isRegular)
-                                                {{ $schedule->section->section }}
+                                            {{ $schedule->section->section }}
+                                            {{-- @if ($isRegular)
                                             @else
                                                  To Be Announce
-                                            @endif
+                                            @endif --}}
                                         </span>
                                     </td>
                                     <td>

@@ -55,7 +55,7 @@ Route::group(['prefix' => 'specialization', 'middleware' => ['auth']], function 
 
 //Section
 Route::group(['prefix' => 'section', 'middleware' => ['auth']], function () {
-    Route::get('/index', [App\Http\Controllers\SectionController::class, 'index'])->name('section.index');
+    Route::get('/index/{grade_level_id}/{specialization_id?}', [App\Http\Controllers\SectionController::class, 'index'])->name('section.index');
     Route::get('/class-list/{id}', [App\Http\Controllers\SectionController::class, 'show'])->name('section.show');
     Route::post('/store', [App\Http\Controllers\SectionController::class, 'store'])->name('section.store');
     Route::put('/update/{id}', [App\Http\Controllers\SectionController::class, 'update'])->name('section.update');

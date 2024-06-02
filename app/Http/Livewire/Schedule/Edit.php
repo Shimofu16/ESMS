@@ -19,14 +19,14 @@ class Edit extends Component
         $this->days[] = $value;
         if ($value == 'All') {
             // reset days
-            $this->days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+            $this->days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         }
         $this->sortDays();
     }
 
     private function sortDays()
     {
-        $daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+        $daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         $sorted = new Collection();
 
         foreach ($this->days as $k => $v) {

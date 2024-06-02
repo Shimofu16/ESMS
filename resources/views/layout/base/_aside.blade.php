@@ -132,6 +132,10 @@
 
                             </span>
                             <span class="menu-text">Student Records</span>
+                            <span class="menu-label">
+                                <span
+                                    class="label label-rounded label-primary">{{ getStudentsByStatus(0)->count() }}</span>
+                            </span>
                             <i class="menu-arrow"></i>
                         </a>
                         <div class="menu-submenu">
@@ -145,7 +149,8 @@
                                             </i>
                                             <span class="menu-text">Enrolled Students</span>
                                             <span class="menu-label">
-                                                {{-- <span class="label label-rounded label-primary"><?= $count_user ?></span> --}}
+                                                <span
+                                                    class="label label-rounded label-primary">{{ getStudentsByStatus(1)->count() }}</span>
                                             </span>
                                         </a>
                                     </li>
@@ -158,7 +163,8 @@
                                             </i>
                                             <span class="menu-text">Pending Students</span>
                                             <span class="menu-label">
-                                                {{-- <span class="label label-rounded label-primary"><?= $count_user ?></span> --}}
+                                                <span
+                                                    class="label label-rounded label-primary">{{ getStudentsByStatus(0)->count() }}</span>
                                             </span>
                                         </a>
                                     </li>
@@ -182,6 +188,10 @@
                                                 <span></span>
                                             </i>
                                             <span class="menu-text">Alumni</span>
+                                            <span class="menu-label">
+                                                <span
+                                                    class="label label-rounded label-primary">{{ getStudentsByStatus(3)->count() }}</span>
+                                            </span>
                                         </a>
                                     </li>
                                 @endcan
@@ -192,6 +202,10 @@
                                                 <span></span>
                                             </i>
                                             <span class="menu-text">Dropouts</span>
+                                            <span class="menu-label">
+                                                <span
+                                                    class="label label-rounded label-primary">{{ getStudentsByStatus(2)->count() }}</span>
+                                            </span>
                                         </a>
                                     </li>
                                 @endcan
@@ -200,7 +214,16 @@
                         </div>
                     </li>
                 @endcan
+                @can('manage-sections')
+                    <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                        <a href="{{ route('section.index',['grade_level_id' =>  1, 'specialization_id' => 1]) }}" class="menu-link menu-toggle">
+                            <span class="menu-icon fas fa-user-plus">
+                            </span>
+                            <span class="menu-text">Sections</span>
 
+                        </a>
+                    </li>
+                @endcan
                 @can('manage-accounting')
                     <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                         <a href="javascript:;" class="menu-link menu-toggle">
@@ -208,6 +231,10 @@
 
                             </span>
                             <span class="menu-text">Accounting</span>
+                            <span class="menu-label">
+                                <span
+                                    class="label label-rounded label-primary">{{ \App\Models\SMS\PaymentTransaction::count() }}</span>
+                            </span>
                             <i class="menu-arrow"></i>
                         </a>
                         <div class="menu-submenu">
@@ -230,6 +257,10 @@
                                                 <span></span>
                                             </i>
                                             <span class="menu-text">Payment Transactions</span>
+                                            <span class="menu-label">
+                                                <span
+                                                    class="label label-rounded label-primary">{{ \App\Models\SMS\PaymentTransaction::count() }}</span>
+                                            </span>
                                         </a>
                                     </li>
                                 @endcan
