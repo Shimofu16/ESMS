@@ -25,6 +25,13 @@ class DashboardController extends Controller
             })
             ->where('status', 1)
             ->count();
+        $enrollee_students_cnt = Student::with('enrollment')
+            ->select('status')
+            ->whereHas('enrollment', function (Builder $query) use ($active) {
+                $query->where('school_year_id', $active->active_SY_id);
+            })
+            ->where('status', 0)
+            ->count();
         $graduate_students_count =  $students = Student::select('status')->where('status', 3)->count();
 
         $gradeLevels = [1, 2];
@@ -58,7 +65,12 @@ class DashboardController extends Controller
         
         return view(
             'pages.dashboard',
-            compact('enrolled_students_cnt', 'studentsCountPerSpecializationForGrades',  'graduate_students_count')
+            compact(
+                'enrolled_students_cnt',
+                'enrollee_students_cnt',
+             'studentsCountPerSpecializationForGrades',
+               'graduate_students_count'
+               )
         );
     }
 }
