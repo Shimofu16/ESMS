@@ -52,7 +52,7 @@
                         <small>Below are the students that are enrolled to section  {{ $section->section }}</small>
                     </div>
                     <div class="card-toolbar">
-                        <a class="btn btn-secondary font-weight-bold btn-sm mr-1" href="{{ route('section.index') }}">
+                        <a class="btn btn-secondary font-weight-bold btn-sm mr-1" href="{{ url()->previous() }}">
                             {{-- return --}}
                             <i class="flaticon2-back"></i>
                             back
