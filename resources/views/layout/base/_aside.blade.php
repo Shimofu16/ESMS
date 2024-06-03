@@ -148,10 +148,10 @@
                                                 <span></span>
                                             </i>
                                             <span class="menu-text">Enrolled Students</span>
-                                            <span class="menu-label">
+                                            {{-- <span class="menu-label">
                                                 <span
                                                     class="label label-rounded label-primary">{{ getStudentsByStatus(1)->count() }}</span>
-                                            </span>
+                                            </span> --}}
                                         </a>
                                     </li>
                                 @endcan
@@ -188,10 +188,10 @@
                                                 <span></span>
                                             </i>
                                             <span class="menu-text">Alumni</span>
-                                            <span class="menu-label">
+                                            {{-- <span class="menu-label">
                                                 <span
                                                     class="label label-rounded label-primary">{{ getStudentsByStatus(3)->count() }}</span>
-                                            </span>
+                                            </span> --}}
                                         </a>
                                     </li>
                                 @endcan
@@ -202,10 +202,10 @@
                                                 <span></span>
                                             </i>
                                             <span class="menu-text">Dropouts</span>
-                                            <span class="menu-label">
+                                            {{-- <span class="menu-label">
                                                 <span
                                                     class="label label-rounded label-primary">{{ getStudentsByStatus(2)->count() }}</span>
-                                            </span>
+                                            </span> --}}
                                         </a>
                                     </li>
                                 @endcan
