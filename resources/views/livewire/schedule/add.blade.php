@@ -88,6 +88,7 @@
                         <option value="Wednesday">Wednesday</option>
                         <option value="Thursday">Thursday</option>
                         <option value="Friday">Friday</option>
+                        <option value="Saturday">Saturday</option>
                         <option value="All">All</option>
                     </select>
                     @error('selected_day')
