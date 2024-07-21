@@ -167,7 +167,7 @@ return [
          * Package Service Providers...
          */
         App\Providers\MetronicServiceProvider::class,
-
+        Maatwebsite\Excel\ExcelServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -237,7 +237,7 @@ return [
         'Menu' => App\Classes\Theme\Menu::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-
+        
     ],
 
 ];

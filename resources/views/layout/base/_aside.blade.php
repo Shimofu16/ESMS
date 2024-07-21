@@ -402,7 +402,7 @@
                     </li>
                 @endcan
 
-                @can('manage-teachers')
+                {{-- @can('manage-teachers')
                     <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                         <a href="{{ route('teacher.index') }}" class="menu-link menu-toggle">
                             <span class="menu-icon fas fa-chalkboard-teacher">
@@ -422,7 +422,7 @@
 
                         </a>
                     </li>
-                @endcan
+                @endcan --}}
                 @can('manage-users')
                     <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                         <a href="{{ route('user.index') }}" class="menu-link menu-toggle">

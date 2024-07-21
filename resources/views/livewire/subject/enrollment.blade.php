@@ -28,25 +28,7 @@
                         @endforeach
                     </datalist>
                 </div>
-                <div class="col-6">
-                    @if (!$isRegular)
-                        <label for="subject_id" class="form-label fw-bold text-black">Subjects</label>
-                        <select name="subject_id" id="subject_id" wire:model.live='subject_id' class="form-control  p-0"
-                            required>
-                            @if ($student_id)
-                                <option value="">Select subject</option>
-                                @foreach ($subjects as $subject)
-                                    <option value="{{ $subject->id }}"
-                                        @if (old('subject_id') == $subject->id) selected @endif>
-                                        {{ $subject->name }}
-                                    </option>
-                                @endforeach
-                            @else
-                                <option value="">Select student First</option>
-                            @endif
-                        </select>
-                    @endif
-                </div>
+                
             </div>
             <div class="row justify-content-center my-3">
                 <button class="btn btn-primary {{ session()->has('error') ? 'pe-none' : '' }}" wire:click="generatePDF"
@@ -106,7 +88,7 @@
                             </div>
 
                         </div>
-                        <div class="d-flex justify-content-between mb-3 px-4">
+                        <div class="d-flex justify-content-between mb-0 px-4">
                             <div class="d-flex">
                                 <h1 class="label-title bold mt-3">
                                     Name: &nbsp;
@@ -127,7 +109,7 @@
                             </div>
 
                         </div>
-                        <div class="d-flex justify-content-between mb-3 px-4">
+                        <div class="d-flex justify-content-between mb-0 px-4">
                             <div class="d-flex">
                                 <h1 class="label-title bold mt-3">
                                     Program: &nbsp;
@@ -147,7 +129,7 @@
                             </div>
 
                         </div>
-                        <div class="d-flex justify-content-between mb-3 px-4">
+                        <div class="d-flex justify-content-between mb-0 px-4">
 
                             <div class="d-flex">
                                 <h1 class="label-title bold mt-3">
@@ -180,7 +162,7 @@
                                 </h1>
                             </div>
                         </div>
-                        <div class="d-flex justify-content-between mb-3 px-4">
+                        <div class="d-flex justify-content-between mb-0 px-4">
                             <div class="d-flex">
                                 <h1 class="label-title bold mt-3">
                                     Total Amount of Tuition Fee: &nbsp;
@@ -320,7 +302,7 @@
                             </div>
 
                         </div>
-                        <div class="d-flex justify-content-between mb-3 px-4">
+                        <div class="d-flex justify-content-between mb-0 px-4">
                             <div class="d-flex">
                                 <h1 class="label-title bold mt-3">
                                     Name: &nbsp;
@@ -340,7 +322,7 @@
 
                             </div>
                         </div>
-                        <div class="d-flex justify-content-between mb-3 px-4">
+                        <div class="d-flex justify-content-between mb-0 px-4">
                             <div class="d-flex">
                                 <h1 class="label-title bold mt-3">
                                     Program: &nbsp;
@@ -360,7 +342,7 @@
                             </div>
 
                         </div>
-                        <div class="d-flex justify-content-between mb-3 px-4">
+                        <div class="d-flex justify-content-between mb-0 px-4">
 
                             <div class="d-flex">
                                 <h1 class="label-title bold mt-3">
@@ -406,48 +388,25 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($schedules as $schedule)
-                                <tr>
-                                    <td>
-                                        <span class="label-title">
-                                            {{ $schedule->subject->name }}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span class="label-title">
-                                            {{ date('H:i A', strtotime($schedule->start_time)) }} -
-                                            {{ date('H:i A', strtotime($schedule->end_time)) }}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span class="label-title">
-                                            @foreach ($schedule->days as $day)
-                                                {{ Str::ucfirst(toShort($day, 3)) }}{{ !$loop->last ? ',' : '' }}
-                                            @endforeach
-                                        </span>
-                                        {{-- @dd($schedule->days) --}}
-                                    </td>
-                                    <td>
-                                        <span class="label-title">
-                                            {{ $schedule->section->section }}
-                                            {{-- @if ($isRegular)
-                                            @else
-                                                 To Be Announce
-                                            @endif --}}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span class="label-title">
-                                            {{ $schedule->teacher->full_name }}
-                                        </span>
-                                    </td>
-                                </tr>
-
-                            @empty
-                                <tr>
-                                    <td colspan="5" class="text-center"> Select student to view schedules</td>
-                                </tr>
-                            @endforelse
+                            @for ($i = 0; $i < 10; $i++)
+                            <tr>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            @endfor
 
                         </tbody>
                     </table>

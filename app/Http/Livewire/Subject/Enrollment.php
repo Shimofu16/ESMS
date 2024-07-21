@@ -65,9 +65,9 @@ class Enrollment extends Component
                 return session()->flash('error', 'The student has not yet paid the registration fee.');
             }
 
-            if (!$schedules) {
-                return session()->flash('error', 'The student has no schedules');
-            }
+            // if (!$schedules) {
+            //     return session()->flash('error', 'The student has no schedules');
+            // }
 
             $this->image = $student->image;
             $this->student_number = $student->std_num;
@@ -97,7 +97,7 @@ class Enrollment extends Component
                 ->where('semester_id', $this->semester)
                 ->pluck('id')
                 ->toArray();
-                $this->schedules =   getSchedulesUsingSection($this->enrollment->section_id, $subjects);
+                // $this->schedules =   getSchedulesUsingSection($this->enrollment->section_id, $subjects);
             } else {
                 $this->subjects = Subject::where('specialization_id', $this->enrollment->specialization_id)
                     ->where('grade_level_id', $this->enrollment->gradelevel_id)
@@ -108,20 +108,20 @@ class Enrollment extends Component
             // dd($this->subjects, $this->enrollment);
         }
     }
-    public function updatedSubjectId($value)
-    {
-        if ($value) {
-            $this->selected_subjects[$value] = $value;
-            $this->schedules =   getSchedulesUsingSection($this->enrollment->section_id,  $this->selected_subjects);
-            if (count( $this->selected_subjects) == count($this->schedules)) {
-                $this->subjects = Subject::where('specialization_id', $this->enrollment->specialization_id)
-                    ->whereNotIn('id',  $this->selected_subjects)
-                    ->where('grade_level_id', $this->enrollment->gradelevel_id)
-                    ->where('semester_id', $this->semester)
-                    ->get();
-            }
-        }
-    }
+    // public function updatedSubjectId($value)
+    // {
+    //     if ($value) {
+    //         $this->selected_subjects[$value] = $value;
+    //         $this->schedules =   getSchedulesUsingSection($this->enrollment->section_id,  $this->selected_subjects);
+    //         if (count( $this->selected_subjects) == count($this->schedules)) {
+    //             $this->subjects = Subject::where('specialization_id', $this->enrollment->specialization_id)
+    //                 ->whereNotIn('id',  $this->selected_subjects)
+    //                 ->where('grade_level_id', $this->enrollment->gradelevel_id)
+    //                 ->where('semester_id', $this->semester)
+    //                 ->get();
+    //         }
+    //     }
+    // }
     private function getTotalTransactions($transactions)
     {
         $total = 0;

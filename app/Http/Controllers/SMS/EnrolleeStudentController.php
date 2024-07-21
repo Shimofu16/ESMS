@@ -4,9 +4,11 @@ namespace App\Http\Controllers\SMS;
 
 use App\Helpers\Activity;
 use App\Http\Controllers\Controller;
+use App\Imports\ImportEnrollee;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use File;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EnrolleeStudentController extends Controller
 {
@@ -100,5 +102,12 @@ class EnrolleeStudentController extends Controller
         } catch (\Throwable $th) {
             return back()->with('error', $th->getMessage());
         }
+    }
+
+    public function import(Request $request)
+    {
+        // dd($request);
+        $request->validate(['file' => ['required','mimes:xlsx,xls,csv','max:2048']]);
+        Excel::import(new ImportEnrollee, $request->file('file'));
     }
 }
