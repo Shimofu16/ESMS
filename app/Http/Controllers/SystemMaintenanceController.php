@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Storage;
 
 class SystemMaintenanceController extends Controller
 {
-    public function index(){
+    public function index()
+    {
 
         // dd(Storage::disk('backup')->exists('backups'));
         $backups = $this->getBackups();
@@ -23,14 +24,15 @@ class SystemMaintenanceController extends Controller
         $schoolYears = SchoolYear::all();
         $sems = Sem::all();
         $gradelevels = GradeLevel::all();
-        $active_schoolYear_sems = Active_SchoolYearAndSem::with('schoolyear','sem')->first();
+        $active_schoolYear_sems = Active_SchoolYearAndSem::with('schoolyear', 'sem')->first();
         $strands = Strand::with('track')->get();
         $specializations = Specialization::with('strand.track')->get();
         $sections = Section::with('specialization.enrollment')->get();
-        return view('pages.SystemMaintenance.index',compact('backups','tracks','strands','specializations','gradelevels','schoolYears','active_schoolYear_sems','sems','sections'));
+        return view('pages.SystemMaintenance.index', compact('backups', 'tracks', 'strands', 'specializations', 'gradelevels', 'schoolYears', 'active_schoolYear_sems', 'sems', 'sections'));
     }
 
-    private function getBackups(){
+    private function getBackups()
+    {
         $path = 'CIT';
         $files = collect(Storage::disk('backup')->allFiles($path));
         $backups = $files->map(function ($file) use ($path) {

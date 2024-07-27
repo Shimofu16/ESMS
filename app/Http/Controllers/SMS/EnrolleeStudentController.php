@@ -109,5 +109,6 @@ class EnrolleeStudentController extends Controller
         // dd($request);
         $request->validate(['file' => ['required','mimes:xlsx,xls,csv','max:2048']]);
         Excel::import(new ImportEnrollee, $request->file('file'));
+        return back()->with('toast_success', 'Student list successfully imported.');
     }
 }

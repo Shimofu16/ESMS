@@ -27,7 +27,10 @@ class ImportGradeElevenEnrollees implements
     {
         $status = ['Regular', 'Irregular'];
         foreach ($collection as $row) {
-            if ($row['specialization']) {
+        // Initialize birthdate to null
+        $birthdate = null;
+            $specialization = Specialization::where('specialization', 'like', '%' . $row['specialization'] . '%')->first();
+            if ($specialization) {
                 // Map the collection data to the student model fields
                 $student = new Student();
                 $student->lrn = $row['lrn'];
@@ -40,7 +43,25 @@ class ImportGradeElevenEnrollees implements
                 $student->age = $row['age'];
                 $student->sex = $row['sex'];
                 $student->nationality = $row['nationality'];
-                $student->b_date = Carbon::createFromFormat('F d, Y', $row['birthdate'])->format('Y-m-d'); // Assuming b_date is in 'Month d, Y' format
+
+
+                // Check if the birthdate is in Excel serial date format (numeric)
+                if (is_numeric($row['birthdate'])) {
+                    $birthdate = Carbon::createFromFormat('Y-m-d', gmdate('Y-m-d', ($row['birthdate'] - 25569) * 86400));
+                } else {
+                    // Try to parse the birthdate as standard date formats
+                    try {
+                        $birthdate = Carbon::createFromFormat('m/d/Y', $row['birthdate']);
+                    } catch (\Exception $e) {
+                        try {
+                            $birthdate = Carbon::createFromFormat('F d, Y', $row['birthdate']);
+                        } catch (\Exception $e) {
+                            // Handle invalid date formats or log the error
+                            // Optionally, you can set a default value or skip the record
+                            $birthdate = null;
+                        }
+                    }
+                }
                 $student->contact_num = $row['contact_num'];
                 $student->house_num = $row['house_num'];
                 $student->purok = $row['purok'];
@@ -54,7 +75,7 @@ class ImportGradeElevenEnrollees implements
                 $student->g_name = $row['guardian_name'];
                 $student->relationship = $row['relationship'];
                 $student->g_contact_num = $row['guardian_contact_num'];
-                $student->g_add = $row['g_add'];
+                $student->g_add = $row['guardian_add'];
                 $student->prev_school = $row['prev_school'];
                 $student->prev_school_type = $row['prev_school_type'];
                 $student->jhs_yrs = $row['jhs_yrs'];
@@ -74,6 +95,7 @@ class ImportGradeElevenEnrollees implements
                 $school_year = Active_SchoolYearAndSem::first();
 
                 $specialization = Specialization::where('specialization', 'like', '%' . $row['specialization'] . '%')->first();
+                // dd($specialization, $row['specialization']);
                 $enrollment_id = Student_Specialization_GradeLevel_SchoolYear::create([
                     'student_id' => $student->id,
                     'specialization_id' => $specialization->id,

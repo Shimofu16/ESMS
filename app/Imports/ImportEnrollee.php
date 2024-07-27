@@ -20,7 +20,7 @@ WithMultipleSheets
      public function sheets(): array
     {
         return [
-            // 'G11' => new ImportGradeElevenEnrollees(),
+            'G11' => new ImportGradeElevenEnrollees(),
             'G12' => new ImportGradeTwelveEnrollees(),
         ];
     }
