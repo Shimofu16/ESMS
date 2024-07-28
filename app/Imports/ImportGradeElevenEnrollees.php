@@ -27,10 +27,11 @@ class ImportGradeElevenEnrollees implements
     {
         $status = ['Regular', 'Irregular'];
         foreach ($collection as $row) {
-        // Initialize birthdate to null
-        $birthdate = null;
+            // Initialize birthdate to null
+            $birthdate = null;
             $specialization = Specialization::where('specialization', 'like', '%' . $row['specialization'] . '%')->first();
-            if ($specialization) {
+            $isStudentAlreadyExist = Student::where('lrn', $row['lrn'])->orWhere('lrn', 'like', '%' . $row['lrn'] . '%')->first();
+            if (!$isStudentAlreadyExist && $specialization) {
                 // Map the collection data to the student model fields
                 $student = new Student();
                 $student->lrn = $row['lrn'];
