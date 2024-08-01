@@ -38,9 +38,18 @@ if (!function_exists('getCurrentSettings')) {
     }
 }
 if (!function_exists('getStudentsByStatus')) {
-    function getStudentsByStatus(int $status)
+    function getStudentsByStatus(int $status, string $student_type = '')
     {
         $setting = getCurrentSettings();
+        if ($student_type) {
+            return Student::with('enrollment.student')
+            ->whereHas('enrollment', function ($query) use ($setting) {
+                return $query->where('school_year_id', '=', $setting['school_year_id'])->where('sem_id', '=', $setting['semester_id']);
+            })
+            ->where('status', '=', $status)
+            ->where('type', '=', $student_type)
+            ->get();
+        }
         return Student::with('enrollment.student')
             ->whereHas('enrollment', function ($query) use ($setting) {
                 return $query->where('school_year_id', '=', $setting['school_year_id'])->where('sem_id', '=', $setting['semester_id']);

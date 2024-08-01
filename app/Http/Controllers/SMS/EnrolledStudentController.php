@@ -15,10 +15,12 @@ class EnrolledStudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($student_type = '')
     {
-        return view('pages.SMS.students.enrolled.index', [
-            'students' => getStudentsByStatus(1)
+        // dd(getStudentsByStatus(0, $student_type));
+        return view('pages.SMS.students.enrolled.index',[
+            'students' => getStudentsByStatus(1, $student_type),
+            'student_type' => $student_type
         ]);
     }
 

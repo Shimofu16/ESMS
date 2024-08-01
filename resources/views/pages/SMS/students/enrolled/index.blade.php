@@ -47,11 +47,42 @@
         <div class="card-header flex-wrap py-5">
             <div class="card-title">
                 <h3 class="card-label">
-                    List of Students
+                    List of  {{ $student_type ? $student_type : '' }} Students
                     <div class="text-muted pt-2 font-size-sm">Below is the list of enrolled student this school year</div>
                 </h3>
             </div>
+            <div class="card-toolbar">
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                        data-toggle="dropdown" aria-expanded="false">
+                        Student Type
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li>
+                            <a class="dropdown-item" href="{{ route('students.enrolled.filter', ['student_type' => 'Regular']) }}">
+                                Regular
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('students.enrolled.filter', ['student_type' => 'Irregular']) }}">
+                                Irregular
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('students.enrolled.filter', ['student_type' => 'Transferee']) }}">
+                                Transferee
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('students.enrolled.index', ['student_type' => '']) }}">
+                                Reset
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
+        
         <div class="card-body">
             <!--begin: Datatable-->
             <table class="table table-separate table-head-custom table-checkable" id="enrolled-students">

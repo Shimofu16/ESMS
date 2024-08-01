@@ -106,11 +106,13 @@ Route::group(['prefix' => 'enroll_existing_student', 'middleware' => ['auth']], 
 Route::prefix('students')->name('students.')->group(function () {
     Route::prefix('enrolled')->name('enrolled.')->group(function () {
         Route::get('/', [App\Http\Controllers\SMS\EnrolledStudentController::class, 'index'])->name('index');
+        Route::get('/filter/{student_type?}', [App\Http\Controllers\SMS\EnrolledStudentController::class, 'index'])->name('filter');
         Route::get('/show/{student_id}', [App\Http\Controllers\SMS\EnrolledStudentController::class, 'show'])->name('show');
         Route::put('/drop/{student_id}', [App\Http\Controllers\SMS\EnrolledStudentController::class, 'destroy'])->name('destroy');
     });
     Route::prefix('enrollee')->name('enrollee.')->group(function () {
         Route::get('/', [App\Http\Controllers\SMS\EnrolleeStudentController::class, 'index'])->name('index');
+        Route::get('/filter/{student_type?}', [App\Http\Controllers\SMS\EnrolleeStudentController::class, 'index'])->name('filter');
         Route::delete('/{student_id}', [App\Http\Controllers\SMS\EnrolleeStudentController::class, 'destroy'])->name('destroy');
         Route::post('/payment/{student_id}', [App\Http\Controllers\SMS\EnrolleeStudentController::class, 'store'])->name('store');
         Route::post('/import', [App\Http\Controllers\SMS\EnrolleeStudentController::class, 'import'])->name('import');

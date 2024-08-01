@@ -17,12 +17,12 @@ class EnrolleeStudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($student_type = '')
     {
-        // dd(public_path('sample-images\student-sample-1.jpg'));
-        // dd(Storage::get(public_path('sample-images/student-sample-1.jpg')));
+        // dd(getStudentsByStatus(0, $student_type));
         return view('pages.SMS.students.enrollees.index',[
-            'students' => getStudentsByStatus(0)
+            'students' => getStudentsByStatus(0, $student_type),
+            'student_type' => $student_type
         ]);
     }
 

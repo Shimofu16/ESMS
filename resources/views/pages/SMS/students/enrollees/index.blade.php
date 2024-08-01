@@ -47,16 +47,44 @@
         <div class="card-header flex-wrap py-5">
             <div class="card-title">
                 <h3 class="card-label">
-                    List of Students
+                    List of  {{ $student_type ? $student_type : '' }} Students
                     <div class="text-muted pt-2 font-size-sm">Below is the list of enrollee student this school year</div>
                 </h3>
             </div>
             <div class="card-toolbar">
                 <!-- Button trigger modal-->
-                <button type="button" class="btn btn-primary font-weight-bold btn-sm" data-toggle="modal"
+                <button type="button" class="btn btn-primary font-weight-bold btn-sm mr-3" data-toggle="modal"
                     data-target="#import"><i class="flaticon2-cube"></i>
                     Import
                 </button>
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                        data-toggle="dropdown" aria-expanded="false">
+                        Student Type
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li>
+                            <a class="dropdown-item" href="{{ route('students.enrollee.filter', ['student_type' => 'Regular']) }}">
+                                Regular
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('students.enrollee.filter', ['student_type' => 'Irregular']) }}">
+                                Irregular
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('students.enrollee.filter', ['student_type' => 'Transferee']) }}">
+                                Transferee
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('students.enrollee.index', ['student_type' => '']) }}">
+                                Reset
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="card-body">
@@ -83,14 +111,14 @@
                             <td>{{ $student->enrollment->specialization->specialization }}</td>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <a
-                                        href="{{ route('transaction.create', ['student_id' => $student->std_num]) }}" class="btn btn-sm btn-outline-info mr-2">Pay
+                                    <a href="{{ route('transaction.create', ['student_id' => $student->std_num]) }}"
+                                        class="btn btn-sm btn-outline-info mr-2">Pay
                                         Registration Fee</a>
-                                        <button class="btn btn-sm btn-outline-danger" data-toggle="modal"
-                                            data-target="#delete{{ $student->id }}">
-                                            <i class="fas fa-trash"></i>
-                                            Delete
-                                        </button>
+                                    <button class="btn btn-sm btn-outline-danger" data-toggle="modal"
+                                        data-target="#delete{{ $student->id }}">
+                                        <i class="fas fa-trash"></i>
+                                        Delete
+                                    </button>
                                 </div>
                                 @include('pages.SMS.students.enrollees.modals._delete')
 
@@ -103,34 +131,34 @@
             <!--end: Datatable-->
         </div>
     </div>
-     <!-- import Modal-->
-     <div class="modal fade" id="import" data-backdrop="static" tabindex="-1" role="dialog"
-     aria-labelledby="staticBackdrop" aria-hidden="true">
-     <div class="modal-dialog modal-md" role="document">
-         <div class="modal-content">
-             <div class="modal-header">
-                 <h5 class="modal-title" id="staticBackdropLabel">Import Enrollee</h5>
-                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                     <i aria-hidden="true" class="ki ki-close"></i>
-                 </button>
-             </div>
-             <form action="{{ route('students.enrollee.import') }}" method="POST" enctype="multipart/form-data">
-                 <div class="modal-body">
-                     @csrf
-                     <div class="form-group">
-                         <label>File <span class="text-danger">*</span></label>
-                         <input type="file" class="form-control" name="file" />
-                     </div>
-                 </div>
-                 <div class="modal-footer">
-                     <button type="button" class="btn btn-light-primary font-weight-bold"
-                         data-dismiss="modal">Close</button>
-                     <button type="submit" class="btn btn-primary font-weight-bold">Import</button>
-                 </div>
-             </form>
-         </div>
-     </div>
- </div>
+    <!-- import Modal-->
+    <div class="modal fade" id="import" data-backdrop="static" tabindex="-1" role="dialog"
+        aria-labelledby="staticBackdrop" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Import Enrollee</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <form action="{{ route('students.enrollee.import') }}" method="POST" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        @csrf
+                        <div class="form-group">
+                            <label>File <span class="text-danger">*</span></label>
+                            <input type="file" class="form-control" name="file" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-primary font-weight-bold"
+                            data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary font-weight-bold">Import</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <!--end::Card-->
 @endsection
 
