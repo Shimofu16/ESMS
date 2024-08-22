@@ -26,14 +26,15 @@ class Create extends Component
     public $total = 0;
 
 
-    public function mount()
+    public function mount($student_id)
     {
         $this->school_year =  getCurrentSettings();
         $this->array_selected_fees = [];
         $this->fees = collect();
         $this->selected_fees = collect();
-        if ($this->student_id) {
-            // dd($this->student_id);
+        if ($student_id) {
+            $this->student_id = $student_id;
+            // dd($student_id);
             $this->resetThingsUp();
         }
     }

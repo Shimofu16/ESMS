@@ -22,6 +22,7 @@ class Soa extends Component
     }
     public function updatedSectionId($value)
     {
+        session()->forget('error');
         if ($value) {
             $setting = getCurrentSettings();
             $this->payment_transactions = PaymentTransaction::query()
@@ -32,19 +33,19 @@ class Soa extends Component
                     });
                 })
                 ->get();
-                // dd($this->payment_transactions);
-        if (count($this->payment_transactions) == 0) {
-            return session()->flash('error', 'No Transactions yet.');
-        }
-        if (!checkIfStudentHasTuitionFee($this->payment_transactions)) {
-            return session()->flash('error', 'Some students do not have a tuition fee.');
-        }
-        foreach ($this->payment_transactions as $key => $temp) {
-            if ($temp->student->enrollment->section_id == null) {
-                return session()->flash('error', "Student {$temp->student->full_name} do not have an assigned section.");
+            if (count($this->payment_transactions) == 0) {
+                return session()->flash('error', 'No Transactions yet.');
+            }
+            if (!checkIfStudentHasTuitionFee($this->payment_transactions)) {
+                // dd($this->payment_transactions,'no tuition');
+                return session()->flash('error', 'Some students do not have a tuition fee.');
+            }
+            foreach ($this->payment_transactions as $key => $temp) {
+                if ($temp->student->enrollment->section_id == null) {
+                    return session()->flash('error', "Student {$temp->student->full_name} do not have an assigned section.");
+                }
             }
         }
-    }
         // if ($value) {
         //     $setting = getCurrentSettings();
         //     $this->payment_transactions = PaymentTransaction::query()
@@ -57,6 +58,7 @@ class Soa extends Component
         //         ->get();
         // }
     }
+
     public function mount()
     {
         $this->grade_levels = GradeLevel::all();

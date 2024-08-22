@@ -123,7 +123,6 @@ if (!function_exists('checkIfStudentPayRegistrationFee')) {
 if (!function_exists('checkIfStudentHasTuitionFee')) {
     function checkIfStudentHasTuitionFee($payment_transactions)
     {
-        // dd($payment_transactions);
         foreach ($payment_transactions as $key => $payment_transaction) {
             $tuition_fee = $payment_transaction->transactions()->where('type', 'tuition')->first();
             if ($tuition_fee) {

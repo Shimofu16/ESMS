@@ -6,6 +6,7 @@
                     <div class="col-12">
                         <div class="alert alert-danger">
                             {{ session('error') }}
+                            {{ session('error_no_tuition') }}
                         </div>
                     </div>
                 </div>
@@ -79,7 +80,7 @@
                         </h1>
                     </div>
                     <h1 class="sub-title bold my-2 text-center">
-                        STATEMENT OF ACCOUNTS
+                        SUMMARY OF STATEMENTS
                     </h1>
                     <div class="d-flex justify-content-between align-items-center ">
                         <div class="d-flex">
@@ -185,10 +186,12 @@
                         <tbody>
                             @php
                                 $transaction_tuition = $payment_transaction->transactions()->where('type', 'tuition')->first();
+
                                 if (checkIfStudentHasBalance($transaction_tuition)) {
                                     $first_month = getFirstBalance($transaction_tuition, 'created_at');
                                 } else {
                                     $first_month = $transaction_tuition->created_at;
+                                    
                                 }
                                 $second_month = $first_month->addMonths(1);
                                 $third_month = $first_month->addMonths(2);
@@ -196,13 +199,7 @@
                                 $fifth_month = $first_month->addMonths(4);
 
                             @endphp
-                            {{-- @dd(
-                                $first_month,
-                                $second_month,
-                                $third_month,
-                                $fourth_month,
-                                $fifth_month,
-                            ) --}}
+                            
                             <tr>
                                 <td class="text-center">1<sup>st</sup></td>
                                 <td class="text-center">

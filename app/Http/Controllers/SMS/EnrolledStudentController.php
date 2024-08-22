@@ -64,9 +64,9 @@ class EnrolledStudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $student_id)
     {
-        //
+        return view('');
     }
 
     /**
