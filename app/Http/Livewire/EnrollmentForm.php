@@ -117,7 +117,7 @@ class EnrollmentForm extends Component
             case 1:
                 $this->validate([
                     'student_lrn' => ['nullable', 'numeric', 'digits:12'],
-                    'student_no' => ['nullable', 'string', 'min:8'],
+                    'student_no' => ['required', 'string', 'min:8'],
                     'first_name' => 'required',
                     'middle_name' => 'required',
                     'last_name' => 'required',
