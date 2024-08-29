@@ -15,8 +15,8 @@ class CreateTransactionFeesTable extends Migration
     {
         Schema::create('transaction_fees', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('transaction_id')->constrained('payment_transactions', 'id');
-            $table->foreignId('fee_id')->constrained('fees', 'id');
+            $table->foreignId('transaction_id')->constrained('payment_transactions', 'id')->onDelete('cascade');
+            $table->foreignId('fee_id')->constrained('fees', 'id')->onDelete('cascade');
             $table->double('fee_amount');
             $table->double('amount');
             $table->enum('type', ['tuition', 'registration', 'miscellaneous', 'activity', 'other']);

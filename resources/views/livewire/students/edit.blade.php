@@ -266,20 +266,18 @@
                                 @if ($student->status != 3)
                                     <li role="presentation" class="navi-link py-4 d-flex justify-content-center">
                                         <button class="btn btn-danger w-100" data-toggle="modal"
-                                            data-target="#dropStudent">Drop
-                                            this student</button>
+                                            data-target="#dropStudent">
+                                            Drop this student
+                                        </button>
                                     </li>
                                 @endif
+                                <li role="presentation" class="navi-link py-4 d-flex justify-content-center">
+                                    <button class="btn btn-danger w-100" data-toggle="modal"
+                                        data-target="#deleteModal">
+                                        Delete
+                                    </button>
+                                </li>
                             </ul>
-
-
-
-
-
-
-
-
-
                         </div>
                         <!--end::Nav-->
                     </div>
@@ -1179,6 +1177,33 @@
                                 <button type="button" class="btn btn-danger mt-4" data-dismiss="modal">
                                     Cancel</button>
                                 <button type="submit" class="btn btn-primary mt-4 mr-2">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Drop Student Modal-->
+            <div class="modal fade" id="deleteModal" data-backdrop="static" tabindex="-1" role="dialog"
+                aria-labelledby="staticBackdrop" aria-hidden="true">
+                <div class="modal-dialog modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Delete</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <i aria-hidden="true" class="ki ki-close"></i>
+                            </button>
+                        </div>
+                        <form action="{{ route('students.enrolled.delete', $student->id) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <div class="modal-body">
+                                <h3>Are you sure you want to delete {{ $student->first_name }}`s data?</h3>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger mt-4" data-dismiss="modal">
+                                    Cancel</button>
+                                <button type="submit" class="btn btn-primary mt-4 mr-2">Delete</button>
                             </div>
                         </form>
                     </div>

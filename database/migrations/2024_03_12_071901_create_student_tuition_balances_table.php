@@ -15,7 +15,7 @@ class CreateStudentTuitionBalancesTable extends Migration
     {
         Schema::create('student_tuition_balances', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->constrained('students', 'id');
+            $table->foreignId('student_id')->constrained('students', 'id')->onDelete('cascade');
             $table->double('balance');
             $table->integer('duration');
             $table->timestamps();

@@ -15,7 +15,7 @@ class CreateTransactionFeeBalancesTable extends Migration
     {
         Schema::create('transaction_fee_balances', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('transaction_fee_id')->constrained('transaction_fees', 'id');
+            $table->foreignId('transaction_fee_id')->constrained('transaction_fees', 'id')->onDelete('cascade');
             $table->double('amount');
             $table->double('balance')->nullable();
             $table->timestamps();

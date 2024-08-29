@@ -18,7 +18,7 @@ class EnrolledStudentController extends Controller
     public function index($student_type = '')
     {
         // dd(getStudentsByStatus(0, $student_type));
-        return view('pages.SMS.students.enrolled.index',[
+        return view('pages.SMS.students.enrolled.index', [
             'students' => getStudentsByStatus(1, $student_type),
             'student_type' => $student_type
         ]);
@@ -97,6 +97,29 @@ class EnrolledStudentController extends Controller
         ]);
 
         Activity::log(auth()->user()->id, 'Student Management', 'Dropped Student ' . $student->full_name);
-        return redirect()->route('students.enrolled.index')->with('toast_success', 'Added Successfully');
+        return redirect()->route('students.enrolled.index')->with('toast_success', 'Successfully Dropped student');
+    }
+    public function delete($id)
+    {
+        $student = Student::find($id);
+        Activity::log(auth()->user()->id, 'Student Management', "Deleted Student {$student->full_name} data");
+        // Delete related enrollments (optional, if cascading is not enabled)
+        $student->enrollment()->delete();
+
+        // Delete related subjects
+        $student->subjects()->delete();
+        // dd($student->transactions() );
+        // Delete related payment transactions
+        foreach ($student->transactions() as $key => $transaction) {
+            foreach ($transaction->transactions() as $key => $fee) {
+                $fee->balances()->delete();
+            }
+            $transaction->transactions()->delete();
+        }
+        $student->transactions()->delete();
+
+        $student->delete();
+
+        return redirect()->route('students.enrolled.index')->with('toast_success', 'Successfully deleted student`s data.');
     }
 }

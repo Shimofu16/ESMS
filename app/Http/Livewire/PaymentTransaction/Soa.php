@@ -36,27 +36,19 @@ class Soa extends Component
             if (count($this->payment_transactions) == 0) {
                 return session()->flash('error', 'No Transactions yet.');
             }
+            // not working
             if (!checkIfStudentHasTuitionFee($this->payment_transactions)) {
                 // dd($this->payment_transactions,'no tuition');
                 return session()->flash('error', 'Some students do not have a tuition fee.');
             }
+            // not working
             foreach ($this->payment_transactions as $key => $temp) {
                 if ($temp->student->enrollment->section_id == null) {
                     return session()->flash('error', "Student {$temp->student->full_name} do not have an assigned section.");
                 }
             }
         }
-        // if ($value) {
-        //     $setting = getCurrentSettings();
-        //     $this->payment_transactions = PaymentTransaction::query()
-        //         ->where('school_year_id', $setting['school_year_id'])
-        //         ->whereHas('student', function ($query) use ($value) {
-        //             $query->whereHas('enrollment', function ($que) use ($value) {
-        //                 $que->where('section_id', $value);
-        //             });
-        //         })
-        //         ->get();
-        // }
+
     }
 
     public function mount()

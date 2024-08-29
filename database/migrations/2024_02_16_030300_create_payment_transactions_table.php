@@ -15,7 +15,7 @@ class CreatePaymentTransactionsTable extends Migration
     {
         Schema::create('payment_transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->constrained('students', 'id');
+            $table->foreignId('student_id')->constrained('students', 'id')->onDelete('cascade');
             $table->foreignId('school_year_id')->constrained('school_years', 'id');
             $table->text('mode_of_payment');
             $table->enum('status',['pending', 'paid'])->default('pending');
